@@ -1,4 +1,3 @@
-const buffer = require('buffer/').Buffer;
 const { verify } = require('tweetnacl').sign.detached;
 
 const Channels = require('./channels.json');
@@ -28,9 +27,9 @@ async function handleRequest(req) {
   const rawBody = await req.text();
 
   const verified = await verify(
-    buffer.from(timestamp + rawBody),
-    buffer.from(signature, 'hex'),
-    buffer.from(PUBLIC_KEY, 'hex') // from env
+    Buffer.from(timestamp + rawBody),
+    Buffer.from(signature, 'hex'),
+    Buffer.from(PUBLIC_KEY, 'hex') // from env
   );
 
   if (!verified) {

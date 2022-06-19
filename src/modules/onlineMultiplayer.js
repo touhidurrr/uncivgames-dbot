@@ -1,5 +1,4 @@
-const { ungzip } = require('pako');
-const buffer = require('buffer/').Buffer;
+const { gunzipSync } =  require('zlib');
 const jsonParser = require('./ijson-parser.js');
 
 module.exports.getGame = async function (gameId) {
@@ -12,7 +11,7 @@ module.exports.getGame = async function (gameId) {
   if (res.status !== 200) return null;
 
   let gzipData = await res.text();
-  let jsonText = await ungzip(buffer.from(gzipData, 'base64'), { to: 'string' });
+  let jsonText = gunzipSync(Buffer.from(gzipData, 'base64')).toString();
 
   return jsonParser(jsonText);
 };
