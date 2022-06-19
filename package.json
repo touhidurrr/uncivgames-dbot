@@ -14,14 +14,14 @@
     "node": "~18"
   },
   "dependencies": {
-    "tweetnacl": "^1.0.3",
+    "tweetnacl": "~1",
     "wrangler": "~2"
   },
   "devDependencies": {
-    "axios": "~0.26.1",
-    "dotenv": "~16.0.0",
-    "esbuild": "~0.14.27",
-    "lodash.isequal": "~4.5.0",
-    "prettier": "~2.5.1"
+    "axios": "^0.27.2",
+    "dotenv": "~16",
+    "esbuild": "^0.14.45",
+    "lodash.isequal": "^4.5.0",
+    "prettier": "~2"
   }
 }
