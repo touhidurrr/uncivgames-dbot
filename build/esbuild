@@ -1,0 +1,23 @@
+#!/bin/node
+
+const { buildSync, analyzeMetafileSync } = require('esbuild');
+const { main } = require('./package.json');
+
+const { metafile } = buildSync({
+  entryPoints: [main],
+  bundle: true,
+  outfile: 'dist/bot.js',
+  external: ['__STATIC_CONTENT_MANIFEST'],
+  format: 'esm',
+  minify: true,
+  sourcemap: true,
+  metafile: true,
+  conditions: ['worker', 'browser'],
+  loader: {
+    '.js': 'jsx',
+    '.mjs': 'jsx',
+    '.cjs': 'jsx',
+  },
+});
+
+console.log(analyzeMetafileSync(metafile, { verbose: true }));

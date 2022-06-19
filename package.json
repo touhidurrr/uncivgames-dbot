@@ -1,0 +1,29 @@
+{
+  "name": "uncivgames-dbot",
+  "version": "1.0.0",
+  "description": "A bot owned by touhidurrr made for The Unciv Games Discord Server. Join link https://discord.gg/YYEmec3xr6",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "build/esbuild",
+    "format": "prettier --write .",
+    "wc": "wc src/*"
+  },
+  "author": "Md. Touhidur Rahman",
+  "license": "BSD-3-Clause",
+  "engines": {
+    "node": "~18"
+  },
+  "dependencies": {
+    "buffer": "~6.0.3",
+    "pako": "~2.0.4",
+    "tweetnacl": "^1.0.3",
+    "wrangler": "~2"
+  },
+  "devDependencies": {
+    "axios": "~0.26.1",
+    "dotenv": "~16.0.0",
+    "esbuild": "~0.14.27",
+    "lodash.isequal": "~4.5.0",
+    "prettier": "~2.5.1"
+  }
+}
