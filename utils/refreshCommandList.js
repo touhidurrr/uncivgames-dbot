@@ -1,7 +1,4 @@
-const { parsed } = require('dotenv').config();
-Object.keys(parsed).forEach(key => {
-  global[key] = parsed[key];
-});
+require('dotenv').config();
 
 const isEqual = require('lodash.isequal');
 const { ApplicationCommandResponses } = require('../src/responsesList.js');
@@ -25,7 +22,7 @@ const discordApiEndpoint = 'https://discord.com/api/v10';
 const discord = require('axios').create({
   baseURL: discordApiEndpoint,
   headers: {
-    authorization: `Bot ${DISCORD_TOKEN}`,
+    authorization: `Bot ${process.env.DISCORD_TOKEN}`,
   },
 });
 
@@ -95,7 +92,7 @@ async function updateCommands(config) {
       .then(res => res.data.name)
       .catch(logAxiosError);
     await updateCommands({
-      path: `/applications/${APPLICATION_ID}/guilds/${guildId}/commands`,
+      path: `/applications/${process.env.APPLICATION_ID}/guilds/${guildId}/commands`,
       indentifier: `guild commands for ${name}`,
       commandsList: guildCommands[guildId],
     });
