@@ -21,11 +21,12 @@ jobs:
       - name: Install Packages
         run: npm install
 
-      - name: Update Commands
-        run: |
-          DISCORD_TOKEN='${{ secrets.DISCORD_TOKEN }}' \
-          APPLICATION_ID='${{ secrets.APPLICATION_ID }}' \
-          node utils/refreshCommandList.js
+# Comment for now
+#      - name: Update Commands
+#        run: |
+#          DISCORD_TOKEN='${{ secrets.DISCORD_TOKEN }}' \
+#          APPLICATION_ID='${{ secrets.APPLICATION_ID }}' \
+#          node utils/refreshCommandList.js
 
       - name: Deploy
         run: |
