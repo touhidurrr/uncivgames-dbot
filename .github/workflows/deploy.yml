@@ -19,16 +19,18 @@ jobs:
           cache: 'npm'
 
       - name: Install Packages
-        run: npm install
+        run: |
+          npm install
+          npm ls
 
 # Comment for now
 #      - name: Update Commands
-#        run: |
-#          DISCORD_TOKEN='${{ secrets.DISCORD_TOKEN }}' \
-#          APPLICATION_ID='${{ secrets.APPLICATION_ID }}' \
+#        run: >
+#          DISCORD_TOKEN='${{ secrets.DISCORD_TOKEN }}'
+#          APPLICATION_ID='${{ secrets.APPLICATION_ID }}'
 #          node utils/refreshCommandList.js
 
       - name: Deploy
-        run: |
-          CLOUDFLARE_API_TOKEN='${{ secrets.CF_AUTH }}' \
+        run: >
+          CLOUDFLARE_API_TOKEN='${{ secrets.CF_AUTH }}'
           node_modules/.bin/wrangler publish
