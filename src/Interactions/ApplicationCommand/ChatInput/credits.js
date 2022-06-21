@@ -9,7 +9,7 @@ module.exports = {
       fields: [
         {
           name: 'Author',
-          value: 'PikaPika#2315 • [Github](https://github.com/touhidurrr) • [Email](mailto:authordbot@uncivserver.xyz)',
+          value: 'PikaPika#2315 • [Github](https://github.com/touhidurrr) • [Email](https://tinyurl.com/dbotmail)',
         },
         {
           name: 'Bot Avatar',
