@@ -28,7 +28,7 @@ async function sendUncivUpdateNotification() {
   ++subRequestCount;
 
   if (!(id > releaseId)) return;
-  if (assets.length < 6) return;
+  if (assets.length < 7) return;
 
   id = id.toString();
 
