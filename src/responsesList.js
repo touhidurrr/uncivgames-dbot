@@ -46,7 +46,7 @@ exports.InteractionResponses = {
     require('./Interactions/MessageComponent/votepoll.js'),
   ],
   // APPLICATION_COMMAND_AUTOCOMPLETE
-  4: [],
+  4: [require('./Interactions/Autocomplete/gameIdSuggestion.js')],
   // MODAL_SUBMIT
   5: [require('./Interactions/ModalSubmit/poll.js')],
 };

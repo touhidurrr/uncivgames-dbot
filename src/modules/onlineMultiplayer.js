@@ -1,4 +1,4 @@
-const { gunzipSync } =  require('zlib');
+const { gunzipSync } = require('zlib');
 const jsonParser = require('./ijson-parser.js');
 
 module.exports.getGame = async function (gameId) {

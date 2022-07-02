@@ -59,6 +59,14 @@ async function handleRequest(req) {
     return await command.respond(interaction);
   }
 
+  // Autocomplete
+  if (interaction.type === 4) {
+    return await InteractionResponses[4]
+      .filter(r => r.logic(interaction))
+      .sort((a, b) => b.priority - a.priority)[0]
+      .respond(interaction);
+  }
+
   // Respond to other Interactions
   if (InteractionResponses.hasOwnProperty(interaction.type)) {
     let args = interaction.data.custom_id.split('-');

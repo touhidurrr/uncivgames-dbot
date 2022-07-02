@@ -14,6 +14,7 @@ module.exports = {
       description: 'Unciv Multiplayer game ID',
       type: 3,
       required: true,
+      autocomplete: true,
     },
   ],
   async respond(interaction) {

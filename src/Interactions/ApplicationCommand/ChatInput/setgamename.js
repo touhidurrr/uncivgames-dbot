@@ -19,6 +19,7 @@ module.exports = {
       description: 'UncivServer.xyz game ID!',
       type: 3,
       required: true,
+      autocomplete: true,
     },
   ],
   async respond(interaction) {
