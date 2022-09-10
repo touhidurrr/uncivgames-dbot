@@ -49,8 +49,7 @@ module.exports = class Message {
     if (config.title) {
       embed.author = {
         name: config.title,
-        icon_url:
-          'https://cdn.discordapp.com/avatars/866759632617996308/e90689c242194c7a1526ab8d885bfc13.png',
+        icon_url: 'https://i.imgur.com/nf2lNl0.png',
       };
     }
 
