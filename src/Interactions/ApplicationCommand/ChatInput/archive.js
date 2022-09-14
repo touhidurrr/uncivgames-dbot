@@ -64,7 +64,7 @@ module.exports = {
       channelId = Channel.id;
     }
 
-    if (!isMod && !new Permissions(interaction.permissions).has(Permissions.MANAGE_ROLES)) {
+    if (!isMod && !new Permissions(interaction.member.permissions).has(Permissions.MANAGE_ROLES)) {
       return new Message(
         {
           title: 'Archive Prompt',
