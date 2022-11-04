@@ -10,8 +10,7 @@ module.exports = {
         {
           name: 'Author',
           value:
-            '`PikaPika#2315` -
- <@577491473100963840> • [Github](https://github.com/touhidurrr) • [Email](https://tinyurl.com/dbotmail)',
+            '`PikaPika#2315` - <@577491473100963840> • [Github](https://github.com/touhidurrr) • [Email](https://tinyurl.com/dbotmail)',
         },
         {
           name: 'Bot Avatar',
