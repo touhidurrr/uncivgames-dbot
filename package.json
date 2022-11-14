@@ -20,7 +20,7 @@
   "devDependencies": {
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
-    "esbuild": "^0.14.46",
+    "esbuild": "^0.15.13",
     "lodash.isequal": "^4.5.0",
     "prettier": "^2.7.1"
   }
