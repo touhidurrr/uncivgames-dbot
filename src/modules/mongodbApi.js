@@ -15,7 +15,7 @@ async function doMongoRequest(collection, action, parameters) {
 
   if (typeof filter === 'string') filter = { _id: filter };
 
-  return await fetch(`${DATA_API_ENDPOINT}/${action}`, {
+  return await fetch(`${DATA_API_ENDPOINT}/action/${action}`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
