@@ -2,6 +2,7 @@ const materialColors = require('./materialColors.js');
 
 module.exports = class Message {
   static Flags = {
+    CROSSPOSTED: 1 << 0,
     EPHEMERAL: 1 << 6,
     SUPPRESS_EMBEDS: 1 << 2,
   };
@@ -69,5 +70,8 @@ module.exports = class Message {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
+  }
+  getData() {
+    return this.body.data;
   }
 };

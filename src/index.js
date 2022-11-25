@@ -1,9 +1,4 @@
 const { verify } = require('tweetnacl').sign.detached;
-
-const Channels = require('./channels.json');
-const Message = require('./modules/message.js');
-const Discord = require('./modules/discordApi.js');
-const MongoDB = require('./modules/mongodbApi.js');
 const { handleScheduled } = require('./scheduled.js');
 const { ApplicationCommandResponses, InteractionResponses } = require('./responsesList.js');
 

@@ -67,7 +67,7 @@ module.exports = {
       new Message({
         title: 'Leave Prompt',
         description: `You have left **Game ${name.slice(5)}**`,
-      }).body.data
+      }).getData()
     );
 
     return new Message({

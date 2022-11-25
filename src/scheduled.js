@@ -28,7 +28,7 @@ async function sendUncivUpdateNotification() {
   ++subRequestCount;
 
   if (!(id > releaseId)) return;
-  if (assets.length < 7) return;
+  if (assets.length < 6) return;
 
   id = id.toString();
 
@@ -55,7 +55,9 @@ async function sendUncivUpdateNotification() {
                 value: assets.map(a => `[${a.name}](${a.browser_download_url})`).join('\n'),
               },
         ],
-      }).body.data
+      }).getData()
+    ).then(({ id }) =>
+      Discord('POST', `/channels/${Channels.uncivUpdates}/messages/${id}/crosspost`)
     ),
     MongoDB.updateOne('Variables', 'Unciv Release Id', { $set: { value: { $numberLong: id } } }),
   ]);
