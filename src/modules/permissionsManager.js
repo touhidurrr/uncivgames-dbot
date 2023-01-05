@@ -47,6 +47,9 @@ module.exports = class Permissions {
   add(...permissions) {
     for (const p of permissions) this.permissions |= BigInt(p);
   }
+  remove(...permissions) {
+    for (const p of permissions) this.permissions &= ~BigInt(p);
+  }
   has(...permissions) {
     for (const p of permissions) {
       if (!(this.permissions & BigInt(p))) return false;
