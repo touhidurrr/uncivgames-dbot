@@ -40,19 +40,24 @@ module.exports = class Permissions {
   static SEND_MESSAGES_IN_THREADS = 1n << 38n;
   static USE_EMBEDDED_ACTIVITIES = 1n << 39n;
   static MODERATE_MEMBERS = 1n << 40n;
+
+  #permissions = 0n;
+
   constructor(...permissions) {
-    this.permissions = 0n;
-    for (const p of permissions) this.permissions |= BigInt(p);
+    for (const p of permissions) this.#permissions |= BigInt(p);
+  }
+  getValue() {
+    return this.#permissions;
   }
   add(...permissions) {
-    for (const p of permissions) this.permissions |= BigInt(p);
+    for (const p of permissions) this.#permissions |= BigInt(p);
   }
   remove(...permissions) {
-    for (const p of permissions) this.permissions &= ~BigInt(p);
+    for (const p of permissions) this.#permissions &= ~BigInt(p);
   }
   has(...permissions) {
     for (const p of permissions) {
-      if (!(this.permissions & BigInt(p))) return false;
+      if (!(this.#permissions & BigInt(p))) return false;
     }
     return true;
   }
