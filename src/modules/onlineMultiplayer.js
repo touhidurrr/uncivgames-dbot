@@ -10,8 +10,8 @@ module.exports.getGame = async function (gameId) {
   // if that is not found also return null as error signal
   if (!res.ok) return null;
 
-  let gzipData = await res.text();
-  let jsonText = gunzipSync(Buffer.from(gzipData, 'base64')).toString();
+  const gzipData = await res.text();
+  const jsonText = gunzipSync(Buffer.from(gzipData, 'base64')).toString();
 
   return jsonParser(jsonText);
 };
@@ -19,11 +19,11 @@ module.exports.getGame = async function (gameId) {
 module.exports.getFullGame = async function (gameId) {
   const res = await fetch(`https://uncivserver.xyz/files/${gameId}`);
 
-  // if that is not found also return null as error signal
+  // if game is not found
   if (!res.ok) return null;
 
-  let gzipData = await res.text();
-  let jsonText = gunzipSync(Buffer.from(gzipData, 'base64')).toString();
+  const gzipData = await res.text();
+  const jsonText = gunzipSync(Buffer.from(gzipData, 'base64')).toString();
 
   return jsonParser(jsonText);
 };
