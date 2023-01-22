@@ -2,7 +2,7 @@ const { gunzipSync } = require('zlib');
 const jsonParser = require('./ijson-parser.js');
 
 module.exports.getGame = async function (gameId) {
-  let res = await fetch(`https://uncivserver.xyz/files/${gameId}_Preview`);
+  let res = await fetch(`https://uncivserver.xyz/files/${gameId}`);
 
   // if Preview is not found try to fetch the full game
   if (res.status !== 200) res = await fetch(`https://uncivserver.xyz/files/${gameId}`);
