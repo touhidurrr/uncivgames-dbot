@@ -49,7 +49,7 @@ module.exports = {
       ...new Set(game.civilizations.filter(c => c.playerId).map(c => c.playerId)),
     ];
     const playerCount = uniquePlayers.length;
-    } catch (e) await console.log(e?.stack);
+    } catch (e) { await console.log(e?.stack); }
 
     if (playerCount < 3) {
       return new Message(
