@@ -42,14 +42,16 @@ module.exports = {
       ).toResponse();
     }
 
-    const uniquePlayers = [...new Set(game.gameParameters.players.filter(p => p.playerId).map(p => p.playerId))];
-    const playerCount =  uniquePlayers.length;
+    const uniquePlayers = [
+      ...new Set(game.civilizations.filter(c => c.playerId).map(c => c.playerId)),
+    ];
+    const playerCount = uniquePlayers.length;
 
     if (playerCount < 3) {
       return new Message(
         {
           title: 'VoteKick Prompt',
-          description: "VoteKick is only applicable to games with more than 3 Human players !",
+          description: 'VoteKick is only applicable to games with more than 3 Human players !',
         },
         Message.Flags.EPHEMERAL
       ).toResponse();
@@ -57,7 +59,7 @@ module.exports = {
 
     return new Message({
       title: 'VoteKick Prompt',
-      description: 'Test'
+      description: 'Test',
     }).toResponse();
   },
 };
