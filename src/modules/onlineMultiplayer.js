@@ -30,13 +30,13 @@ module.exports.getFullGame = async function (gameId) {
 
 module.exports.postGame = function (gameId, gameData) {
   const json = JSON.stringify(gameData);
-  const base64 = Buffer.from(json).toString('base64');
-  const gzip = gzipSync(base64);
+  const gzip = gzipSync(base64).toSting('utf8');
+  const base64 = Buffer.from(gzip).toString('base64');
   return fetch(`https://uncivserver.xyz/files/${gameId}`, {
     method: 'POST',
     headers: {
       'User-Agent': 'UncivDBot/0.0.0',
     },
-    body: gzip
+    body: base64
   });
 };
