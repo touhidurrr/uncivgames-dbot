@@ -42,6 +42,7 @@ module.exports = {
       ).toResponse();
     }
 
+    await console.log(game.civilizations);
     const uniquePlayers = [
       ...new Set(game.civilizations.filter(c => c.playerId).map(c => c.playerId)),
     ];
