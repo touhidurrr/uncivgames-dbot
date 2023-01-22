@@ -11,10 +11,11 @@
   "author": "Md. Touhidur Rahman",
   "license": "BSD-3-Clause",
   "engines": {
-    "node": "~18"
+    "node": ">=18"
   },
   "dependencies": {
     "mongodb-data-api": "^0.4.0",
+    "pako": "^2.1.0",
     "tweetnacl": "^1.0.3",
     "wrangler": "^2.4.4"
   },
