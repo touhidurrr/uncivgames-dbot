@@ -30,7 +30,9 @@ module.exports = {
       ).toResponse();
     }
 
+    await console.log(1);
     const game = await onlineMultiplayer.getFullGame(gameId);
+    await console.log(2);
 
     if (game === null) {
       return new Message(
@@ -42,11 +44,9 @@ module.exports = {
       ).toResponse();
     }
 
-    await console.log(game?.gameParameters);
     const uniquePlayers = [
       ...new Set(game.civilizations.filter(c => c.playerId).map(c => c.playerId)),
     ];
-    await console.log(uniquePlayers);
     const playerCount = uniquePlayers.length;
 
     if (playerCount < 3) {
