@@ -30,7 +30,8 @@ module.exports.getFullGame = async function (gameId) {
 
 module.exports.postGame = function (gameId, gameData) {
   const json = JSON.stringify(gameData);
-  const base64 = Buffer.from(gzip(json)).toString('base64');
+  const gzip = Buffer.from(gzip(json)).toString('utf8');
+  const base64 = Buffer.from(gzip).toString('base64');
   return fetch(`https://uncivserver.xyz/files/${gameId}`, {
     method: 'POST',
     headers: {
