@@ -26,7 +26,7 @@ module.exports = {
   ],
   async respond(interaction) {
     const gameId = interaction.data.options[0].value.trim();
-    const civName = interaction.data.options[0].value.trim().toLowerCase();
+    const civName = interaction.data.options[1].value.trim().toLowerCase();
 
     if (!gameId || !gameIdRegex.test(gameId)) {
       return new Message(
@@ -64,7 +64,7 @@ module.exports = {
     }
 
     const playerToKick = game.civilizations.find(
-      c => civName === c.civName.toLowerCase()
+      c => c.playerId && civName === c.civName.toLowerCase()
     )?.playerId;
 
     if (!playerToKick) {
