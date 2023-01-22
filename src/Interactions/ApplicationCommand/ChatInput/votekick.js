@@ -45,6 +45,7 @@ module.exports = {
     const uniquePlayers = [
       ...new Set(game.civilizations.filter(c => c.playerId).map(c => c.playerId)),
     ];
+    await console.log(uniquePlayers);
     const playerCount = uniquePlayers.length;
 
     if (playerCount < 3) {
