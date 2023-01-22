@@ -1,4 +1,4 @@
-const { gzipSync, gunzipSync } = require('zlib');
+const { ungzip, gzip } = require('pako');
 const jsonParser = require('./ijson-parser.js');
 
 module.exports.getGame = async function (gameId) {
@@ -11,7 +11,7 @@ module.exports.getGame = async function (gameId) {
   if (!res.ok) return null;
 
   const gzipData = await res.text();
-  const jsonText = gunzipSync(Buffer.from(gzipData, 'base64')).toString();
+  const jsonText = ungzip(Buffer.from(gzipData, 'base64'), { to: 'string' });
 
   return jsonParser(jsonText);
 };
@@ -23,15 +23,14 @@ module.exports.getFullGame = async function (gameId) {
   if (!res.ok) return null;
 
   const gzipData = await res.text();
-  const jsonText = gunzipSync(Buffer.from(gzipData, 'base64')).toString();
+  const jsonText = ungzip(Buffer.from(gzipData, 'base64'), { to: 'string' })
 
   return jsonParser(jsonText);
 };
 
 module.exports.postGame = function (gameId, gameData) {
   const json = JSON.stringify(gameData);
-  const gzip = gzipSync(base64).toSting('utf8');
-  const base64 = Buffer.from(gzip).toString('base64');
+  const base64 = Buffer.from(gzip(json)).toString('base64');
   return fetch(`https://uncivserver.xyz/files/${gameId}`, {
     method: 'POST',
     headers: {
