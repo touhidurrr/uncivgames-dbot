@@ -27,6 +27,7 @@ exports.ApplicationCommandResponses = {
     require('./Interactions/ApplicationCommand/ChatInput/recentgames.js'),
     require('./Interactions/ApplicationCommand/ChatInput/dropid.js'),
     require('./Interactions/ApplicationCommand/ChatInput/addbrgame.js'),
+    require('./Interactions/ApplicationCommand/ChatInput/votekick.js'),
   ],
   // USER
   2: [require('./Interactions/ApplicationCommand/User/avatar.js')],
