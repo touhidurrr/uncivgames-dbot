@@ -85,7 +85,10 @@ module.exports = {
       { _id: 1, uncivUserIds: 1 }
     );
 
-    const registeredPlayerIds = registeredPlayers.map(r => r.uncivUserIds).flat();
+    const registeredPlayerIds = registeredPlayers
+      .map(r => r.uncivUserIds)
+      .flat()
+      .filter(id => uniquePlayers.has(id));
 
     if (registeredPlayerIds.length < playerCount - 1) {
       return new Message(
