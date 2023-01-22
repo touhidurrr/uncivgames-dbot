@@ -1,4 +1,5 @@
 const Message = require('../../../modules/message.js');
+const { default: mongodbApi } = require('../../../modules/mongodbApi.js');
 const onlineMultiplayer = require('../../../modules/onlineMultiplayer.js');
 
 const gameIdRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/;
@@ -16,9 +17,16 @@ module.exports = {
       required: true,
       autocomplete: true,
     },
+    {
+      name: 'civ',
+      description: 'Civilization to VoteKick!',
+      type: 3,
+      required: true,
+    },
   ],
   async respond(interaction) {
     const gameId = interaction.data.options[0].value.trim();
+    const civName = interaction.data.options[0].value.trim().toLowerCase();
 
     if (!gameId || !gameIdRegex.test(gameId)) {
       return new Message(
@@ -42,16 +50,49 @@ module.exports = {
       ).toResponse();
     }
 
-    const uniquePlayers = [
-      ...new Set(game.civilizations.filter(c => c.playerId).map(c => c.playerId)),
-    ];
-    const playerCount = uniquePlayers.length;
+    const uniquePlayers = new Set(game.civilizations.filter(c => c.playerId).map(c => c.playerId));
+    const playerCount = [...uniquePlayers].length;
 
     if (playerCount < 3) {
       return new Message(
         {
           title: 'VoteKick Prompt',
-          description: 'VoteKick is only applicable to games with more than 3 Human players !',
+          description: 'VoteKick is only applicable to games with 3 or more Human players !',
+        },
+        Message.Flags.EPHEMERAL
+      ).toResponse();
+    }
+
+    const playerToKick = game.civilizations.find(
+      c => civName === c.civName.toLowerCase()
+    )?.playerId;
+
+    if (!playerToKick) {
+      return new Message(
+        {
+          title: 'VoteKick Prompt',
+          description: 'Civilization not found !',
+        },
+        Message.Flags.EPHEMERAL
+      ).toResponse();
+    }
+
+    uniquePlayers.delete(playerToKick);
+
+    const registeredPlayers = await mongodbApi.find(
+      'PlayerProfiles',
+      { uncivUserIds: { $in: [...uniquePlayers] } },
+      { _id: 1, uncivUserIds: 1 }
+    );
+
+    const registeredPlayerIds = registeredPlayers.map(r => r.uncivUserIds).flat();
+
+    if (registeredPlayerIds.length < playerCount - 1) {
+      return new Message(
+        {
+          title: 'VoteKick Prompt',
+          description:
+            'VoteKick can only be initiated when all players except the player to kick is registered via `/addid`!',
         },
         Message.Flags.EPHEMERAL
       ).toResponse();
@@ -59,7 +100,7 @@ module.exports = {
 
     return new Message({
       title: 'VoteKick Prompt',
-      description: 'Test',
+      description: 'Test Success!',
     }).toResponse();
   },
 };
