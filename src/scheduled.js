@@ -36,7 +36,7 @@ async function sendUncivUpdateNotification() {
     Discord(
       'POST',
       `/channels/${Channels.uncivUpdates}/messages`,
-      new Message('<@1110904546642886679>').addEmbed({
+      new Message('<@&1110904546642886679>').addEmbed({
         fields: [
           {
             name: 'Release Id',
