@@ -32,14 +32,18 @@ module.exports = class Message {
       if (typeof flags === 'number') this.addFlag(flags);
       else this.addFlags(flags);
     }
+
+    return this;
   }
   addFlag(flag) {
     if (!this.body.data.flags) this.body.data.flags = flag;
     else this.body.data.flags |= flag;
+    return this;
   }
   addFlags(flags) {
     if (!this.body.data.flags) this.body.data.flags = 0;
     for (flag of flags) this.body.data.flags |= flag;
+    return this;
   }
   addEmbed(config) {
     let embed = {
@@ -59,9 +63,11 @@ module.exports = class Message {
     if (config.footer) embed.footer = { text: config.footer };
 
     this.body.data.embeds.push(embed);
+    return this;
   }
   addComponents(components) {
     this.body.data.components = components;
+    return this;
   }
   toResponse(type = 4) {
     this.body.type = type;
