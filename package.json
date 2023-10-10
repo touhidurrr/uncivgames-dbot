@@ -17,13 +17,13 @@
     "mongodb-data-api": "^0.4.0",
     "pako": "^2.1.0",
     "tweetnacl": "^1.0.3",
-    "wrangler": "^3.0.1"
+    "wrangler": "^3.11.0"
   },
   "devDependencies": {
-    "axios": "^1.2.0",
-    "dotenv": "^16.0.3",
-    "esbuild": "^0.19.2",
+    "axios": "^1.5.1",
+    "dotenv": "^16.3.1",
+    "esbuild": "^0.19.4",
     "lodash.isequal": "^4.5.0",
-    "prettier": "^3.0.0"
+    "prettier": "^3.0.3"
   }
 }
