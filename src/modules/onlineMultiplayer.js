@@ -1,6 +1,5 @@
 const { Buffer } = require('buffer');
 const { ungzip, gzip } = require('pako');
-const jsonParser = require('./ijson-parser.js');
 
 module.exports.getGame = async function (gameId) {
   let res = await fetch(`https://uncivserver.xyz/files/${gameId}_Preview`);
@@ -14,7 +13,7 @@ module.exports.getGame = async function (gameId) {
   const gzipData = await res.text();
   const jsonText = ungzip(Buffer.from(gzipData, 'base64'), { to: 'string' });
 
-  return jsonParser(jsonText);
+  return JSON.parse(jsonText);
 };
 
 module.exports.getFullGame = async function (gameId) {
@@ -26,7 +25,7 @@ module.exports.getFullGame = async function (gameId) {
   const gzipData = await res.text();
   const jsonText = ungzip(Buffer.from(gzipData, 'base64'), { to: 'string' })
 
-  return jsonParser(jsonText);
+  return JSON.parse(jsonText);
 };
 
 module.exports.postGame = function (gameId, gameData) {
