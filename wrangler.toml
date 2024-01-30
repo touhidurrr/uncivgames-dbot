@@ -1,7 +1,8 @@
-compatibility_date = "2023-10-10"
+compatibility_date = "2023-12-01"
 account_id = "2abd5f3a5cdcf01e98291c0a7a1f47e4"
 
 name = "dbot"
 workers_dev = true
 node_compat = true
 main = "src/index.js"
+compatibility_flags = [ "nodejs_compat" ]
