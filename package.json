@@ -14,6 +14,7 @@
     "node": "20.x"
   },
   "dependencies": {
+    "buffer": "^6.0.3",
     "mongodb-data-api": "^0.4.0",
     "pako": "^2.1.0",
     "tweetnacl": "^1.0.3",

@@ -1,4 +1,4 @@
-import { Buffer } from 'node:buffer';
+const { Buffer } = require('buffer');
 const { verify } = require('tweetnacl').sign.detached;
 const { handleScheduled } = require('./scheduled.js');
 const { ApplicationCommandResponses, InteractionResponses } = require('./responsesList.js');

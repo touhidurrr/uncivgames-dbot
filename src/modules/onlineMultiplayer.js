@@ -1,4 +1,4 @@
-import { Buffer } from 'node:buffer';
+const { Buffer } = require('buffer');
 const { ungzip, gzip } = require('pako');
 const jsonParser = require('./ijson-parser.js');
 
