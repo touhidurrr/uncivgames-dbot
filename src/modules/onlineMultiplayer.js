@@ -1,4 +1,5 @@
 const { ungzip, gzip } = require('pako');
+const { Buffer } = require('node:buffer');
 const jsonParser = require('./ijson-parser.js');
 
 module.exports.getGame = async function (gameId) {
