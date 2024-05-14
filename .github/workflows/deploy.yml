@@ -30,5 +30,6 @@ jobs:
       #          node utils/refreshCommandList.js
 
       - name: Deploy
-        run: >
-          CLOUDFLARE_API_TOKEN='${{ secrets.CF_AUTH }}' node_modules/.bin/wrangler deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_AUTH }}
