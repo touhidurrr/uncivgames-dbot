@@ -80,10 +80,11 @@ module.exports = {
     }
 
     const { username, discriminator } = await Discord('GET', `/users/${queryResponse._id}`);
+    const uniqueName = discriminator !== '0' ? `${username}#${discriminator}` : `@${username}`;
 
     return new Message({
       title: 'AddID Prompt',
-      description: `This ID is Already owned by **${username}#${discriminator}** !`,
+      description: `This ID is Already owned by **${uniqueName}** !`,
     }).toResponse();
   },
 };

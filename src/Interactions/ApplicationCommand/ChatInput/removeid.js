@@ -72,10 +72,11 @@ module.exports = {
     }
 
     const { username, discriminator } = await Discord('GET', `/users/${queryResponse._id}`);
+    const uniqueName = discriminator !== '0' ? `${username}#${discriminator}` : `@${username}`;
 
     return new Message({
       title: 'RemoveID Prompt',
-      description: `This ID is owned by **${username}#${discriminator}**, not You !`,
+      description: `This ID is owned by **${uniqueName}**, not You !`,
     }).toResponse();
   },
 };

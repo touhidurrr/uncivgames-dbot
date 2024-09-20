@@ -36,26 +36,28 @@ async function sendUncivUpdateNotification() {
     Discord(
       'POST',
       `/channels/${Channels.uncivUpdates}/messages`,
-      new Message('<@&1110904546642886679>').addEmbed({
-        fields: [
-          {
-            name: 'Release Id',
-            value: id,
-            inline: true,
-          },
-          {
-            name: 'Version',
-            value: `[${tag_name}](${html_url})`,
-            inline: true,
-          },
-          !assets
-            ? undefined
-            : {
-                name: 'Attachments',
-                value: assets.map(a => `[${a.name}](${a.browser_download_url})`).join('\n'),
-              },
-        ],
-      }).getData()
+      new Message('<@&1110904546642886679>')
+        .addEmbed({
+          fields: [
+            {
+              name: 'Release Id',
+              value: id,
+              inline: true,
+            },
+            {
+              name: 'Version',
+              value: `[${tag_name}](${html_url})`,
+              inline: true,
+            },
+            !assets
+              ? undefined
+              : {
+                  name: 'Attachments',
+                  value: assets.map(a => `[${a.name}](${a.browser_download_url})`).join('\n'),
+                },
+          ],
+        })
+        .getData()
     ).then(({ id }) =>
       Discord('POST', `/channels/${Channels.uncivUpdates}/messages/${id}/crosspost`)
     ),

@@ -70,9 +70,10 @@ module.exports = {
       }).getData()
     );
 
+    const uniqueName = discriminator !== '0' ? `${username}#${discriminator}` : `@${username}`;
     return new Message({
       title: 'Leave Prompt',
-      description: `**${username}#${discriminator}** left the Channel !`,
+      description: `**${uniqueName}** left the Channel !`,
     }).toResponse();
   },
 };

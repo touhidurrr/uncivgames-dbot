@@ -80,10 +80,11 @@ module.exports = {
 
     const { id, username, discriminator } = interaction.member.user;
 
+    const uniqueName = discriminator !== '0' ? `${username}#${discriminator}` : `@${username}`;
     const channelId = await Discord('POST', `/guilds/${homeGuildId}/channels`, {
       name: `game-${gameNo}`,
       type: 0, // GUILD_TEXT
-      topic: `A **G**ame made by ${username}#${discriminator}`,
+      topic: `A **G**ame made by ${uniqueName}`,
       nsfw: false,
       parent_id: Channels.Games,
       permission_overwrites: [

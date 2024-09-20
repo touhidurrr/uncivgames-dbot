@@ -45,10 +45,11 @@ module.exports = {
       });
 
       const { username, discriminator } = interaction.data.resolved.users[targetId];
+      const uniqueName = discriminator !== '0' ? `${username}#${discriminator}` : `@${username}`;
 
       return new Message({
         title: 'Add Prompt',
-        description: `Added **${username}#${discriminator}** !`,
+        description: `Added **${uniqueName}** !`,
       }).toResponse();
     }
 

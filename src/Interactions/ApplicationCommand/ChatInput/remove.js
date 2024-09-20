@@ -60,10 +60,11 @@ module.exports = {
     });
 
     const { username, discriminator } = interaction.data.resolved.users[targetId];
+    const uniqueName = discriminator !== '0' ? `${username}#${discriminator}` : `@${username}`;
 
     return new Message({
       title: 'Remove Prompt',
-      description: `Removed **${username}#${discriminator}** !`,
+      description: `Removed **${uniqueName}** !`,
       footer: 'Note: Abusing this Command may result in Moderation',
     }).toResponse();
   },

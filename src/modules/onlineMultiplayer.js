@@ -23,7 +23,7 @@ module.exports.getFullGame = async function (gameId) {
   if (!res.ok) return null;
 
   const gzipData = await res.text();
-  const jsonText = ungzip(Buffer.from(gzipData, 'base64'), { to: 'string' })
+  const jsonText = ungzip(Buffer.from(gzipData, 'base64'), { to: 'string' });
 
   return JSON.parse(jsonText);
 };
@@ -37,6 +37,6 @@ module.exports.postGame = function (gameId, gameData) {
     headers: {
       'User-Agent': 'UncivDBot/0.0.0',
     },
-    body: base64
+    body: base64,
   });
 };
