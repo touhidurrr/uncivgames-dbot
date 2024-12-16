@@ -1,13 +1,13 @@
 {
   "name": "uncivgames-dbot",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A bot owned by touhidurrr made for The Unciv Games Discord Server. Join link https://discord.gg/YYEmec3xr6",
   "module": "src/index.js",
   "type": "module",
   "scripts": {
     "build": "build/esbuild",
     "format": "prettier --write .",
-    "wc": "wc src/*",
+    "wc": "wc $(find src utils -name '*.js' -o -name '*.ts')",
     "deploy": "wrangler deploy"
   },
   "author": "Md. Touhidur Rahman",
