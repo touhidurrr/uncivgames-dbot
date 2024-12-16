@@ -1,3 +1,4 @@
+const { stringify } = require('yaml');
 const Message = require('../../../modules/message.js');
 const MongoDB = require('../../../modules/mongodbApi.js');
 
@@ -30,7 +31,7 @@ module.exports = {
     return new Message({
       title: 'Profile Prompt',
       description:
-        '```js\n' + `"${user.username}'s Profile" ${JSON.stringify(profile, null, 2)}` + '\n```',
+        `\`\`\`yml\n# ${user.username}'s Profile\n${stringify(profile)}\n\`\`\``,
     }).toResponse();
   },
 };

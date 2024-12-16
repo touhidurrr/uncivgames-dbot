@@ -1,3 +1,4 @@
+const { stringify } = require('yaml');
 const Message = require('../../../modules/message.js');
 const onlineMultiplayer = require('../../../modules/onlineMultiplayer.js');
 
@@ -93,11 +94,11 @@ module.exports = {
         },
         {
           name: 'Map Parameters',
-          value: `\`\`\`js\n${JSON.stringify(mapParameters, null, 2)}\n\`\`\``,
+          value: `\`\`\`yml\n${stringify(mapParameters)}\n\`\`\``,
         },
         {
           name: 'Game Parameters',
-          value: `\`\`\`js\n${JSON.stringify(gameParameters, null, 2)}\n\`\`\``,
+          value: `\`\`\`yml\n${stringify(gameParameters)}\n\`\`\``,
         },
       ],
     }).toResponse();

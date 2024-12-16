@@ -18,7 +18,8 @@
     "mongodb-data-api": "^0.4.0",
     "pako": "^2.1.0",
     "tweetnacl": "^1.0.3",
-    "wrangler": "^3.78.6"
+    "wrangler": "^3.78.6",
+    "yaml": "^2.6.1"
   },
   "devDependencies": {
     "axios": "^1.7.7",
