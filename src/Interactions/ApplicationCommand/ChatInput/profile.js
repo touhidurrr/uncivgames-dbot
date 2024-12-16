@@ -30,8 +30,7 @@ module.exports = {
 
     return new Message({
       title: 'Profile Prompt',
-      description:
-        `\`\`\`yml\n# ${user.username}'s Profile\n${stringify(profile)}\n\`\`\``,
+      description: `\`\`\`yml\n# ${user.username}'s Profile\n${stringify(profile)}\n\`\`\``,
     }).toResponse();
   },
 };
