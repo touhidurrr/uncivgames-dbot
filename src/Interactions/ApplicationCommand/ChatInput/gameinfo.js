@@ -55,6 +55,7 @@ module.exports = {
 
     delete gameParameters.players;
     delete mapParameters.seed;
+    delete mapParameters.createdWithVersion;
 
     return new Message({
       title: 'GameInfo Prompt',
