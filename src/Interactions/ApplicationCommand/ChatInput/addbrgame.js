@@ -1,9 +1,8 @@
-const Message = require('../../../modules/message');
-const MongoDB = require('../../../modules/mongodbApi.js');
+import Message from '../../../modules/message';
 
 const gameIdRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/;
 
-module.exports = {
+export default {
   name: 'addbrgame',
   description: 'Add a Battle Royale Game for Testing',
   options: [
@@ -30,7 +29,7 @@ module.exports = {
 
     const res = await fetch(`https://uncivserver.xyz/addbrgame/${gameId}`, {
       method: 'POST',
-      body: BR_AUTH,
+      body: env.BR_AUTH,
     });
 
     return new Message({

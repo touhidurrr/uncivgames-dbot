@@ -1,6 +1,6 @@
-const MongoDB = require('../../modules/mongodbApi.js');
+import MongoDB from '../../modules/mongodbApi.js';
 
-module.exports = {
+export default {
   priority: 0,
   logic: i => i.data.options.some(o => o.focused && o.name === 'game-id'),
   async respond(interaction) {

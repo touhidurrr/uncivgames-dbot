@@ -1,4 +1,4 @@
-const Message = require('../../../modules/message');
+import Message from '../../../modules/message';
 
 const choose = async arr => {
   if (arr.length === 1) return arr[0];
@@ -13,7 +13,7 @@ const choose = async arr => {
         jsonrpc: '2.0',
         method: 'generateIntegers',
         params: {
-          apiKey: RANDOM_ORG_TOKEN,
+          apiKey: env.RANDOM_ORG_TOKEN,
           n: 1,
           min: 0,
           max: arr.length - 1,
@@ -29,7 +29,7 @@ const choose = async arr => {
   ];
 };
 
-module.exports = {
+export default {
   name: 'choose',
   description: 'Ask the Bot to Choose from a number of Variables',
   usage: '/choose variables: <variable 1> | <variable 2> | <variable 3> ...',

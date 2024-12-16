@@ -1,10 +1,10 @@
-const Message = require('../../../modules/message.js');
-const Channels = require('../../../channels.json');
-const Discord = require('../../../modules/discordApi.js');
-const MongoDB = require('../../../modules/mongodbApi.js');
-const Permissions = require('../../../modules/permissionsManager.js');
+import Channels from '../../../channels.json';
+import Discord from '../../../modules/discordApi.js';
+import Message from '../../../modules/message.js';
+import MongoDB from '../../../modules/mongodbApi.js';
+import Permissions from '../../../modules/permissionsManager.js';
 
-module.exports = {
+export default {
   name: 'leave',
   guildId: '866650187211210762',
   description: 'Leaves a Game Channel',

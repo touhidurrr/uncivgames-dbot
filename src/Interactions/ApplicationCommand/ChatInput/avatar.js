@@ -1,6 +1,6 @@
-const Message = require('../../../modules/message');
+import Message from '../../../modules/message';
 
-module.exports = {
+export default {
   name: 'avatar',
   description: "Get your or someone else's Avatar!",
   options: [

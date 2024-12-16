@@ -15,11 +15,11 @@ async function doMongoRequest(collection, action, parameters) {
 
   if (typeof filter === 'string') filter = { _id: filter };
 
-  return await fetch(`${DATA_API_ENDPOINT}/action/${action}`, {
+  return await fetch(`${env.DATA_API_ENDPOINT}/action/${action}`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
-      'api-key': DATA_API_KEY,
+      'api-key': env.DATA_API_KEY,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -41,7 +41,7 @@ async function doMongoRequest(collection, action, parameters) {
   }).then(res => res.json());
 }
 
-module.exports = {
+export default {
   async findOne(collection, filter, projection) {
     return (await doMongoRequest(collection, 'findOne', { filter, projection })).document;
   },

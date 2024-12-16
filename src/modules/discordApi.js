@@ -1,11 +1,11 @@
 const discordApiEndpoint = 'https://discord.com/api/v10';
 
-module.exports = async (method, path, data) => {
+export default async (method, path, data) => {
   config = {
     method,
     headers: {
       Accept: 'application/json',
-      Authorization: `Bot ${DISCORD_TOKEN}`,
+      Authorization: `Bot ${env.DISCORD_TOKEN}`,
     },
   };
   if (data) {

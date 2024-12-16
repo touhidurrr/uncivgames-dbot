@@ -70,8 +70,8 @@ function parser() {
 var i = 0;
 var str = '';
 
-module.exports = function (s) {
+export default function (s) {
   i = 0;
   str = s;
   return parser();
-};
+}

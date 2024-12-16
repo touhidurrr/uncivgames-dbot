@@ -1,4 +1,4 @@
-colors = [
+export const colors = [
   0xffebee, 0xffcdd2, 0xef9a9a, 0xe57373, 0xef5350, 0xf44336, 0xe53935, 0xd32f2f, 0xc62828,
   0xb71c1c, 0xff8a80, 0xff5252, 0xff1744, 0xd50000, 0xfce4ec, 0xf8bbd0, 0xf48fb1, 0xf06292,
   0xec407a, 0xe91e63, 0xd81b60, 0xc2185b, 0xad1457, 0x880e4f, 0xff80ab, 0xff4081, 0xf50057,
@@ -30,11 +30,9 @@ colors = [
   0x37474f, 0x263238,
 ];
 
-function getRandomColor() {
-  return colors[Math.floor(colors.length * Math.random())];
-}
+export const getRandomColor = () => colors[Math.floor(colors.length * Math.random())];
 
-module.exports = {
+export default {
   colors,
   getRandomColor,
 };

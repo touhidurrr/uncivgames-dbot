@@ -1,9 +1,9 @@
-const Message = require('../../../modules/message.js');
-const Permissions = require('../../../modules/permissionsManager.js');
-const Discord = require('../../../modules/discordApi.js');
-const Channels = require('../../../channels.json');
+import Channels from '../../../channels.json';
+import Discord from '../../../modules/discordApi.js';
+import Message from '../../../modules/message.js';
+import Permissions from '../../../modules/permissionsManager.js';
 
-module.exports = {
+export default {
   name: 'archive',
   guildId: '866650187211210762',
   description: 'archives a Game Channel',

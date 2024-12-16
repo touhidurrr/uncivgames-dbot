@@ -1,12 +1,12 @@
-const Message = require('../../../modules/message.js');
-const Channels = require('../../../channels.json');
-const Discord = require('../../../modules/discordApi.js');
-const MongoDB = require('../../../modules/mongodbApi.js');
-const Permissions = require('../../../modules/permissionsManager.js');
+import Channels from '../../../channels.json';
+import Discord from '../../../modules/discordApi.js';
+import Message from '../../../modules/message.js';
+import MongoDB from '../../../modules/mongodbApi.js';
+import Permissions from '../../../modules/permissionsManager.js';
 
 const homeGuildId = '866650187211210762';
 
-module.exports = {
+export default {
   name: 'newgame',
   description: 'Creates a new Game Channel',
   async respond(interaction) {

@@ -1,7 +1,10 @@
-const { Buffer } = require('buffer');
-const { ungzip, gzip } = require('pako');
+import { gunzipSync } from 'zlib';
 
-module.exports.getGame = async function (gameId) {
+export function unpackGame(gameData) {
+  return gunzipSync(Buffer.from(gameData, 'base64')).toString('utf8');
+}
+
+export async function getGame(gameId) {
   let res = await fetch(`https://uncivserver.xyz/files/${gameId}_Preview`);
 
   // if Preview is not found try to fetch the full game
@@ -10,25 +13,21 @@ module.exports.getGame = async function (gameId) {
   // if that is not found also return null as error signal
   if (!res.ok) return null;
 
-  const gzipData = await res.text();
-  const jsonText = ungzip(Buffer.from(gzipData, 'base64'), { to: 'string' });
-
+  const jsonText = unpackGame(await res.text());
   return JSON.parse(jsonText);
-};
+}
 
-module.exports.getFullGame = async function (gameId) {
+export async function getFullGame(gameId) {
   const res = await fetch(`https://uncivserver.xyz/files/${gameId}`);
 
   // if game is not found
   if (!res.ok) return null;
 
-  const gzipData = await res.text();
-  const jsonText = ungzip(Buffer.from(gzipData, 'base64'), { to: 'string' });
-
+  const jsonText = unpackGame(await res.text());
   return JSON.parse(jsonText);
-};
+}
 
-module.exports.postGame = function (gameId, gameData) {
+export function postGame(gameId, gameData) {
   const json = JSON.stringify(gameData);
   const gzip = Buffer.from(gzip(json)).toString('utf8');
   const base64 = Buffer.from(gzip).toString('base64');
@@ -39,4 +38,4 @@ module.exports.postGame = function (gameId, gameData) {
     },
     body: base64,
   });
-};
+}

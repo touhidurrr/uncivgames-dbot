@@ -1,9 +1,9 @@
-const Message = require('../../../modules/message.js');
-const Channels = require('../../../channels.json');
-const Permissions = require('../../../modules/permissionsManager.js');
-const Discord = require('../../../modules/discordApi.js');
+import Channels from '../../../channels.json';
+import Discord from '../../../modules/discordApi.js';
+import Message from '../../../modules/message.js';
+import Permissions from '../../../modules/permissionsManager.js';
 
-module.exports = {
+export default {
   name: 'remove',
   description: 'Removes a player from a Game Channel',
   guildId: '866650187211210762',

@@ -1,8 +1,8 @@
-const Message = require('../../../modules/message.js');
-const Discord = require('../../../modules/discordApi.js');
-const Channels = require('../../../channels.json');
+import Channels from '../../../channels.json';
+import Discord from '../../../modules/discordApi.js';
+import Message from '../../../modules/message.js';
 
-module.exports = {
+export default {
   name: 'pin',
   guildId: '866650187211210762',
   async respond(interaction) {

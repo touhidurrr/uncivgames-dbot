@@ -1,7 +1,7 @@
-const Message = require('../../../modules/message.js');
-const MongoDB = require('../../../modules/mongodbApi.js');
+import Message from '../../../modules/message';
+import MongoDB from '../../../modules/mongodbApi';
 
-module.exports = {
+export default {
   name: 'dropid',
   description: 'Drops one of your Unciv user Ids',
   options: [

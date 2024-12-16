@@ -1,10 +1,10 @@
-const { stringify } = require('yaml');
-const Message = require('../../../modules/message.js');
-const onlineMultiplayer = require('../../../modules/onlineMultiplayer.js');
+import { stringify } from 'yaml';
+import Message from '../../../modules/message.js';
+import { getFullGame } from '../../../modules/onlineMultiplayer.js';
 
 const gameIdRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/;
 
-module.exports = {
+export default {
   name: 'gameinfo',
   description: 'Show information about Unciv Multiplayer Games',
   usage: '/gameinfo game-id: <Unciv Multiplayer game ID>',
@@ -31,7 +31,7 @@ module.exports = {
       ).toResponse();
     }
 
-    const game = await onlineMultiplayer.getFullGame(gameId);
+    const game = await getFullGame(gameId);
 
     if (game === null) {
       return new Message(
@@ -55,6 +55,7 @@ module.exports = {
     const { seed } = mapParameters;
 
     delete gameParameters.players;
+    delete gameParameters.randomNationsPool;
     delete mapParameters.seed;
     delete mapParameters.createdWithVersion;
 

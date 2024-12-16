@@ -1,9 +1,9 @@
-const { parsed } = require('dotenv').config();
+import 'dotenv/config';
 Object.entries(parsed).forEach(([key, value]) => {
   global[key] = value;
 });
 
-const isEqual = require('lodash.isequal');
+import isEqual from 'lodash.isequal';
 const { ApplicationCommandResponses } = require('../src/responsesList.js');
 
 var globalCommands = [];

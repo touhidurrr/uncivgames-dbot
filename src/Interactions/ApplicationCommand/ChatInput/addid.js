@@ -1,10 +1,10 @@
-const Message = require('../../../modules/message.js');
-const MongoDB = require('../../../modules/mongodbApi.js');
-const Discord = require('../../../modules/discordApi.js');
+import Discord from '../../../modules/discordApi.js';
+import Message from '../../../modules/message.js';
+import MongoDB from '../../../modules/mongodbApi.js';
 
 const uncivUserIdRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/;
 
-module.exports = {
+export default {
   name: 'addid',
   description: 'Adds an Unciv user ID to your Profile',
   usage: '/addid unciv-user-id: <Unciv user ID>',

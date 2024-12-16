@@ -1,10 +1,10 @@
-const Message = require('../../../modules/message');
-const MongoDB = require('../../../modules/mongodbApi.js');
-const onlineMultiplayer = require('../../../modules/onlineMultiplayer.js');
+import Message from '../../../modules/message';
+import MongoDB from '../../../modules/mongodbApi.js';
+import { getGame } from '../../../modules/onlineMultiplayer.js';
 
 const gameIdRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/;
 
-module.exports = {
+export default {
   name: 'setgamename',
   description: 'Name a Multiplayer Game to appear on UncivServer.xyz Turn Notifications',
   options: [
@@ -35,7 +35,7 @@ module.exports = {
       ).toResponse();
     }
 
-    const game = await onlineMultiplayer.getGame(gameId);
+    const game = await getGame(gameId);
 
     if (game === null) {
       return new Message(

@@ -1,7 +1,7 @@
-const Message = require('../../../modules/message.js');
-const MongoDB = require('../../../modules/mongodbApi.js');
+import Message from '../../../modules/message.js';
+import MongoDB from '../../../modules/mongodbApi.js';
 
-module.exports = {
+export default {
   name: 'myturn',
   description: 'Check the Games where it is your Turn !',
   async respond(interaction) {

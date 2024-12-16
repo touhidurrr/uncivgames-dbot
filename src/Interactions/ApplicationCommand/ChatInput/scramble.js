@@ -1,4 +1,5 @@
-const Message = require('../../../modules/message');
+import Message from '../../../modules/message';
+
 const scramble = async arr => {
   if (arr.length === 1) return arr;
   const randomIndexes = await fetch('https://api.random.org/json-rpc/4/invoke', {
@@ -11,7 +12,7 @@ const scramble = async arr => {
       jsonrpc: '2.0',
       method: 'generateIntegers',
       params: {
-        apiKey: RANDOM_ORG_TOKEN,
+        apiKey: env.RANDOM_ORG_TOKEN,
         n: arr.length,
         min: 0,
         max: arr.length - 1,
@@ -31,7 +32,7 @@ const scramble = async arr => {
   return scrambledArr;
 };
 
-module.exports = {
+export default {
   name: 'scramble',
   description: 'Ask the Bot to Scramble some Variables',
   usage: '/scramble <variable 1> | <variable 2> | <variable 3> ...',

@@ -1,10 +1,10 @@
-const Message = require('../../../modules/message.js');
-const mongodbApi = require('../../../modules/mongodbApi.js');
-const onlineMultiplayer = require('../../../modules/onlineMultiplayer.js');
+import Message from '../../../modules/message.js';
+import mongodbApi from '../../../modules/mongodbApi.js';
+import { getFullGame } from '../../../modules/onlineMultiplayer.js';
 
 const gameIdRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/;
 
-module.exports = {
+export default {
   name: 'votekick',
   description: 'Kick a player by Unanimous Agreement!',
   usage: '/votekick game-id: <Unciv Multiplayer game ID>',
@@ -38,7 +38,7 @@ module.exports = {
       ).toResponse();
     }
 
-    const game = await onlineMultiplayer.getFullGame(gameId);
+    const game = await getFullGame(gameId);
 
     if (game === null) {
       return new Message(

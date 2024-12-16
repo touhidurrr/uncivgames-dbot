@@ -1,9 +1,9 @@
-const Message = require('../../modules/message.js');
-const MongoDB = require('../../modules/mongodbApi.js');
+import Message from '../../modules/message.js';
+import MongoDB from '../../modules/mongodbApi.js';
 
 const numberEmojis = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟'];
 
-module.exports = {
+export default {
   name: 'votepoll',
   async respond(interaction, pollId) {
     const userId = interaction.user ? interaction.user.id : interaction.member.user.id;

@@ -1,8 +1,8 @@
-const Message = require('../../modules/message.js');
-const Discord = require('../../modules/discordApi.js');
-const Permissions = require('../../modules/permissionsManager.js');
+import Discord from '../../modules/discordApi.js';
+import Message from '../../modules/message.js';
+import Permissions from '../../modules/permissionsManager.js';
 
-module.exports = {
+export default {
   name: 'join',
   async respond(interaction, gameNo, channelId, timestamp) {
     const userId = interaction.member.user.id;

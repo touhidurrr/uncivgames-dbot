@@ -1,4 +1,4 @@
-module.exports = class Permissions {
+export default class Permissions {
   static CREATE_INSTANT_INVITE = 1n << 0n;
   static KICK_MEMBERS = 1n << 1n;
   static BAN_MEMBERS = 1n << 2n;
@@ -61,4 +61,4 @@ module.exports = class Permissions {
     }
     return true;
   }
-};
+}

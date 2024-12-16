@@ -1,55 +1,78 @@
-// Folder Structure
-exports.ApplicationCommandResponses = {
-  // CHAT_INPUT
+// Import statements for ApplicationCommandResponses
+import add from './Interactions/ApplicationCommand/ChatInput/add.js';
+import addbrgame from './Interactions/ApplicationCommand/ChatInput/addbrgame.js';
+import addid from './Interactions/ApplicationCommand/ChatInput/addid.js';
+import archive from './Interactions/ApplicationCommand/ChatInput/archive.js';
+import avatar from './Interactions/ApplicationCommand/ChatInput/avatar.js';
+import choose from './Interactions/ApplicationCommand/ChatInput/choose.js';
+import cleargamename from './Interactions/ApplicationCommand/ChatInput/cleargamename.js';
+import credits from './Interactions/ApplicationCommand/ChatInput/credits.js';
+import dropid from './Interactions/ApplicationCommand/ChatInput/dropid.js';
+import gameinfo from './Interactions/ApplicationCommand/ChatInput/gameinfo.js';
+import leave from './Interactions/ApplicationCommand/ChatInput/leave.js';
+import myturn from './Interactions/ApplicationCommand/ChatInput/myturn.js';
+import newgame from './Interactions/ApplicationCommand/ChatInput/newgame.js';
+import notifications from './Interactions/ApplicationCommand/ChatInput/notifications.js';
+import pin from './Interactions/ApplicationCommand/ChatInput/pin.js';
+import ping from './Interactions/ApplicationCommand/ChatInput/ping.js';
+import poll from './Interactions/ApplicationCommand/ChatInput/poll.js';
+import profile from './Interactions/ApplicationCommand/ChatInput/profile.js';
+import recentgames from './Interactions/ApplicationCommand/ChatInput/recentgames.js';
+import remove from './Interactions/ApplicationCommand/ChatInput/remove.js';
+import removeid from './Interactions/ApplicationCommand/ChatInput/removeid.js';
+import scramble from './Interactions/ApplicationCommand/ChatInput/scramble.js';
+import send from './Interactions/ApplicationCommand/ChatInput/send.js';
+import setgamename from './Interactions/ApplicationCommand/ChatInput/setgamename.js';
+import unpin from './Interactions/ApplicationCommand/ChatInput/unpin.js';
+import votekick from './Interactions/ApplicationCommand/ChatInput/votekick.js';
+import messagePin from './Interactions/ApplicationCommand/Message/pin.js';
+import messageUnpin from './Interactions/ApplicationCommand/Message/unpin.js';
+import userAvatar from './Interactions/ApplicationCommand/User/avatar.js';
+
+// Import statements for InteractionResponses
+import gameIdSuggestion from './Interactions/Autocomplete/gameIdSuggestion.js';
+import join from './Interactions/MessageComponent/join.js';
+import notificationsComponent from './Interactions/MessageComponent/notifications.js';
+import votepoll from './Interactions/MessageComponent/votepoll.js';
+import pollModalSubmit from './Interactions/ModalSubmit/poll.js';
+
+// Exporting ApplicationCommandResponses
+export const ApplicationCommandResponses = {
   1: [
-    require('./Interactions/ApplicationCommand/ChatInput/add.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/addid.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/archive.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/avatar.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/choose.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/credits.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/gameinfo.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/leave.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/newgame.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/notifications.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/pin.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/ping.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/poll.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/profile.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/remove.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/removeid.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/scramble.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/send.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/unpin.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/setgamename.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/cleargamename.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/myturn.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/recentgames.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/dropid.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/addbrgame.js'),
-    require('./Interactions/ApplicationCommand/ChatInput/votekick.js'),
+    add,
+    addid,
+    archive,
+    avatar,
+    choose,
+    credits,
+    gameinfo,
+    leave,
+    newgame,
+    notifications,
+    pin,
+    ping,
+    poll,
+    profile,
+    remove,
+    removeid,
+    scramble,
+    send,
+    unpin,
+    setgamename,
+    cleargamename,
+    myturn,
+    recentgames,
+    dropid,
+    addbrgame,
+    votekick,
   ],
-  // USER
-  2: [require('./Interactions/ApplicationCommand/User/avatar.js')],
-  // MESSAGE
-  3: [
-    require('./Interactions/ApplicationCommand/Message/pin.js'),
-    require('./Interactions/ApplicationCommand/Message/unpin.js'),
-  ],
+  2: [userAvatar],
+  3: [messagePin, messageUnpin],
 };
 
-// Other Interactions List
-exports.InteractionResponses = {
-  // MESSAGE_COMPONENT
-  3: [
-    require('./Interactions/MessageComponent/join.js'),
-    require('./Interactions/MessageComponent/notifications.js'),
-    require('./Interactions/MessageComponent/votepoll.js'),
-  ],
-  // APPLICATION_COMMAND_AUTOCOMPLETE
-  4: [require('./Interactions/Autocomplete/gameIdSuggestion.js')],
-  // MODAL_SUBMIT
-  5: [require('./Interactions/ModalSubmit/poll.js')],
+// Exporting InteractionResponses
+export const InteractionResponses = {
+  3: [join, notificationsComponent, votepoll],
+  4: [gameIdSuggestion],
+  5: [pollModalSubmit],
 };
-
-module.exports = exports;

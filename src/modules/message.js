@@ -1,6 +1,6 @@
-const materialColors = require('./materialColors.js');
+import { getRandomColor } from './materialColors.js';
 
-module.exports = class Message {
+export default class Message {
   static Flags = {
     CROSSPOSTED: 1 << 0,
     EPHEMERAL: 1 << 6,
@@ -47,7 +47,7 @@ module.exports = class Message {
   }
   addEmbed(config) {
     let embed = {
-      color: config.color || materialColors.getRandomColor(),
+      color: config.color || getRandomColor(),
       description: config.description,
     };
 
@@ -80,4 +80,4 @@ module.exports = class Message {
   getData() {
     return this.body.data;
   }
-};
+}

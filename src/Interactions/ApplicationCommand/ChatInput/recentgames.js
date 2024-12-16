@@ -1,7 +1,7 @@
-const Message = require('../../../modules/message.js');
-const MongoDB = require('../../../modules/mongodbApi.js');
+import Message from '../../../modules/message.js';
+import MongoDB from '../../../modules/mongodbApi.js';
 
-module.exports = {
+export default {
   name: 'recentgames',
   description: 'Check your Recently Active Games !',
   async respond(interaction) {

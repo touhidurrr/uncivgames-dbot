@@ -1,9 +1,9 @@
-const Message = require('../../modules/message.js');
-const MongoDB = require('../../modules/mongodbApi.js');
+import Message from '../../modules/message.js';
+import MongoDB from '../../modules/mongodbApi.js';
 
 const numberEmojis = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟'];
 
-module.exports = {
+export default {
   name: 'poll',
   async respond(interaction) {
     const title = interaction.data.components[0].components[0].value.replace(/[\s\n]+/g, ' ');

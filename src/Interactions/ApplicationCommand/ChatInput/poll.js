@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   name: 'poll',
   description: 'Open a Cool Poll',
   async respond(interaction) {

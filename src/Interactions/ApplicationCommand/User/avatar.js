@@ -1,6 +1,6 @@
-const Message = require('../../../modules/message');
+import Message from '../../../modules/message';
 
-module.exports = {
+export default {
   name: 'avatar',
   async respond(interaction) {
     const user = interaction.data.resolved.users[Object.keys(interaction.data.resolved.users)[0]];

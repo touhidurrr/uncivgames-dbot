@@ -1,7 +1,8 @@
-const Message = require('../../../modules/message.js');
-const DiscordApi = require('../../../modules/discordApi.js');
+import { AUTHOR_ID, GUILD_ID, MOD_ROLE_ID } from '../../../constants.js';
+import Discord from '../../../modules/discordApi.js';
+import Message from '../../../modules/message.js';
 
-module.exports = {
+export default {
   name: 'send',
   description: 'Sends a Message from Democracy Bot',
   options: [
@@ -69,7 +70,7 @@ module.exports = {
 
     const content = interaction.data.options.find(o => o.name === 'content').value;
 
-    await DiscordApi('POST', `/channels/${interaction.channel_id}/messages`, {
+    await Discord('POST', `/channels/${interaction.channel_id}/messages`, {
       content: !content ? undefined : content,
       embeds: !description
         ? undefined

@@ -1,19 +1,18 @@
-const Channels = require('./channels.json');
-const Message = require('./modules/message.js');
-const Discord = require('./modules/discordApi.js');
-const MongoDB = require('./modules/mongodbApi.js');
+import Channels from './channels.json';
+import Discord from './modules/discordApi.js';
+import Message from './modules/message.js';
+import MongoDB from './modules/mongodbApi.js';
 
 BigInt.prototype.toJSON = function () {
   return this.toString();
 };
 
-module.exports.handleScheduled = async e => {
-  await sendUncivUpdateNotification();
-};
-
 var subRequestCount = 0;
 
-async function sendUncivUpdateNotification() {
+export async function scheduled(event, env, ctx) {
+  globalThis.env = env;
+  globalThis.ctx = ctx;
+
   const githubApi = 'https://api.github.com/repos/yairm210/Unciv/releases/latest';
 
   const releaseId = (await MongoDB.findOne('Variables', 'Unciv Release Id', { _id: 0 })).value;

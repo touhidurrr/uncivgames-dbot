@@ -1,8 +1,8 @@
 const { stringify } = require('yaml');
-const Message = require('../../../modules/message.js');
-const MongoDB = require('../../../modules/mongodbApi.js');
+import Message from '../../../modules/message.js';
+import MongoDB from '../../../modules/mongodbApi.js';
 
-module.exports = {
+export default {
   name: 'profile',
   description: 'Shows a Players Profile',
   async respond(interaction) {
