@@ -85,7 +85,7 @@ module.exports = {
       fields: [
         {
           name: 'game ID',
-          value: `\`\`\`js\n'${gameId}'\n\`\`\``,
+          value: `\`\`\`js\n${gameId}\n\`\`\``,
         },
         {
           name: 'New Name',

@@ -30,7 +30,7 @@ module.exports = {
       ).toResponse();
     }
 
-    const game = await onlineMultiplayer.getGame(gameId);
+    const game = await onlineMultiplayer.getFullGame(gameId);
 
     if (game === null) {
       return new Message(
@@ -42,35 +42,61 @@ module.exports = {
       ).toResponse();
     }
 
-    game.gameParameters.players = undefined;
+    const {
+      turns,
+      currentPlayer,
+      civilizations,
+      gameParameters,
+      tileMap: { mapParameters },
+      version: { createdWith },
+    } = game;
+
+    const { seed } = mapParameters;
+
+    delete gameParameters.players;
+    delete mapParameters.seed;
 
     return new Message({
       title: 'GameInfo Prompt',
       fields: [
         {
           name: 'game ID',
-          value: `\`\`\`js\n'${game.gameId}'\n\`\`\``,
+          value: `\`\`\`js\n${gameId}\n\`\`\``,
         },
         {
           name: 'Turns',
-          value: `\`\`\`js\n${game.turns || 0}\n\`\`\``,
+          value: `\`\`\`js\n${turns || 0}\n\`\`\``,
           inline: true,
         },
         {
           name: 'Current Turn',
-          value: `\`\`\`js\n'${game.currentPlayer}'\n\`\`\``,
+          value: `\`\`\`js\n${currentPlayer}\n\`\`\``,
           inline: true,
         },
         {
           name: 'Players',
-          value: `\`\`\`js\n${game.civilizations
+          value: `\`\`\`js\n${civilizations
             .filter(c => c.playerType === 'Human')
             .map(c => c.civName)
             .join(', ')}\n\`\`\``,
         },
         {
-          name: 'Game Settings',
-          value: `\`\`\`js\n${JSON.stringify(game.gameParameters, null, 2)}\n\`\`\``,
+          name: 'Seed',
+          value: `\`\`\`js\n${seed})\n\`\`\``,
+          inline: true,
+        },
+        {
+          name: 'Made With',
+          value: `\`\`\`js\n${createdWith.text} (Build ${createdWith.number})\n\`\`\``,
+          inline: true,
+        },
+        {
+          name: 'Map Parameters',
+          value: `\`\`\`js\n${JSON.stringify(mapParameters, null, 2)}\n\`\`\``,
+        },
+        {
+          name: 'Game Parameters',
+          value: `\`\`\`js\n${JSON.stringify(gameParameters, null, 2)}\n\`\`\``,
         },
       ],
     }).toResponse();
