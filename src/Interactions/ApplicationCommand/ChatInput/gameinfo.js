@@ -82,7 +82,7 @@ module.exports = {
         },
         {
           name: 'Seed',
-          value: `\`\`\`js\n${seed})\n\`\`\``,
+          value: `\`\`\`js\n${seed}\n\`\`\``,
           inline: true,
         },
         {
