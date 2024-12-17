@@ -1,5 +1,4 @@
-import { AUTHOR_ID, GUILD_ID, MOD_ROLE_ID } from '../../../constants.js';
-import Discord from '../../../modules/discordApi.js';
+import Discord from '../../../modules/discord.js';
 import Message from '../../../modules/message.js';
 
 export default {
@@ -23,23 +22,6 @@ export default {
       description: 'Embed Description',
       type: 3,
       required: false,
-    },
-  ],
-  permissions: [
-    {
-      id: AUTHOR_ID,
-      type: 2,
-      permission: true,
-    },
-    {
-      id: MOD_ROLE_ID,
-      type: 1,
-      permission: true,
-    },
-    {
-      id: GUILD_ID,
-      type: 1,
-      permission: false,
     },
   ],
   async respond(interaction) {

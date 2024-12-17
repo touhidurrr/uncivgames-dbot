@@ -52,7 +52,7 @@ function parser() {
     }
 
     ++i;
-    let value = stringHandler();
+    let value: any = stringHandler();
     if (str.at(i) == '[' || str.at(i) == '{') value = parser();
     while (str.at(i) && str.at(i) != ',' && str.at(i) != '}') {
       value += str.at(i++);
@@ -70,7 +70,7 @@ function parser() {
 var i = 0;
 var str = '';
 
-export default function (s) {
+export default function (s: string) {
   i = 0;
   str = s;
   return parser();

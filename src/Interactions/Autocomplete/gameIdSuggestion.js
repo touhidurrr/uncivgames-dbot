@@ -1,4 +1,4 @@
-import MongoDB from '../../modules/mongodbApi.js';
+import MongoDB from '../../modules/mongodb.js';
 
 export default {
   priority: 0,

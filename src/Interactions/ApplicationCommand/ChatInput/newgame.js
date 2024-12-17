@@ -1,10 +1,6 @@
-import Channels from '../../../channels.json';
-import Discord from '../../../modules/discordApi.js';
+import Discord from '../../../modules/discord.js';
 import Message from '../../../modules/message.js';
-import MongoDB from '../../../modules/mongodbApi.js';
-import Permissions from '../../../modules/permissionsManager.js';
-
-const homeGuildId = '866650187211210762';
+import MongoDB from '../../../modules/mongodb.js';
 
 export default {
   name: 'newgame',
@@ -20,115 +16,50 @@ export default {
       ).toResponse();
     }
 
-    if (interaction.guild_id !== homeGuildId) {
-      // Get Game Number
-      const gameNo = (await MongoDB.findOne('Variables', 'Games Created', { _id: 0 })).value;
+    // Get Game Number
+    const gameNo = await MongoDB.findOne('Variables', 'Games Created', { _id: 0 }).then(
+      doc => doc.value
+    );
 
-      // Create Message
-      const { id, channel_id } = await Discord(
-        'POST',
-        `/channels/${interaction.channel_id}/messages`,
-        new Message({
-          title: `Game ${gameNo} Prompt`,
-          description:
-            'A new Game Chat has been Opened !**' +
-            `\nOpened By\t:\t<@${interaction.member.user.id}>` +
-            `\nTime\t\t\t:\t<t:${~~(Date.now() / 1000)}:R>**`,
-        }).getData()
-      );
+    // Create Message
+    const { id, channel_id } = await Discord(
+      'POST',
+      `/channels/${interaction.channel_id}/messages`,
+      new Message({
+        title: `Game ${gameNo} Prompt`,
+        description:
+          'A new Game Chat has been Opened !**' +
+          `\nOpened By\t:\t<@${interaction.member.user.id}>` +
+          `\nTime\t\t\t:\t<t:${~~(Date.now() / 1000)}:R>**`,
+      }).getData()
+    );
 
-      if (!id) {
-        // Notify failure
-        return new Message(
-          {
-            title: 'NewGame Prompt',
-            description: `Failed !`,
-          },
-          Message.Flags.EPHEMERAL
-        ).toResponse();
-      }
-
-      // Open Thread & Increment Game number
-      await Promise.all([
-        Discord('POST', `/channels/${channel_id}/messages/${id}/threads`, {
-          name: `Game ${gameNo}`,
-        }),
-        MongoDB.updateOne('Variables', 'Games Created', { $inc: { value: 1 } }),
-      ]);
-
-      // Respond
+    if (!id) {
+      // Notify failure
       return new Message(
         {
           title: 'NewGame Prompt',
-          description: `Success !`,
+          description: `Failed !`,
         },
         Message.Flags.EPHEMERAL
       ).toResponse();
     }
 
-    if (interaction.channel_id !== Channels.gameBot) {
-      return new Message(
-        {
-          title: 'NewGame Prompt',
-          description: `Only usable in <#${Channels.gameBot}> !`,
-        },
-        Message.Flags.EPHEMERAL
-      ).toResponse();
-    }
-
-    const gameNo = (await MongoDB.findOne('Variables', 'Games Created', { _id: 0 })).value;
-
-    const { id, username, discriminator } = interaction.member.user;
-
-    const uniqueName = discriminator !== '0' ? `${username}#${discriminator}` : `@${username}`;
-    const channelId = await Discord('POST', `/guilds/${homeGuildId}/channels`, {
-      name: `game-${gameNo}`,
-      type: 0, // GUILD_TEXT
-      topic: `A **G**ame made by ${uniqueName}`,
-      nsfw: false,
-      parent_id: Channels.Games,
-      permission_overwrites: [
-        {
-          id: homeGuildId,
-          type: 0,
-          deny: String(Permissions.VIEW_CHANNEL),
-        },
-        {
-          id,
-          type: 1,
-          allow: String(Permissions.VIEW_CHANNEL | Permissions.MANAGE_ROLES),
-        },
-      ],
-    }).then(ch => ch.id);
-
+    // Open Thread & Increment Game number
     await Promise.all([
-      Discord('POST', `/channels/${channelId}/messages`, {
-        content: `<@${id}> joined the chat`,
+      Discord('POST', `/channels/${channel_id}/messages/${id}/threads`, {
+        name: `Game ${gameNo}`,
       }),
       MongoDB.updateOne('Variables', 'Games Created', { $inc: { value: 1 } }),
     ]);
 
-    return new Message({
-      title: `Game ${gameNo} Prompt`,
-      description:
-        'A new game channel has been opened!**' +
-        `\nOwner\t\t:\t<@${id}>` +
-        `\nChannel\t:\t<#${channelId}>` +
-        `\nOpened\t:\t<t:${~~(Date.now() / 1000)}:R>**` +
-        `\n*This Interaction is supposed to be closed <t:${~~(Date.now() / 1000) + 300}:R>*`,
-      components: [
-        {
-          type: 1,
-          components: [
-            {
-              type: 2,
-              style: 3,
-              label: 'Join',
-              custom_id: `join-${gameNo}-${channelId}-${Date.now()}`,
-            },
-          ],
-        },
-      ],
-    }).toResponse();
+    // Respond
+    return new Message(
+      {
+        title: 'NewGame Prompt',
+        description: `Success !`,
+      },
+      Message.Flags.EPHEMERAL
+    ).toResponse();
   },
 };

@@ -1,6 +1,6 @@
-import Discord from '../../../modules/discordApi.js';
+import Discord from '../../../modules/discord.js';
 import Message from '../../../modules/message.js';
-import MongoDB from '../../../modules/mongodbApi.js';
+import MongoDB from '../../../modules/mongodb.js';
 
 const uncivUserIdRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/;
 

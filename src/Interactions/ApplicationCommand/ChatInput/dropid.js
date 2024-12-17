@@ -1,5 +1,5 @@
 import Message from '../../../modules/message';
-import MongoDB from '../../../modules/mongodbApi';
+import MongoDB from '../../../modules/mongodb';
 
 export default {
   name: 'dropid',

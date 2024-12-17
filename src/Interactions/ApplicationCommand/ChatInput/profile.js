@@ -1,6 +1,6 @@
 const { stringify } = require('yaml');
 import Message from '../../../modules/message.js';
-import MongoDB from '../../../modules/mongodbApi.js';
+import MongoDB from '../../../modules/mongodb.js';
 
 export default {
   name: 'profile',

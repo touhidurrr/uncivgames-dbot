@@ -1,3 +1,5 @@
+export type BigIntParsable = bigint | boolean | number | string;
+
 export default class Permissions {
   static CREATE_INSTANT_INVITE = 1n << 0n;
   static KICK_MEMBERS = 1n << 1n;
@@ -43,19 +45,23 @@ export default class Permissions {
 
   #permissions = 0n;
 
-  constructor(...permissions) {
+  constructor(...permissions: BigIntParsable[]) {
     for (const p of permissions) this.#permissions |= BigInt(p);
   }
+
   getValue() {
     return this.#permissions;
   }
-  add(...permissions) {
+
+  add(...permissions: BigIntParsable[]) {
     for (const p of permissions) this.#permissions |= BigInt(p);
   }
-  remove(...permissions) {
+
+  remove(...permissions: BigIntParsable[]) {
     for (const p of permissions) this.#permissions &= ~BigInt(p);
   }
-  has(...permissions) {
+
+  has(...permissions: BigIntParsable[]) {
     for (const p of permissions) {
       if (!(this.#permissions & BigInt(p))) return false;
     }

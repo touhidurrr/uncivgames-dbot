@@ -1,5 +1,5 @@
 import Message from '../../../modules/message';
-import MongoDB from '../../../modules/mongodbApi';
+import MongoDB from '../../../modules/mongodb';
 import { getGame } from '../../../modules/onlineMultiplayer';
 
 const gameIdRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/;

@@ -2,9 +2,12 @@
   "compilerOptions": {
     "allowJs": true,
     "noEmit": true,
-    "target": "esnext",
-    "module": "esnext",
-    "lib": ["esnext"],
-    "types": ["@types/node", "@cloudflare/workers-types"]
+    "target": "ESNext",
+    "module": "NodeNext",
+    "lib": ["ESNext"],
+    "types": ["@types/node", "@types/bun", "@cloudflare/workers-types"],
+    "paths": {
+      "@src/*": ["./src/*"]
+    }
   }
 }

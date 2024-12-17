@@ -1,7 +1,7 @@
 const discordApiEndpoint = 'https://discord.com/api/v10';
 
-export default async (method, path, data) => {
-  config = {
+export default async function Discord(method, path, data) {
+  const config = {
     method,
     headers: {
       Accept: 'application/json',
@@ -19,4 +19,4 @@ export default async (method, path, data) => {
     //await console.dir(json, { depth: null });
     return json;
   }
-};
+}

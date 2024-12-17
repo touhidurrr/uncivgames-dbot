@@ -1,10 +1,10 @@
-import { gunzipSync } from 'zlib';
+import { gunzipSync, gzipSync } from 'zlib';
 
-export function unpackGame(gameData) {
+export function unpackGame(gameData: string) {
   return gunzipSync(Buffer.from(gameData, 'base64')).toString('utf8');
 }
 
-export async function getGame(gameId) {
+export async function getGame(gameId: string) {
   let res = await fetch(`https://uncivserver.xyz/files/${gameId}_Preview`);
 
   // if Preview is not found try to fetch the full game
@@ -17,7 +17,7 @@ export async function getGame(gameId) {
   return JSON.parse(jsonText);
 }
 
-export async function getFullGame(gameId) {
+export async function getFullGame(gameId: string) {
   const res = await fetch(`https://uncivserver.xyz/files/${gameId}`);
 
   // if game is not found
@@ -27,10 +27,9 @@ export async function getFullGame(gameId) {
   return JSON.parse(jsonText);
 }
 
-export function postGame(gameId, gameData) {
+export function postGame(gameId: string, gameData: string) {
   const json = JSON.stringify(gameData);
-  const gzip = Buffer.from(gzip(json)).toString('utf8');
-  const base64 = Buffer.from(gzip).toString('base64');
+  const base64 = gzipSync(json).toString('base64');
   return fetch(`https://uncivserver.xyz/files/${gameId}`, {
     method: 'POST',
     headers: {

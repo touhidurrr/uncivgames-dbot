@@ -1,5 +1,5 @@
 import Message from '../../../modules/message.js';
-import mongodbApi from '../../../modules/mongodbApi.js';
+import mongodbApi from '../../../modules/mongodb.js';
 import { getFullGame } from '../../../modules/onlineMultiplayer.js';
 
 const gameIdRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/;

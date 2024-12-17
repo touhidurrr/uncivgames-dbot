@@ -1,7 +1,7 @@
 import Channels from './channels.json';
-import Discord from './modules/discordApi.js';
+import Discord from './modules/discord.js';
 import Message from './modules/message.js';
-import MongoDB from './modules/mongodbApi.js';
+import MongoDB from './modules/mongodb.js';
 
 BigInt.prototype.toJSON = function () {
   return this.toString();
