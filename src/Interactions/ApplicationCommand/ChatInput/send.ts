@@ -1,5 +1,6 @@
 import Discord from '@modules/discord.js';
 import Message from '@modules/message.js';
+import { AUTHOR_ID } from '@src/constants.js';
 import {
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,
@@ -31,6 +32,18 @@ export default {
     },
   ] satisfies APIApplicationCommandOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
+    const userId = interaction.user?.id ?? interaction.member?.user?.id;
+
+    if (userId !== AUTHOR_ID) {
+      return new Message(
+        {
+          title: 'Send Prompt',
+          description: 'Command reserved for Bot Author !',
+        },
+        Message.Flags.EPHEMERAL
+      ).toResponse();
+    }
+
     if (!interaction.data.options) {
       return new Message(
         {
