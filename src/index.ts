@@ -1,7 +1,9 @@
 import { sign } from 'tweetnacl';
 import { ApplicationCommandResponses, InteractionResponses } from './responsesList.js';
 import { scheduled } from './scheduled.js';
+import { APIInteraction } from 'discord-api-types/v10';
 
+//@ts-ignore
 BigInt.prototype.toJSON = function () {
   return this.toString();
 };
@@ -9,6 +11,7 @@ BigInt.prototype.toJSON = function () {
 export default {
   scheduled,
   async fetch(req, env, ctx) {
+    //@ts-ignore
     globalThis.env = env;
     globalThis.ctx = ctx;
 
@@ -24,11 +27,11 @@ export default {
     );
 
     if (!verified) {
-      return new Response({ status: 401, statusText: 'invalid request signature' });
+      return new Response('invalid request signature', { status: 401 });
     }
 
     // Parse Request
-    const interaction = JSON.parse(rawBody);
+    const interaction = JSON.parse(rawBody) as APIInteraction;
 
     // Log Interaction
     //console.dir(interaction, { depth: null });

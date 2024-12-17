@@ -1,3 +1,4 @@
+import { Routes } from 'discord-api-types/v10';
 import Discord from '../../../modules/discord';
 import Message from '../../../modules/message';
 import MongoDB from '../../../modules/mongodb';
@@ -79,7 +80,7 @@ export default {
       }).toResponse();
     }
 
-    const { username, discriminator } = await Discord('GET', `/users/${queryResponse._id}`);
+    const { username, discriminator } = await Discord('GET', Routes.user(queryResponse._id));
     const uniqueName = discriminator !== '0' ? `${username}#${discriminator}` : `@${username}`;
 
     return new Message({

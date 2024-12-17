@@ -7,7 +7,9 @@
     "lib": ["ESNext"],
     "types": ["@types/node", "@types/bun", "@cloudflare/workers-types"],
     "paths": {
-      "@src/*": ["./src/*"]
+      "@src/*": ["./src/*"],
+      "@modules/*": ["./src/modules/*"],
+      "@interactions/*": ["./src/Interactions/*"]
     }
   }
 }

@@ -1,5 +1,11 @@
-import Discord from '../../../modules/discord.js';
-import Message from '../../../modules/message.js';
+import Discord from '@modules/discord.js';
+import Message from '@modules/message.js';
+import {
+  APIApplicationCommandOption,
+  APIChatInputApplicationCommandInteraction,
+  RESTPostAPIChannelMessageJSONBody,
+  Routes,
+} from 'discord-api-types/v10';
 
 export default {
   name: 'send',
@@ -23,8 +29,8 @@ export default {
       type: 3,
       required: false,
     },
-  ],
-  async respond(interaction) {
+  ] satisfies APIApplicationCommandOption[],
+  async respond(interaction: APIChatInputApplicationCommandInteraction) {
     if (!interaction.data.options) {
       return new Message(
         {
@@ -35,8 +41,11 @@ export default {
       ).toResponse();
     }
 
-    const title = interaction.data.options.find(o => o.name === 'title').value;
-    const description = interaction.data.options.find(o => o.name === 'description').value;
+    //@ts-ignore
+    const title = interaction.data.options.find(o => o.name === 'title')?.value;
+
+    //@ts-ignore
+    const description = interaction.data.options.find(o => o.name === 'description')?.value;
 
     if (title && !description) {
       return new Message(
@@ -50,10 +59,11 @@ export default {
       ).toResponse();
     }
 
-    const content = interaction.data.options.find(o => o.name === 'content').value;
+    //@ts-ignore
+    const content = interaction.data.options.find(o => o.name === 'content')?.value;
 
-    await Discord('POST', `/channels/${interaction.channel_id}/messages`, {
-      content: !content ? undefined : content,
+    await Discord('POST', Routes.channelMessages(interaction.channel.id), {
+      content,
       embeds: !description
         ? undefined
         : [
@@ -62,7 +72,7 @@ export default {
               title: !title ? undefined : title,
             },
           ],
-    });
+    } satisfies RESTPostAPIChannelMessageJSONBody);
 
     return new Message(
       {

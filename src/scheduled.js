@@ -1,3 +1,4 @@
+import { Routes } from 'discord-api-types/v10';
 import Channels from './channels.json';
 import Discord from './modules/discord.js';
 import Message from './modules/message.js';
@@ -34,7 +35,7 @@ export async function scheduled(event, env, ctx) {
   await Promise.all([
     Discord(
       'POST',
-      `/channels/${Channels.uncivUpdates}/messages`,
+      Routes.channelMessages(Channels.uncivUpdates),
       new Message('<@&1110904546642886679>')
         .addEmbed({
           fields: [
@@ -57,9 +58,7 @@ export async function scheduled(event, env, ctx) {
           ],
         })
         .getData()
-    ).then(({ id }) =>
-      Discord('POST', `/channels/${Channels.uncivUpdates}/messages/${id}/crosspost`)
-    ),
+    ).then(({ id }) => Discord('POST', Routes.channelMessageCrosspost(Channels.uncivUpdates, id))),
     MongoDB.updateOne('Variables', 'Unciv Release Id', { $set: { value: { $numberLong: id } } }),
   ]);
 
