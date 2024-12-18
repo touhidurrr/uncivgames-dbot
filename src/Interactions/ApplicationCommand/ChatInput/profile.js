@@ -30,7 +30,9 @@ export default {
     delete profile._id;
 
     if (interaction.context !== InteractionContextType.BotDM)
-      profile.uncivUserIds = [`Count: ${profile.uncivUserIds.length}. You can only see your ids when you dm the bot this command! `]
+      profile.uncivUserIds = [
+        `Count: ${profile.uncivUserIds.length}. You can only see your ids when dm the bot this command!`,
+      ];
 
     return new Message({
       title: 'Profile Prompt',
