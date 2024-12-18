@@ -1,7 +1,7 @@
+import { APIInteraction } from 'discord-api-types/v10';
 import { sign } from 'tweetnacl';
 import { ApplicationCommandResponses, InteractionResponses } from './responsesList.js';
 import { scheduled } from './scheduled.js';
-import { APIInteraction } from 'discord-api-types/v10';
 
 //@ts-ignore
 BigInt.prototype.toJSON = function () {

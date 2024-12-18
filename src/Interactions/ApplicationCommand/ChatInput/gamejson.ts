@@ -1,11 +1,16 @@
 import Message from '@modules/message.js';
 import { getFullGame, getGame } from '@modules/onlineMultiplayer.js';
+import Discord from '@src/modules/discord.js';
 import {
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,
   ApplicationCommandOptionType,
+  InteractionContextType,
+  RESTPostAPIChannelMessageResult,
+  RESTPostAPICurrentUserCreateDMChannelJSONBody,
+  Routes,
 } from 'discord-api-types/v10';
-import { stringify } from 'yaml';
+import { RESTPostAPICurrentUserCreateDMChannelResult } from 'discord-api-types/v9';
 
 const gameIdRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/;
 
@@ -59,17 +64,49 @@ export default {
       }).toResponse();
     }
 
+    const userId = interaction.user?.id ?? interaction.member?.user?.id;
     const filename = `${gameId}${preview ? '_Preview' : ''}.json`;
+    const filedata = [JSON.stringify(game, null, 2)];
+
+    if (interaction.context === InteractionContextType.BotDM) {
+      return new Message({
+        title: 'GameJSON Prompt',
+        description: 'Your JSON is ready !',
+      })
+        .addAttachment({
+          filename,
+          data: filedata,
+        })
+        .toResponse();
+    }
+
+    try {
+      const { id } = await Discord<
+        RESTPostAPICurrentUserCreateDMChannelJSONBody,
+        RESTPostAPICurrentUserCreateDMChannelResult
+      >('POST', Routes.userChannels(), { recipient_id: userId });
+
+      const fd = new Message({
+        title: 'GameJSON Prompt',
+        description: 'Your JSON is ready !',
+      })
+        .addAttachment({
+          filename,
+          data: filedata,
+        })
+        .getDataFormData();
+
+      await Discord<any, RESTPostAPIChannelMessageResult>('POST', Routes.channelMessages(id), fd);
+    } catch {
+      return new Message({
+        title: 'GameJSON Prompt',
+        description: 'Failed to DM user!',
+      }).toResponse();
+    }
 
     return new Message({
       title: 'GameJSON Prompt',
-      description: 'Your JSON is ready !',
-    })
-      .addFile({
-        filename,
-        data: [JSON.stringify(game, null, 2)],
-        description: `JSON ${preview ? 'Preview ' : ''}file for Game ${gameId}`,
-      })
-      .toResponse();
+      description: 'Your JSON is sent to your inbox !',
+    }).toResponse();
   },
 };
