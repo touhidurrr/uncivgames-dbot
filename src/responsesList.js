@@ -6,6 +6,7 @@ import cleargamename from './Interactions/ApplicationCommand/ChatInput/cleargame
 import credits from './Interactions/ApplicationCommand/ChatInput/credits.js';
 import dropid from './Interactions/ApplicationCommand/ChatInput/dropid.js';
 import gameinfo from './Interactions/ApplicationCommand/ChatInput/gameinfo.js';
+import gamejson from './Interactions/ApplicationCommand/ChatInput/gamejson.js';
 import myturn from './Interactions/ApplicationCommand/ChatInput/myturn.js';
 import newgame from './Interactions/ApplicationCommand/ChatInput/newgame.js';
 import notifications from './Interactions/ApplicationCommand/ChatInput/notifications.js';
@@ -34,6 +35,7 @@ export const ApplicationCommandResponses = {
     choose,
     credits,
     gameinfo,
+    gamejson,
     newgame,
     notifications,
     ping,

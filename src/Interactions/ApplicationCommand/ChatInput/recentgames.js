@@ -17,7 +17,7 @@ export default {
             "**Opps!** You don't have any Unciv user Ids listed !" +
             '\nUse `/addid` so that the bot can ***Recongnise*** you ...',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -34,15 +34,14 @@ export default {
           title: 'RecentGames Prompt',
           description: 'Could not find any Game for you which was active Recently !',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
-    let Screen = new Message();
-    Screen.addFlag(Message.Flags.EPHEMERAL);
+    const msg = new Message().addFlag(Message.Flags.Ephemeral);
 
     gamesFound.forEach(game =>
-      Screen.addEmbed({
+      msg.addEmbed({
         fields: [
           {
             name: 'Game ID',
@@ -74,6 +73,6 @@ export default {
       })
     );
 
-    return Screen.toResponse();
+    return msg.toResponse();
   },
 };

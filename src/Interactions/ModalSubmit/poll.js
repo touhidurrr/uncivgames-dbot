@@ -18,7 +18,7 @@ export default {
           description: 'Polls should have at least 2 entries !',
           footer: 'Tip: Identical entries are removed by default',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -28,7 +28,7 @@ export default {
           title: 'Poll Prompt',
           description: 'Polls cannot have more than 10 entries !',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -38,7 +38,7 @@ export default {
           title: 'Poll Prompt',
           description: 'Polls entries cannot exceed 100 characters !',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 

@@ -17,7 +17,7 @@ export default {
           title: 'NewGame Prompt',
           description: `Not Available in DMs !`,
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -46,7 +46,7 @@ export default {
           title: 'NewGame Prompt',
           description: `Failed !`,
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -64,7 +64,7 @@ export default {
         title: 'NewGame Prompt',
         description: `Success !`,
       },
-      Message.Flags.EPHEMERAL
+      Message.Flags.Ephemeral
     ).toResponse();
   },
 };

@@ -25,7 +25,7 @@ export default {
           title: 'ClearGameName Prompt',
           description: 'Invalid game ID !',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -37,7 +37,7 @@ export default {
           title: 'ClearGameName Prompt',
           description: "Game doesn't exist !",
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -55,7 +55,7 @@ export default {
           description: 'You are not a Player of this Game !',
           footer: 'Note: Use `/addid` command to add your Unciv user ID to your Profile',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 

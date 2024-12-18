@@ -28,7 +28,7 @@ export default {
           title: 'AddID Prompt',
           description: 'Invalid user ID !',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 

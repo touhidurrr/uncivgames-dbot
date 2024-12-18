@@ -1,11 +1,21 @@
+import {
+  APIAttachment,
+  APIEmbed,
+  APIInteractionResponse,
+  APIInteractionResponseCallbackData,
+  InteractionResponseType,
+  MessageFlags,
+} from 'discord-api-types/v10';
 import { getRandomColor } from './materialColors.js';
 
+export type MessageFile = Partial<APIAttachment> & {
+  id?: number;
+  filename: string;
+  data: ((ArrayBuffer | ArrayBufferView) | string | Blob)[];
+};
+
 export default class Message {
-  static Flags = {
-    CROSSPOSTED: 1 << 0,
-    EPHEMERAL: 1 << 6,
-    SUPPRESS_EMBEDS: 1 << 2,
-  };
+  static Flags = MessageFlags;
   static Types = {
     PONG: 1,
     CHANNEL_MESSAGE_WITH_SOURCE: 4,
@@ -15,8 +25,15 @@ export default class Message {
     APPLICATION_COMMAND_AUTOCOMPLETE_RESULT: 8,
     MODAL: 9,
   };
-  body = { data: { embeds: [] } };
-  constructor(config, flags) {
+  #files: MessageFile[] = [];
+  body: Partial<APIInteractionResponse> & {
+    type: InteractionResponseType;
+    data: APIInteractionResponseCallbackData;
+  } = {
+    type: InteractionResponseType.ChannelMessageWithSource,
+    data: { embeds: [] },
+  };
+  constructor(config, flags?: MessageFlags | MessageFlags[]) {
     if (config === undefined) return;
     if (typeof config === 'number') this.body.data.content = String(config);
     else if (typeof config === 'string') this.body.data.content = config;
@@ -35,18 +52,19 @@ export default class Message {
 
     return this;
   }
-  addFlag(flag) {
+  addFlag(flag: MessageFlags) {
     if (!this.body.data.flags) this.body.data.flags = flag;
     else this.body.data.flags |= flag;
     return this;
   }
-  addFlags(flags) {
+  addFlags(flags: MessageFlags[]) {
+    //@ts-ignore
     if (!this.body.data.flags) this.body.data.flags = 0;
-    for (flag of flags) this.body.data.flags |= flag;
+    for (const flag of flags) this.body.data.flags |= flag;
     return this;
   }
-  addEmbed(config) {
-    let embed = {
+  addEmbed(config: Partial<APIEmbed> & { image?: string; footer?: string }) {
+    const embed: APIEmbed = {
       color: config.color || getRandomColor(),
       description: config.description,
     };
@@ -69,15 +87,36 @@ export default class Message {
     this.body.data.components = components;
     return this;
   }
-  toResponse(type = 4) {
-    this.body.type = type;
-    // console.dir(this.body, { depth: null });
-    return new Response(JSON.stringify(this.body), {
+  addFile(file: MessageFile) {
+    //@ts-ignore
+    file.id = this.#files.length;
+    this.#files.push(file);
+    return this;
+  }
+  toJSON(type?: InteractionResponseType) {
+    //@ts-ignore
+    if (type) this.body.type = type;
+    return JSON.stringify(this.body);
+  }
+  toResponse(type?: InteractionResponseType) {
+    if (this.#files.length) {
+      const fd = new FormData();
+      fd.append('payload_json', this.toJSON(type));
+      this.#files.forEach(({ id, filename, data }) => {
+        fd.append(`files[${id}]`, new File(data, filename), filename);
+      });
+      return new Response(fd);
+    }
+
+    return new Response(this.toJSON(type), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
   }
   getData() {
     return this.body.data;
+  }
+  getBody() {
+    return this.body;
   }
 }

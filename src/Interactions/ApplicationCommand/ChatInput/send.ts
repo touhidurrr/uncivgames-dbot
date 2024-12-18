@@ -40,7 +40,7 @@ export default {
           title: 'Send Prompt',
           description: 'Command reserved for Bot Author !',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -50,7 +50,7 @@ export default {
           title: 'Send Prompt',
           description: 'At least one option is Necessary !',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -68,7 +68,7 @@ export default {
             'Description is required if Title is provided.' +
             '\nHowever Title is not required if Description is provided !',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -92,7 +92,7 @@ export default {
         title: 'Send Prompt',
         description: 'Message Sent !',
       },
-      Message.Flags.EPHEMERAL
+      Message.Flags.Ephemeral
     ).toResponse();
   },
 };

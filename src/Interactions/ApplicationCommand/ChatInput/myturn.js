@@ -17,7 +17,7 @@ export default {
             "**Opps!** You don't have any Unciv user Ids listed !" +
             '\nUse `/addid` so that the bot can ***Recongnise*** you ...',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -34,12 +34,12 @@ export default {
           title: 'MyTurn Prompt',
           description: 'I could not find any Game where it is your Turn !',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
     let Screen = new Message();
-    Screen.addFlag(Message.Flags.EPHEMERAL);
+    Screen.addFlag(Message.Flags.Ephemeral);
 
     gamesFound.forEach(game =>
       Screen.addEmbed({

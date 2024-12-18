@@ -27,7 +27,7 @@ export default {
           title: 'GameInfo Prompt',
           description: 'Invalid game ID !',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -39,7 +39,7 @@ export default {
           title: 'GameInfo Prompt',
           description: "Game doesn't exist !",
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 

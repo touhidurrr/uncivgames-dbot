@@ -34,7 +34,7 @@ export default {
           title: 'VoteKick Prompt',
           description: 'Invalid game ID !',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -46,7 +46,7 @@ export default {
           title: 'VoteKick Prompt',
           description: "Game doesn't exist !",
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -59,7 +59,7 @@ export default {
           title: 'VoteKick Prompt',
           description: 'VoteKick is only applicable to games with 3 or more Human players !',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -73,7 +73,7 @@ export default {
           title: 'VoteKick Prompt',
           description: 'Civilization not found !',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
@@ -97,7 +97,7 @@ export default {
           description:
             'VoteKick can only be initiated when all players except the player to kick is registered via `/addid`!',
         },
-        Message.Flags.EPHEMERAL
+        Message.Flags.Ephemeral
       ).toResponse();
     }
 
