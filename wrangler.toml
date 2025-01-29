@@ -1,11 +1,11 @@
-compatibility_date = "2024-12-16"
+compatibility_date = "2024-12-27"
 account_id = "2abd5f3a5cdcf01e98291c0a7a1f47e4"
 
 name = "dbot"
 workers_dev = true
 main = "src/index.ts"
 compatibility_flags = ["nodejs_compat"]
-minify = false
+minify = true
 
 [observability.logs]
 enabled = true

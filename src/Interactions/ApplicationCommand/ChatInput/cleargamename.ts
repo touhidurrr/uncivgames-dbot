@@ -1,8 +1,8 @@
-import Message from '../../../modules/message';
-import MongoDB from '../../../modules/mongodb';
-import { getGame } from '../../../modules/onlineMultiplayer';
-
-const gameIdRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/;
+import Message from '@modules/message.js';
+import { getGame } from '@modules/onlineMultiplayer.js';
+import prisma from '@modules/prisma.js';
+import { UUID_REGEX } from '@src/constants.js';
+import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {
   name: 'cleargamename',
@@ -16,10 +16,11 @@ export default {
       autocomplete: true,
     },
   ],
-  async respond(interaction) {
+  async respond(interaction: APIChatInputApplicationCommandInteraction) {
+    //@ts-ignore
     const gameId = interaction.data.options[0].value.trim();
 
-    if (!gameId || !gameIdRegex.test(gameId)) {
+    if (!gameId || !UUID_REGEX.test(gameId)) {
       return new Message(
         {
           title: 'ClearGameName Prompt',
@@ -42,12 +43,16 @@ export default {
     }
 
     const userId = !interaction.user ? interaction.member.user.id : interaction.user.id;
-    const profile = await MongoDB.findOne('PlayerProfiles', userId, { _id: 0, uncivUserIds: 1 });
+    const profile = await prisma.profile.findFirst({
+      where: { discordId: parseInt(userId) },
+      select: { users: { select: { userId: true } } },
+    });
 
     if (
       !profile ||
-      !profile.uncivUserIds ||
-      !game.civilizations.find(p => p.playerId && profile.uncivUserIds.includes(p.playerId))
+      !(game.civilizations as { playerId?: string }[]).find(
+        c => c.playerId && profile.users.some(u => u.userId === c.playerId)
+      )
     ) {
       return new Message(
         {
@@ -59,7 +64,10 @@ export default {
       ).toResponse();
     }
 
-    await MongoDB.updateMany('UncivServer', { _id: gameId + '_Preview' }, { $unset: { name: 1 } });
+    await prisma.game.update({
+      where: { id: gameId },
+      data: { name: null, updatedAt: Date.now() },
+    });
 
     return new Message({
       title: 'ClearGameName Prompt',

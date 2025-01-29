@@ -8,6 +8,8 @@ export interface Env {
   DISCORD_TOKEN: string;
   PUBLIC_KEY: string;
   RANDOM_ORG_TOKEN: string;
+  TURSO_DATABASE_URL: string;
+  TURSO_AUTH_TOKEN: string;
 }
 
 declare global {

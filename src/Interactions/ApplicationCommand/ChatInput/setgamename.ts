@@ -1,8 +1,11 @@
-import Message from '../../../modules/message';
-import MongoDB from '../../../modules/mongodb.js';
-import { getGame } from '../../../modules/onlineMultiplayer.js';
-
-const gameIdRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/;
+import Message from '@modules/message.js';
+import { getGame } from '@modules/onlineMultiplayer.js';
+import prisma from '@modules/prisma.js';
+import { MAX_GAME_NAME_LENGTH, UUID_REGEX } from '@src/constants.js';
+import {
+  APIApplicationCommandOption,
+  APIChatInputApplicationCommandInteraction,
+} from 'discord-api-types/v10';
 
 export default {
   name: 'setgamename',
@@ -21,11 +24,12 @@ export default {
       required: true,
       autocomplete: true,
     },
-  ],
-  async respond(interaction) {
+  ] satisfies APIApplicationCommandOption[],
+  async respond(interaction: APIChatInputApplicationCommandInteraction) {
+    // @ts-ignore
     const gameId = interaction.data.options[1].value.trim();
 
-    if (!gameId || !gameIdRegex.test(gameId)) {
+    if (!gameId || !UUID_REGEX.test(gameId)) {
       return new Message(
         {
           title: 'SetGameName Prompt',
@@ -48,12 +52,16 @@ export default {
     }
 
     const userId = !interaction.user ? interaction.member.user.id : interaction.user.id;
-    const profile = await MongoDB.findOne('PlayerProfiles', userId, { _id: 0, uncivUserIds: 1 });
+    const profile = await prisma.profile.findFirst({
+      where: { discordId: parseInt(userId) },
+      select: { users: { select: { userId: true } } },
+    });
 
     if (
       !profile ||
-      !profile.uncivUserIds ||
-      !game.civilizations.find(p => p.playerId && profile.uncivUserIds.includes(p.playerId))
+      !(game.civilizations as { playerId?: string }[]).find(
+        c => c.playerId && profile.users.some(u => u.userId === c.playerId)
+      )
     ) {
       return new Message(
         {
@@ -65,19 +73,20 @@ export default {
       ).toResponse();
     }
 
+    //@ts-ignore
     const name = interaction.data.options[0].value.trim().replace(/\s+/g, ' ');
 
-    if (name.length > 36) {
+    if (name.length > MAX_GAME_NAME_LENGTH) {
       return new Message(
         {
           title: 'SetGameName Prompt',
-          description: 'Error: Name too Big !\nAllowed 50 Characters Max.',
+          description: `Error: Name too Big !\nMax ${MAX_GAME_NAME_LENGTH} characters allowed.`,
         },
         Message.Flags.Ephemeral
       ).toResponse();
     }
 
-    await MongoDB.updateMany('UncivServer', { _id: gameId + '_Preview' }, { $set: { name } });
+    await prisma.game.update({ where: { id: gameId }, data: { name, updatedAt: Date.now() } });
 
     return new Message({
       title: 'SetGameName Prompt',

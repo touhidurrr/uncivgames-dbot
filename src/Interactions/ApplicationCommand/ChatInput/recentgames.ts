@@ -1,15 +1,19 @@
-import Message from '../../../modules/message.js';
-import MongoDB from '../../../modules/mongodb.js';
+import Message from '@modules/message.js';
+import prisma from '@modules/prisma.js';
+import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {
   name: 'recentgames',
   description: 'Check your Recently Active Games !',
-  async respond(interaction) {
+  async respond(interaction: APIChatInputApplicationCommandInteraction) {
     const userId = !interaction.user ? interaction.member.user.id : interaction.user.id;
 
-    const profile = await MongoDB.findOne('PlayerProfiles', userId, { _id: 0, uncivUserIds: 1 });
+    const profile = await prisma.profile.findFirst({
+      where: { discordId: +userId },
+      select: { users: { select: { userId: true } } },
+    });
 
-    if (!profile || !profile.uncivUserIds.length) {
+    if (!profile || !profile.users.length) {
       return new Message(
         {
           title: 'RecentGames Prompt',
@@ -21,12 +25,24 @@ export default {
       ).toResponse();
     }
 
-    const gamesFound = await MongoDB.find('UncivServer', {
-      filter: { players: { $in: profile.uncivUserIds } },
-      projection: { currentPlayer: 1, name: 1, timestamp: 1, turns: 1 },
-      sort: { timestamp: -1 },
-      limit: 5,
-    });
+    const gamesFound = await prisma.usersInGame
+      .findMany({
+        where: { userId: { in: profile.users.map(u => u.userId) } },
+        select: {
+          game: {
+            select: {
+              id: true,
+              name: true,
+              turns: true,
+              currentPlayer: true,
+              updatedAt: true,
+            },
+          },
+        },
+        orderBy: { game: { updatedAt: 'desc' } },
+        take: 5,
+      })
+      .then(uig => uig.map(g => g.game));
 
     if (!gamesFound.length) {
       return new Message(
@@ -45,7 +61,7 @@ export default {
         fields: [
           {
             name: 'Game ID',
-            value: `\`\`\`${game._id.slice(0, -8)}\`\`\``,
+            value: `\`\`\`${game.id}\`\`\``,
           },
           !game.name
             ? undefined
@@ -67,7 +83,7 @@ export default {
               },
           {
             name: 'Last Activitity',
-            value: `<t:${~~(game.timestamp / 1000)}:R>`,
+            value: `<t:${game.updatedAt / 1000n}:R>`,
           },
         ],
       })

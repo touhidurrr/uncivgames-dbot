@@ -1,33 +1,27 @@
-import Message from '../../../modules/message.js';
-import MongoDB from '../../../modules/mongodb.js';
+import Message from '@modules/message.js';
+import prisma from '@modules/prisma.js';
+import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {
   name: 'notifications',
   description: 'Enable or Disable Notifications',
   usage: '/notifications',
   example: '/notifications',
-  async respond(interaction) {
+  async respond(interaction: APIChatInputApplicationCommandInteraction) {
     const userId = !interaction.user ? interaction.member.user.id : interaction.user.id;
-    let profile = await MongoDB.findOne('PlayerProfiles', userId, { _id: 0, notifications: 1 });
+    let profile = await prisma.profile.findFirst({
+      where: { discordId: +userId },
+      select: { notifications: true },
+    });
 
     if (profile === null) {
-      profile = {
-        _id: userId,
-        games: {
-          won: 0,
-          lost: 0,
-          played: 0,
-          winPercentage: null,
-        },
-        rating: null,
-        uncivUserIds: [],
-        notifications: 'enabled',
-      };
-
-      await MongoDB.insertOne('PlayerProfiles', profile);
+      profile = await prisma.profile.create({
+        data: { discordId: +userId },
+        select: { notifications: true },
+      });
     }
 
-    let { notifications } = profile;
+    const { notifications } = profile;
     const timestamp = Date.now();
 
     return new Message({

@@ -1,9 +1,10 @@
-import Message from '../../../modules/message.js';
+import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
+import Message from '@modules/message.js';
 
 export default {
   name: 'ping',
   description: 'Pings Democracy Bot to check if he is Available',
-  async respond(interaction) {
+  async respond(_: APIChatInputApplicationCommandInteraction) {
     return new Message({
       title: 'Ping Response',
       description: 'Democracy Bot is Here !',

@@ -1,8 +1,11 @@
-import Message from '../../../modules/message.js';
-import mongodbApi from '../../../modules/mongodb.js';
-import { getFullGame } from '../../../modules/onlineMultiplayer.js';
-
-const gameIdRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/;
+import Message from '@modules/message.js';
+import { getFullGame } from '@modules/onlineMultiplayer.js';
+import prisma from '@modules/prisma.js';
+import { UUID_REGEX } from '@src/constants.js';
+import {
+  APIApplicationCommandOption,
+  APIChatInputApplicationCommandInteraction,
+} from 'discord-api-types/v10';
 
 export default {
   name: 'votekick',
@@ -23,12 +26,14 @@ export default {
       type: 3,
       required: true,
     },
-  ],
-  async respond(interaction) {
-    const gameId = interaction.data.options[0].value.trim();
-    const civName = interaction.data.options[1].value.trim().toLowerCase();
+  ] satisfies APIApplicationCommandOption[],
+  async respond(interaction: APIChatInputApplicationCommandInteraction) {
+    //@ts-ignore
+    const gameId: string = interaction.data.options[0].value.trim();
+    //@ts-ignore
+    const civName: string = interaction.data.options[1].value.trim().toLowerCase();
 
-    if (!gameId || !gameIdRegex.test(gameId)) {
+    if (!gameId || !UUID_REGEX.test(gameId)) {
       return new Message(
         {
           title: 'VoteKick Prompt',
@@ -50,8 +55,10 @@ export default {
       ).toResponse();
     }
 
-    const uniquePlayers = new Set(game.civilizations.filter(c => c.playerId).map(c => c.playerId));
-    const playerCount = [...uniquePlayers].length;
+    const uniquePlayers = new Set(
+      (game.civilizations as { playerId?: string }[]).filter(c => c.playerId).map(c => c.playerId)
+    );
+    const playerCount = uniquePlayers.size;
 
     if (playerCount < 3) {
       return new Message(
@@ -79,16 +86,12 @@ export default {
 
     uniquePlayers.delete(playerToKick);
 
-    const registeredPlayers = await mongodbApi.find(
-      'PlayerProfiles',
-      { uncivUserIds: { $in: [...uniquePlayers] } },
-      { _id: 1, uncivUserIds: 1 }
-    );
-
-    const registeredPlayerIds = registeredPlayers
-      .map(r => r.uncivUserIds)
-      .flat()
-      .filter(id => uniquePlayers.has(id));
+    const registeredPlayerIds = await prisma.profile
+      .findMany({
+        where: { users: { some: { userId: { in: [...uniquePlayers] } } } },
+        select: { users: { select: { userId: true } } },
+      })
+      .then(p => p.map(u => u.users.map(u => u.userId)).flat());
 
     if (registeredPlayerIds.length < playerCount - 1) {
       return new Message(

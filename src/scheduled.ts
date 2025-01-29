@@ -1,47 +1,66 @@
-import { Routes } from 'discord-api-types/v10';
-import Channels from './channels.json';
+import type { Event } from '@cloudflare/workers-types';
+import {
+  RESTPostAPIChannelMessageCrosspostResult,
+  RESTPostAPIChannelMessageResult,
+  Routes,
+} from 'discord-api-types/v10';
+import { UNCIV_UPDATE_CHANNEL_ID } from './constants.js';
 import Discord from './modules/discord.js';
 import Message from './modules/message.js';
-import MongoDB from './modules/mongodb.js';
+import prisma from './modules/prisma.js';
+import type { Env } from './types.js';
 
+//@ts-ignore
 BigInt.prototype.toJSON = function () {
   return this.toString();
 };
 
 var subRequestCount = 0;
 
-export async function scheduled(event, env, ctx) {
+export async function scheduled(event: Event, env: Env, ctx) {
+  //@ts-ignore
   globalThis.env = env;
   globalThis.ctx = ctx;
 
   const githubApi = 'https://api.github.com/repos/yairm210/Unciv/releases/latest';
 
-  const releaseId = (await MongoDB.findOne('Variables', 'Unciv Release Id', { _id: 0 })).value;
+  const releaseId = await prisma.variable
+    .findUniqueOrThrow({
+      where: { id: 'Unciv Release Id' },
+      select: { value: true },
+    })
+    .then(({ value }) => +value);
 
   let { id, tag_name, html_url, assets } = await fetch(githubApi, {
     headers: {
       Accept: 'application/json',
       'User-Agent': 'UncivGames Democracy Bot',
     },
-  }).then(res => res.json());
+  }).then(
+    res =>
+      res.json() as Promise<{
+        id: number;
+        tag_name: string;
+        html_url: string;
+        assets: any[];
+      }>
+  );
 
   ++subRequestCount;
 
   if (!(id > releaseId)) return;
   if (assets.length < 6) return;
 
-  id = id.toString();
-
   await Promise.all([
-    Discord(
+    Discord<any, RESTPostAPIChannelMessageResult>(
       'POST',
-      Routes.channelMessages(Channels.uncivUpdates),
+      Routes.channelMessages(UNCIV_UPDATE_CHANNEL_ID),
       new Message('<@&1110904546642886679>')
         .addEmbed({
           fields: [
             {
               name: 'Release Id',
-              value: id,
+              value: id.toString(),
               inline: true,
             },
             {
@@ -58,8 +77,16 @@ export async function scheduled(event, env, ctx) {
           ],
         })
         .getData()
-    ).then(({ id }) => Discord('POST', Routes.channelMessageCrosspost(Channels.uncivUpdates, id))),
-    MongoDB.updateOne('Variables', 'Unciv Release Id', { $set: { value: { $numberLong: id } } }),
+    ).then(({ id }) =>
+      Discord<any, RESTPostAPIChannelMessageCrosspostResult>(
+        'POST',
+        Routes.channelMessageCrosspost(UNCIV_UPDATE_CHANNEL_ID, id)
+      )
+    ),
+    prisma.variable.update({
+      where: { id: 'Unciv Release Id' },
+      data: { value: id.toString(), updatedAt: Date.now() },
+    }),
   ]);
 
   subRequestCount += 2;

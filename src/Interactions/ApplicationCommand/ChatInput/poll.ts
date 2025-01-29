@@ -1,10 +1,16 @@
+import {
+  APIChatInputApplicationCommandInteraction,
+  APIInteractionResponse,
+  InteractionResponseType,
+} from 'discord-api-types/v10';
+
 export default {
   name: 'poll',
   description: 'Open a Cool Poll',
-  async respond(interaction) {
+  async respond(_: APIChatInputApplicationCommandInteraction) {
     return new Response(
       JSON.stringify({
-        type: 9,
+        type: InteractionResponseType.Modal,
         data: {
           title: 'Democracy Bot Poll Maker',
           custom_id: 'poll',
@@ -42,7 +48,7 @@ export default {
             },
           ],
         },
-      }),
+      } satisfies APIInteractionResponse),
       {
         status: 200,
         headers: { 'Content-Type': 'application/json' },

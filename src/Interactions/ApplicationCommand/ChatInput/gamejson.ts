@@ -1,5 +1,6 @@
 import Message from '@modules/message.js';
 import { getFullGame, getGame } from '@modules/onlineMultiplayer.js';
+import { UUID_REGEX } from '@src/constants.js';
 import Discord from '@src/modules/discord.js';
 import {
   APIApplicationCommandOption,
@@ -8,11 +9,9 @@ import {
   InteractionContextType,
   RESTPostAPIChannelMessageResult,
   RESTPostAPICurrentUserCreateDMChannelJSONBody,
+  RESTPostAPICurrentUserCreateDMChannelResult,
   Routes,
 } from 'discord-api-types/v10';
-import { RESTPostAPICurrentUserCreateDMChannelResult } from 'discord-api-types/v9';
-
-const gameIdRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/;
 
 export default {
   name: 'gamejson',
@@ -40,7 +39,7 @@ export default {
       //@ts-ignore
     )?.value;
 
-    if (!gameId || !gameIdRegex.test(gameId)) {
+    if (!gameId || !UUID_REGEX.test(gameId)) {
       return new Message(
         {
           title: 'GameJSON Prompt',

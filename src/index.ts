@@ -63,11 +63,12 @@ export default {
 
     // Respond to other Interactions
     if (InteractionResponses.hasOwnProperty(interaction.type)) {
-      let args = interaction.data.custom_id.split('-');
+      const args = interaction.data.custom_id.split('-');
       const cName = args.shift();
 
       return await InteractionResponses[interaction.type]
         .find(i => i.name === cName)
+        //@ts-ignore
         .respond(interaction, ...args);
     }
   },

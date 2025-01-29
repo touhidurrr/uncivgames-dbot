@@ -1,9 +1,10 @@
-import Message from '../../../modules/message';
+import Message from '@modules/message.js';
+import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {
   name: 'credits',
   description: 'See Bot Credits',
-  async respond() {
+  async respond(_: APIChatInputApplicationCommandInteraction) {
     return new Message({
       title: 'Democracy Bot Credits',
       fields: [

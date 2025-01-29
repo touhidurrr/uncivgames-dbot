@@ -1,9 +1,15 @@
-import Message from '../../modules/message.js';
-import MongoDB from '../../modules/mongodb.js';
+import Message from '@modules/message.js';
+import prisma from '@modules/prisma.js';
+import { APIMessageComponentButtonInteraction } from 'discord-api-types/v10';
 
 export default {
   name: 'notifications',
-  async respond(interaction, initiatorId, toggle, timestamp) {
+  async respond(
+    interaction: APIMessageComponentButtonInteraction,
+    initiatorId: string,
+    toggle: string,
+    timestamp: string
+  ) {
     const user = interaction.user || interaction.member.user;
 
     if (initiatorId !== user.id) {
@@ -15,10 +21,13 @@ export default {
 
     let { message } = interaction;
 
-    var profile = await MongoDB.findOne('PlayerProfiles', user.id, { _id: 0, notifications: 1 });
+    const { id, notifications } = await prisma.profile.findFirstOrThrow({
+      where: { discordId: +user.id },
+      select: { id: true, notifications: true },
+    });
 
-    if (toggle === profile.notifications) {
-      const timeLeft = 300 - (Date.now() - timestamp) / 1000;
+    if (toggle === notifications) {
+      const timeLeft = 300 - (Date.now() - parseInt(timestamp)) / 1000;
 
       message.embeds[0].footer.text = message.embeds[0].footer.text =
         timeLeft < 0.001
@@ -37,9 +46,15 @@ export default {
       );
     }
 
-    await MongoDB.updateOne('PlayerProfiles', user.id, { $set: { notifications: toggle } });
+    await prisma.profile.update({
+      where: { id },
+      data: {
+        notifications: toggle,
+        updatedAt: Date.now(),
+      },
+    });
 
-    const timeLeft = 300 - (Date.now() - timestamp) / 1000;
+    const timeLeft = 300 - (Date.now() - parseInt(timestamp)) / 1000;
 
     message.embeds[0].description = `Your Notifications are currently **${
       toggle.at(0).toUpperCase() + toggle.slice(1)

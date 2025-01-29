@@ -1,11 +1,19 @@
 import Discord from '@modules/discord.js';
 import Message from '@modules/message.js';
-import MongoDB from '@modules/mongodb.js';
+import { TIMESTAMP_SQL } from '@src/constants.js';
+import prisma, { libsql } from '@src/modules/prisma.js';
 import {
   APIChatInputApplicationCommandInteraction,
   RESTPostAPIChannelMessageResult,
   Routes,
 } from 'discord-api-types/v10';
+
+const INCREMENT_GAMES_CREATED_SQL = `
+update Variable set
+  "value" = cast("value" + 1 as text),
+  "updatedAt" = ${TIMESTAMP_SQL}
+where id = "Games Count";
+`;
 
 export default {
   name: 'newgame',
@@ -22,9 +30,12 @@ export default {
     }
 
     // Get Game Number
-    const gameNo = await MongoDB.findOne('Variables', 'Games Created', { _id: 0 }).then(
-      doc => doc.value
-    );
+    const gameNo = await prisma.variable
+      .findUniqueOrThrow({
+        where: { id: 'Games Count' },
+        select: { value: true },
+      })
+      .then(({ value }) => value);
 
     // Create Message
     const { id, channel_id } = (await Discord(
@@ -55,7 +66,7 @@ export default {
       Discord('POST', Routes.threads(channel_id, id), {
         name: `Game ${gameNo}`,
       }),
-      MongoDB.updateOne('Variables', 'Games Created', { $inc: { value: 1 } }),
+      libsql.execute(INCREMENT_GAMES_CREATED_SQL),
     ]);
 
     // Respond
