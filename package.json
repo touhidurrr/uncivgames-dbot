@@ -27,7 +27,7 @@
     "@discordjs/rest": "^2.4.0",
     "@types/bun": "^1.1.14",
     "@types/node": "^22.10.2",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.25.1",
     "lodash.isequal": "^4.5.0",
     "prettier": "^3.4.2",
     "typescript": "^5.7.2"
