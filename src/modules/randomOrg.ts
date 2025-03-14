@@ -1,3 +1,5 @@
+import { env } from '@src/secrets.js';
+
 const randomOrgFetch = (method: string, params: object) =>
   fetch('https://api.random.org/json-rpc/4/invoke', {
     method: 'POST',

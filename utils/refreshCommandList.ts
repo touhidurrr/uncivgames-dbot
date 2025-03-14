@@ -13,10 +13,12 @@ import { stringify } from 'yaml';
 globalThis.env = Bun.env;
 const discord = new REST({ version: '10' }).setToken(Bun.env.DISCORD_TOKEN);
 
-const defaultContexts = Object.values(InteractionContextType).filter(v => typeof v !== 'string');
-const defaultIntegrationTypes = Object.values(ApplicationIntegrationType).filter(
+const defaultContexts = Object.values(InteractionContextType).filter(
   v => typeof v !== 'string'
 );
+const defaultIntegrationTypes = Object.values(
+  ApplicationIntegrationType
+).filter(v => typeof v !== 'string');
 
 const parseCommand = (
   cmd: any,

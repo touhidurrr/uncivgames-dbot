@@ -1,6 +1,7 @@
-import { createClient } from '@libsql/client';
+import { createClient } from '@libsql/client/web';
 import { PrismaLibSQL } from '@prisma/adapter-libsql';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client/edge';
+import { env } from '@src/secrets.js';
 
 export const libsql = createClient({
   url: env.TURSO_DATABASE_URL!,

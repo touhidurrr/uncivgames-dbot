@@ -31,7 +31,9 @@ export default {
     //@ts-ignore
     const gameId: string = interaction.data.options[0].value.trim();
     //@ts-ignore
-    const civName: string = interaction.data.options[1].value.trim().toLowerCase();
+    const civName: string = interaction.data.options[1].value
+      .trim()
+      .toLowerCase();
 
     if (!gameId || !UUID_REGEX.test(gameId)) {
       return new Message(
@@ -56,7 +58,9 @@ export default {
     }
 
     const uniquePlayers = new Set(
-      (game.civilizations as { playerId?: string }[]).filter(c => c.playerId).map(c => c.playerId)
+      (game.civilizations as { playerId?: string }[])
+        .filter(c => c.playerId)
+        .map(c => c.playerId)
     );
     const playerCount = uniquePlayers.size;
 
@@ -64,7 +68,8 @@ export default {
       return new Message(
         {
           title: 'VoteKick Prompt',
-          description: 'VoteKick is only applicable to games with 3 or more Human players !',
+          description:
+            'VoteKick is only applicable to games with 3 or more Human players !',
         },
         Message.Flags.Ephemeral
       ).toResponse();

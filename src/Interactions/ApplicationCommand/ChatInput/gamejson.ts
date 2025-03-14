@@ -95,7 +95,11 @@ export default {
         })
         .getDataFormData();
 
-      await Discord<any, RESTPostAPIChannelMessageResult>('POST', Routes.channelMessages(id), fd);
+      await Discord<any, RESTPostAPIChannelMessageResult>(
+        'POST',
+        Routes.channelMessages(id),
+        fd
+      );
     } catch {
       return new Message({
         title: 'GameJSON Prompt',

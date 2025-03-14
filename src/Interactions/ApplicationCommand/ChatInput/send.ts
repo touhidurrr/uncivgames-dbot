@@ -58,7 +58,9 @@ export default {
     const title = interaction.data.options.find(o => o.name === 'title')?.value;
 
     //@ts-ignore
-    const description = interaction.data.options.find(o => o.name === 'description')?.value;
+    const description = interaction.data.options.find(
+      o => o.name === 'description'
+    )?.value;
 
     if (title && !description) {
       return new Message(
@@ -73,7 +75,9 @@ export default {
     }
 
     //@ts-ignore
-    const content = interaction.data.options.find(o => o.name === 'content')?.value;
+    const content = interaction.data.options.find(
+      o => o.name === 'content'
+    )?.value;
 
     await Discord('POST', Routes.channelMessages(interaction.channel.id), {
       content,

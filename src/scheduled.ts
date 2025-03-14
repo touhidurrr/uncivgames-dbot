@@ -8,7 +8,7 @@ import { UNCIV_UPDATE_CHANNEL_ID } from './constants.js';
 import Discord from './modules/discord.js';
 import Message from './modules/message.js';
 import prisma from './modules/prisma.js';
-import type { Env } from './types.js';
+import secrects from './secrets.js';
 
 //@ts-ignore
 BigInt.prototype.toJSON = function () {
@@ -17,12 +17,11 @@ BigInt.prototype.toJSON = function () {
 
 var subRequestCount = 0;
 
-export async function scheduled(event: Event, env: Env, ctx) {
-  //@ts-ignore
-  globalThis.env = env;
-  globalThis.ctx = ctx;
+export async function scheduled(event: Event, env, ctx) {
+  secrects.setEnv(env);
 
-  const githubApi = 'https://api.github.com/repos/yairm210/Unciv/releases/latest';
+  const githubApi =
+    'https://api.github.com/repos/yairm210/Unciv/releases/latest';
 
   const releaseId = await prisma.variable
     .findUniqueOrThrow({
@@ -72,7 +71,9 @@ export async function scheduled(event: Event, env: Env, ctx) {
               ? undefined
               : {
                   name: 'Attachments',
-                  value: assets.map(a => `[${a.name}](${a.browser_download_url})`).join('\n'),
+                  value: assets
+                    .map(a => `[${a.name}](${a.browser_download_url})`)
+                    .join('\n'),
                 },
           ],
         })

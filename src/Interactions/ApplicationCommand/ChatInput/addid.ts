@@ -25,7 +25,9 @@ export default {
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
     //@ts-ignore
     const uncivUserId: string = interaction.data.options[0].value.trim();
-    const userId = !interaction.user ? interaction.member.user.id : interaction.user.id;
+    const userId = !interaction.user
+      ? interaction.member.user.id
+      : interaction.user.id;
 
     if (!uncivUserId || !UUID_REGEX.test(uncivUserId)) {
       return new Message(
@@ -107,11 +109,12 @@ export default {
     // if the id is already owned by someone else
     // we fetch the username and discriminator of the owner
     // and return a message with the owner's name
-    const { username, discriminator } = await Discord<any, RESTGetAPIUserResult>(
-      'GET',
-      Routes.user(queryResponse.discordId.toString())
-    );
-    const uniqueName = discriminator !== '0' ? `${username}#${discriminator}` : `@${username}`;
+    const { username, discriminator } = await Discord<
+      any,
+      RESTGetAPIUserResult
+    >('GET', Routes.user(queryResponse.discordId.toString()));
+    const uniqueName =
+      discriminator !== '0' ? `${username}#${discriminator}` : `@${username}`;
 
     return new Message({
       title: 'AddID Prompt',

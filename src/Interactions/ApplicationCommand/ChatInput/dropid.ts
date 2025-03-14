@@ -18,8 +18,12 @@ export default {
   ] satisfies APIApplicationCommandOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
     // @ts-ignore
-    const position: number = interaction.data.options ? interaction.data.options[0].value : 1;
-    const userId = interaction.user ? interaction.user.id : interaction.member.user.id;
+    const position: number = interaction.data.options
+      ? interaction.data.options[0].value
+      : 1;
+    const userId = interaction.user
+      ? interaction.user.id
+      : interaction.member.user.id;
 
     const profile = await prisma.profile.findFirst({
       where: { discordId: parseInt(userId) },

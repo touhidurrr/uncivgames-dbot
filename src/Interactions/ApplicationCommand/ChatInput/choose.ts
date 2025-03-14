@@ -20,7 +20,9 @@ export default {
   ] satisfies APIApplicationCommandOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
     // @ts-ignore
-    const variables: string[] = interaction.data.options[0].value.trim().split(/\s*,\s*/);
+    const variables: string[] = interaction.data.options[0].value
+      .trim()
+      .split(/\s*,\s*/);
 
     if (variables.length < 2)
       return new Message({

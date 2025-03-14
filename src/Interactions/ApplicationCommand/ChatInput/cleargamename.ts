@@ -6,7 +6,8 @@ import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10
 
 export default {
   name: 'cleargamename',
-  description: 'Name a Multiplayer Game to appear on UncivServer.xyz Turn Notifications',
+  description:
+    'Name a Multiplayer Game to appear on UncivServer.xyz Turn Notifications',
   options: [
     {
       name: 'game-id',
@@ -42,7 +43,9 @@ export default {
       ).toResponse();
     }
 
-    const userId = !interaction.user ? interaction.member.user.id : interaction.user.id;
+    const userId = !interaction.user
+      ? interaction.member.user.id
+      : interaction.user.id;
     const profile = await prisma.profile.findFirst({
       where: { discordId: parseInt(userId) },
       select: { users: { select: { userId: true } } },
@@ -58,7 +61,8 @@ export default {
         {
           title: 'ClearGameName Prompt',
           description: 'You are not a Player of this Game !',
-          footer: 'Note: Use `/addid` command to add your Unciv user ID to your Profile',
+          footer:
+            'Note: Use `/addid` command to add your Unciv user ID to your Profile',
         },
         Message.Flags.Ephemeral
       ).toResponse();

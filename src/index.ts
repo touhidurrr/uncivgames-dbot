@@ -1,7 +1,11 @@
 import { APIInteraction } from 'discord-api-types/v10';
 import { sign } from 'tweetnacl';
-import { ApplicationCommandResponses, InteractionResponses } from './responsesList.js';
+import {
+  ApplicationCommandResponses,
+  InteractionResponses,
+} from './responsesList.js';
 import { scheduled } from './scheduled.js';
+import secrets from './secrets.js';
 
 //@ts-ignore
 BigInt.prototype.toJSON = function () {
@@ -11,9 +15,7 @@ BigInt.prototype.toJSON = function () {
 export default {
   scheduled,
   async fetch(req, env, ctx) {
-    //@ts-ignore
-    globalThis.env = env;
-    globalThis.ctx = ctx;
+    secrets.setEnv(env);
 
     // Check if the Request is Verified
     const signature = String(req.headers.get('X-Signature-Ed25519'));

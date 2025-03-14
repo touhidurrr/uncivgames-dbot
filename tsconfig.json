@@ -11,7 +11,10 @@
     "paths": {
       "@interactions/*": ["./src/Interactions/*"],
       "@modules/*": ["./src/modules/*"],
-      "@src/*": ["./src/*"]
+      "@src/*": ["./src/*"],
+
+      "@secrets": ["./src/secrets.ts"],
+      "@constants": ["./src/constants.ts"]
     }
   }
 }

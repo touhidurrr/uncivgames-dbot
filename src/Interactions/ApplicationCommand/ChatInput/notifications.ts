@@ -8,7 +8,9 @@ export default {
   usage: '/notifications',
   example: '/notifications',
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    const userId = !interaction.user ? interaction.member.user.id : interaction.user.id;
+    const userId = !interaction.user
+      ? interaction.member.user.id
+      : interaction.user.id;
     let profile = await prisma.profile.findFirst({
       where: { discordId: +userId },
       select: { notifications: true },

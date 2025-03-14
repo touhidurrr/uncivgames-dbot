@@ -9,7 +9,9 @@ import {
 export default {
   name: 'votepoll',
   async respond(interaction: APIMessageComponentSelectMenuInteraction) {
-    const userId = interaction.user ? interaction.user.id : interaction.member.user.id;
+    const userId = interaction.user
+      ? interaction.user.id
+      : interaction.member.user.id;
 
     const votes = await prisma.discordPollVote.findMany({
       where: {
@@ -46,7 +48,8 @@ export default {
     ).then(entries => entries.sort((a, b) => b.count - a.count));
 
     // add title to embed description
-    let description = interaction.message.embeds[0].description.match(/[^\n]+/)[0];
+    let description =
+      interaction.message.embeds[0].description.match(/[^\n]+/)[0];
 
     // add entries to embed description
     entries.forEach(({ label, count }, idx) => {
@@ -57,12 +60,14 @@ export default {
     interaction.message.embeds[0].description = description;
 
     // update select menu options
-    (interaction.message.components[0].components[0] as APIStringSelectComponent).options =
-      entries.map(({ label, id }, idx) => ({
-        label,
-        value: id.toString(),
-        emoji: { name: NUMBER_EMOJIS[idx + 1] },
-      }));
+    (
+      interaction.message.components[0]
+        .components[0] as APIStringSelectComponent
+    ).options = entries.map(({ label, id }, idx) => ({
+      label,
+      value: id.toString(),
+      emoji: { name: NUMBER_EMOJIS[idx + 1] },
+    }));
 
     return new Response(
       JSON.stringify({

@@ -6,7 +6,9 @@ export default {
   name: 'recentgames',
   description: 'Check your Recently Active Games !',
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    const userId = !interaction.user ? interaction.member.user.id : interaction.user.id;
+    const userId = !interaction.user
+      ? interaction.member.user.id
+      : interaction.user.id;
 
     const profile = await prisma.profile.findFirst({
       where: { discordId: +userId },
@@ -48,7 +50,8 @@ export default {
       return new Message(
         {
           title: 'RecentGames Prompt',
-          description: 'Could not find any Game for you which was active Recently !',
+          description:
+            'Could not find any Game for you which was active Recently !',
         },
         Message.Flags.Ephemeral
       ).toResponse();

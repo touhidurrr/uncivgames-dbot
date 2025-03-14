@@ -11,7 +11,9 @@ export default {
     //@ts-ignore
     i.data.options.some(o => o.focused && o.name === 'game-id'),
   async respond(interaction: APIApplicationCommandAutocompleteInteraction) {
-    const userId = interaction.user ? interaction.user.id : interaction.member.user.id;
+    const userId = interaction.user
+      ? interaction.user.id
+      : interaction.member.user.id;
 
     const profile = await prisma.profile.findFirst({
       where: { discordId: parseInt(userId) },

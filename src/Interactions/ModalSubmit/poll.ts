@@ -6,10 +6,15 @@ import { APISelectMenuOption } from 'discord-api-types/v10';
 export default {
   name: 'poll',
   async respond(interaction) {
-    const title = interaction.data.components[0].components[0].value.replace(/[\s\n]+/g, ' ');
+    const title = interaction.data.components[0].components[0].value.replace(
+      /[\s\n]+/g,
+      ' '
+    );
     const entries = [
       ...new Set(
-        (interaction.data.components[1].components[0].value as string).trim().split(/\s*\n+\s*/)
+        (interaction.data.components[1].components[0].value as string)
+          .trim()
+          .split(/\s*\n+\s*/)
       ),
     ];
 
