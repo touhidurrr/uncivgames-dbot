@@ -19,7 +19,7 @@
     "discord-api-types": "^0.37.111",
     "mongodb-data-api": "^0.4.0",
     "tweetnacl": "^1.0.3",
-    "wrangler": "^3.97.0",
+    "wrangler": "^4.0.0",
     "yaml": "^2.6.1"
   },
   "devDependencies": {
