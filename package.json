@@ -16,20 +16,20 @@
     "node": "22.x"
   },
   "dependencies": {
-    "discord-api-types": "^0.37.111",
+    "discord-api-types": "^0.37.119",
     "mongodb-data-api": "^0.4.0",
     "tweetnacl": "^1.0.3",
-    "wrangler": "^3.97.0",
-    "yaml": "^2.6.1"
+    "wrangler": "^4.0.0",
+    "yaml": "^2.7.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20241216.0",
-    "@discordjs/rest": "^2.4.0",
-    "@types/bun": "^1.1.14",
-    "@types/node": "^22.10.2",
-    "esbuild": "^0.24.0",
+    "@cloudflare/workers-types": "^4.20250313.0",
+    "@discordjs/rest": "^2.4.3",
+    "@types/bun": "^1.2.5",
+    "@types/node": "^22.13.10",
+    "esbuild": "^0.25.1",
     "lodash.isequal": "^4.5.0",
-    "prettier": "^3.4.2",
-    "typescript": "^5.7.2"
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
   }
 }
