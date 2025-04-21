@@ -23,7 +23,7 @@ async function doMongoRequest(collection, action, parameters) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      dataSource: 'unciv',
+      dataSource: env.DATA_API_CLUSTER_NAME,
       database: 'unciv',
       collection,
       document,

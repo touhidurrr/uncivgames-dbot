@@ -8,6 +8,7 @@ export interface Env {
   DISCORD_TOKEN: string;
   PUBLIC_KEY: string;
   RANDOM_ORG_TOKEN: string;
+  DATA_API_CLUSTER_NAME: string;
 }
 
 declare global {
