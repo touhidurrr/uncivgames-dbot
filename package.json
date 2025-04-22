@@ -16,7 +16,7 @@
     "node": "22.x"
   },
   "dependencies": {
-    "discord-api-types": "^0.37.120",
+    "discord-api-types": "^0.38.1",
     "mongodb-data-api": "^0.4.0",
     "tweetnacl": "^1.0.3",
     "wrangler": "^4.12.0",
