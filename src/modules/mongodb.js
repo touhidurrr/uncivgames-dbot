@@ -1,4 +1,33 @@
+function parseTimestamps(document) {
+  if (document.updatedAt) document.updatedAt = new Date(document.updatedAt);
+  if (document.createdAt) document.createdAt = new Date(document.createdAt);
+  return document;
+}
+
+function assignTimestamps(action, parameters) {
+  const date = new Date();
+
+  if (action === 'insertOne') {
+    parameters.document = Object.assign(parameters.document, {
+      createdAt: date,
+      updatedAt: date,
+    });
+  } else if (action === 'insertMany') {
+    const timestamps = { createdAt: date, updatedAt: date };
+    parameters.documents = parameters.documents.map(doc => Object.assign(doc, timestamps));
+  } else if (action === 'updateOne' || action === 'updateMany') {
+    if (parameters.update['$set']) {
+      parameters.update['$set'].updatedAt = date;
+    } else {
+      parameters.update['$set'] = { updatedAt: date };
+    }
+  } else if (action === 'replaceOne') {
+    parameters.replacement.updatedAt = date;
+  }
+}
+
 async function doMongoRequest(collection, action, parameters) {
+  assignTimestamps(action, parameters);
   let {
     document,
     documents,
@@ -38,7 +67,13 @@ async function doMongoRequest(collection, action, parameters) {
       replacement,
       pipeline,
     }),
-  }).then(res => res.json());
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.document) data.document = parseTimestamps(data.document);
+      if (data.documents) data.documents = data.documents.map(parseTimestamps);
+      return data;
+    });
 }
 
 export default {

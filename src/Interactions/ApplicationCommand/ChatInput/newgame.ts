@@ -35,7 +35,7 @@ export default {
         description:
           'A new Game Chat has been Opened !**' +
           `\nOpened By\t:\t<@${interaction.member.user.id}>` +
-          `\nTime\t\t\t:\t<t:${~~(Date.now() / 1000)}:R>**`,
+          `\nTime\t\t\t:\t<t:${Math.floor(Date.now() / 1000)}:R>**`,
       }).getData()
     )) as RESTPostAPIChannelMessageResult;
 

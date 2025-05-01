@@ -23,8 +23,8 @@ export default {
 
     const gamesFound = await MongoDB.find('UncivServer', {
       filter: { players: { $in: profile.uncivUserIds } },
-      projection: { currentPlayer: 1, name: 1, timestamp: 1, turns: 1 },
-      sort: { timestamp: -1 },
+      projection: { currentPlayer: 1, name: 1, updatedAt: 1, turns: 1 },
+      sort: { updatedAt: -1 },
       limit: 5,
     });
 
@@ -67,7 +67,7 @@ export default {
               },
           {
             name: 'Last Activitity',
-            value: `<t:${~~(game.timestamp / 1000)}:R>`,
+            value: `<t:${Math.floor(game.updatedAt / 1000)}:R>`,
           },
         ],
       })

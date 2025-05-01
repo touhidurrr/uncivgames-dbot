@@ -19,7 +19,7 @@ export default {
       (await MongoDB.find('UncivServer', {
         filter: { players: { $in: profile.uncivUserIds } },
         projection: { _id: 1, name: 1 },
-        sort: { timestamp: -1 },
+        sort: { updatedAt: -1 },
         limit: 25,
       })) || [];
 
