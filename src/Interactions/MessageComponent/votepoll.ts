@@ -2,6 +2,7 @@ import Message from '@modules/message.js';
 import prisma from '@modules/prisma.js';
 import { NUMBER_EMOJIS } from '@src/constants.js';
 import {
+  APIActionRowComponent,
   APIMessageComponentSelectMenuInteraction,
   APIStringSelectComponent,
 } from 'discord-api-types/v10';
@@ -59,11 +60,11 @@ export default {
     // update embed description
     interaction.message.embeds[0].description = description;
 
+    const actionRow = interaction.message
+      .components[0] as APIActionRowComponent<APIStringSelectComponent>;
+
     // update select menu options
-    (
-      interaction.message.components[0]
-        .components[0] as APIStringSelectComponent
-    ).options = entries.map(({ label, id }, idx) => ({
+    actionRow.components[0].options = entries.map(({ label, id }, idx) => ({
       label,
       value: id.toString(),
       emoji: { name: NUMBER_EMOJIS[idx + 1] },

@@ -33,5 +33,5 @@ export default function Discord<BodyType = any, ResponseType = unknown>(
 
     const isJSON = res.headers.get('Content-Type').includes('json');
     if (isJSON) return res.json();
-  });
+  }) as Promise<ResponseType>;
 }

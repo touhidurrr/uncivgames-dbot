@@ -1,4 +1,4 @@
-# Uncivgames Democracy Bot Code of Conduct
+# UncivGames Democracy Bot Code of Conduct
 
 ## Our Pledge
 

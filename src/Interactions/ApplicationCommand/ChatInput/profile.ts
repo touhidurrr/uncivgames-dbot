@@ -1,10 +1,10 @@
 const { stringify } = require('yaml');
+import Message from '@modules/message.js';
 import prisma from '@src/modules/prisma.js';
 import {
   APIChatInputApplicationCommandInteraction,
   InteractionContextType,
 } from 'discord-api-types/v10';
-import Message from '@modules/message.js';
 
 export default {
   name: 'profile',

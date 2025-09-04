@@ -9,6 +9,7 @@ export const libsql = createClient({
   intMode: 'bigint',
 });
 
+// @ts-ignore url is not supposed to be empty
 const adapter = new PrismaLibSQL(libsql);
 export const prisma = new PrismaClient({ adapter });
 

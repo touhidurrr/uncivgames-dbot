@@ -18,21 +18,21 @@
     "node": "22.x"
   },
   "dependencies": {
-    "@libsql/client": "^0.14.0",
-    "@prisma/adapter-libsql": "^6.5.0",
-    "@prisma/client": "^6.5.0",
-    "discord-api-types": "^0.37.119",
+    "@libsql/client": "^0.15.14",
+    "@prisma/adapter-libsql": "^6.15.0",
+    "@prisma/client": "^6.15.0",
+    "discord-api-types": "^0.38.22",
     "tweetnacl": "^1.0.3",
-    "wrangler": "^4.0.0",
-    "yaml": "^2.7.0"
+    "wrangler": "^4.33.2",
+    "yaml": "^2.8.1"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250313.0",
-    "@discordjs/rest": "^2.4.3",
-    "@types/bun": "^1.2.5",
-    "@types/node": "^22.13.10",
-    "prettier": "^3.5.3",
-    "prisma": "^6.5.0",
-    "typescript": "^5.8.2"
+    "@cloudflare/workers-types": "^4.20250904.0",
+    "@discordjs/rest": "^2.6.0",
+    "@types/bun": "^1.2.21",
+    "@types/node": "^24.3.0",
+    "prettier": "^3.6.2",
+    "prisma": "^6.15.0",
+    "typescript": "^5.9.2"
   }
 }

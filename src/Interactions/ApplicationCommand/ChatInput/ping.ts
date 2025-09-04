@@ -1,5 +1,5 @@
-import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 import Message from '@modules/message.js';
+import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {
   name: 'ping',

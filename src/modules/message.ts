@@ -10,7 +10,7 @@ import { getRandomColor } from './materialColors.js';
 
 export type MessageAttachment = Omit<RESTAPIAttachment, 'id'> & {
   id?: number;
-  data: ((ArrayBuffer | ArrayBufferView) | string | Blob)[];
+  data: (ArrayBuffer | string | Blob)[];
 };
 
 export default class Message {

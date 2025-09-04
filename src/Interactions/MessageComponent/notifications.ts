@@ -1,6 +1,10 @@
 import Message from '@modules/message.js';
 import prisma from '@modules/prisma.js';
-import { APIMessageComponentButtonInteraction } from 'discord-api-types/v10';
+import {
+  APIActionRowComponent,
+  APIButtonComponent,
+  APIMessageComponentButtonInteraction,
+} from 'discord-api-types/v10';
 
 export default {
   name: 'notifications',
@@ -63,8 +67,11 @@ export default {
       timeLeft < 0.001
         ? 'This Interaction will be Closed anytime soon'
         : `You have around ${timeLeft.toFixed(2)} seconds or more to react to this Message.`;
-    message.components[0].components[0].disabled = toggle === 'enabled';
-    message.components[0].components[1].disabled = toggle === 'disabled';
+
+    const actionRow = message
+      .components[0] as APIActionRowComponent<APIButtonComponent>;
+    actionRow.components[0].disabled = toggle === 'enabled';
+    actionRow.components[1].disabled = toggle === 'disabled';
 
     return new Response(
       JSON.stringify({

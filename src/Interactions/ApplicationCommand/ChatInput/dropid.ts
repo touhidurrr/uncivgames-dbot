@@ -1,8 +1,10 @@
 import Message from '@modules/message.js';
 import prisma from '@modules/prisma.js';
 import {
+  APIApplicationCommandInteractionDataIntegerOption,
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,
+  InteractionType,
 } from 'discord-api-types/v10';
 
 export default {
@@ -17,10 +19,13 @@ export default {
     },
   ] satisfies APIApplicationCommandOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    // @ts-ignore
-    const position: number = interaction.data.options
-      ? interaction.data.options[0].value
-      : 1;
+    const position: number =
+      interaction.data.options && interaction.data.options.length > 0
+        ? (
+            interaction.data
+              .options[0] as APIApplicationCommandInteractionDataIntegerOption<InteractionType.ApplicationCommand>
+          ).value
+        : 1;
     const userId = interaction.user
       ? interaction.user.id
       : interaction.member.user.id;
