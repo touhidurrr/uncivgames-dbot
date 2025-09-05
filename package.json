@@ -8,7 +8,7 @@
     "build": "build/esbuild",
     "format": "prettier --write . --config .prettierrc.yaml",
     "wc": "wc $(find src utils -name '*.js' -o -name '*.ts')",
-    "deploy": "wrangler deploy",
+    "publish": "wrangler deploy",
     "typegen": "bun scripts/typegen.ts",
     "sizecheck": "wrangler deploy --outdir .temp --dry-run && rm -rf .temp"
   },
