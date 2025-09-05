@@ -5,7 +5,7 @@ export interface Env {
   PUBLIC_KEY: string;
   RANDOM_ORG_TOKEN: string;
   DATA_API_CLUSTER_NAME: string;
-  DISCORD_TOKEN: SecretsStoreSecret;
+  DISCORD_TOKEN: string;
 }
 declare global {
   const env: Env;

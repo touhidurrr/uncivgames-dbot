@@ -7,12 +7,11 @@ export default async function Discord<BodyType = any, ResponseType = unknown>(
   path: string,
   data?: BodyType
 ): Promise<ResponseType> {
-  const token = await env.DISCORD_TOKEN.get();
   const config: RequestInit = {
     method,
     headers: {
       Accept: 'application/json',
-      Authorization: `Bot ${token}`,
+      Authorization: `Bot ${env.DISCORD_TOKEN}`,
     },
   };
 

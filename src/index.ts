@@ -13,6 +13,8 @@ export default {
   scheduled,
   async fetch(req, env, ctx) {
     //@ts-ignore
+    env.DISCORD_TOKEN = await env.DISCORD_TOKEN.get();
+    //@ts-ignore
     globalThis.env = env;
     globalThis.ctx = ctx;
 
