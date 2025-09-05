@@ -6,4 +6,3 @@ node_modules
 !.prettierignore
 !.prettierrc.yaml
 package-lock.json
-bun.lock*
