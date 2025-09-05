@@ -23,7 +23,7 @@
     "yaml": "^2.8.1"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250904.0",
+    "@cloudflare/workers-types": "^4.20250905.0",
     "@discordjs/rest": "^2.6.0",
     "@types/bun": "^1.2.21",
     "@types/node": "^24.3.1",
