@@ -1,0 +1,106 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:temp.db"
+}
+
+model Variable {
+  id        String   @id @unique
+  value     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([createdAt])
+  @@index([updatedAt])
+}
+
+model User {
+  id        String   @id
+  createdAt DateTime @default(now())
+
+  profiles UsersInProfile[]
+
+  @@index([createdAt])
+}
+
+model Profile {
+  id            Int      @id @default(autoincrement())
+  discordId     BigInt?
+  rating        Float    @default(1000)
+  dmChannel     BigInt?
+  notifications String   @default("enabled")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  users UsersInProfile[]
+
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@index([discordId])
+  @@index([dmChannel])
+}
+
+model ErrorLog {
+  id        Int      @id @default(autoincrement())
+  type      String
+  message   String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model DiscordPoll {
+  id        BigInt   @id
+  authorId  BigInt
+  createdAt DateTime @default(now())
+
+  entries DiscordPollEntry[]
+
+  @@index([createdAt])
+}
+
+model DiscordPollEntry {
+  id     Int    @id @default(autoincrement())
+  label  String
+  pollId BigInt
+  count  Int    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  poll  DiscordPoll       @relation(fields: [pollId], references: [id])
+  votes DiscordPollVote[]
+
+  @@index([createdAt])
+  @@index([updatedAt])
+}
+
+model DiscordPollVote {
+  id        Int      @id @default(autoincrement())
+  entryId   Int
+  discordId BigInt
+  createdAt DateTime @default(now())
+
+  entry DiscordPollEntry @relation(fields: [entryId], references: [id])
+
+  @@unique([entryId, discordId])
+  @@index([createdAt])
+}
+
+model UsersInProfile {
+  userId    String @unique
+  profileId Int
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  profile Profile @relation(fields: [profileId], references: [id])
+
+  @@id([userId, profileId])
+  @@index([userId])
+  @@index([profileId])
+  @@index([createdAt])
+}

@@ -1,6 +1,6 @@
 import Message from '@modules/message.js';
 import { getGame } from '@modules/onlineMultiplayer.js';
-import prisma from '@modules/prisma.js';
+import { getPrisma } from '@modules/prisma.js';
 import { UUID_REGEX } from '@src/constants.js';
 import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
@@ -43,9 +43,11 @@ export default {
       ).toResponse();
     }
 
+    const prisma = await getPrisma();
     const userId = !interaction.user
       ? interaction.member.user.id
       : interaction.user.id;
+
     const profile = await prisma.profile.findFirst({
       where: { discordId: parseInt(userId) },
       select: { users: { select: { userId: true } } },

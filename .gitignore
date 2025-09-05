@@ -1,5 +1,6 @@
 .*
 test*
+temp.db
 node_modules
 !.github
 !.gitignore

@@ -1,5 +1,5 @@
 import Message from '@modules/message.js';
-import prisma from '@modules/prisma.js';
+import { getPrisma } from '@modules/prisma.js';
 import { NUMBER_EMOJIS } from '@src/constants.js';
 import { APISelectMenuOption } from 'discord-api-types/v10';
 
@@ -49,6 +49,7 @@ export default {
       ).toResponse();
     }
 
+    const prisma = await getPrisma();
     const userId = interaction.user.id || interaction.member.user.id;
     const poll = await prisma.discordPoll.create({
       data: {

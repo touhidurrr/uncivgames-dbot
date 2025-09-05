@@ -25,7 +25,7 @@ export default {
     const verified = await sign.detached.verify(
       Buffer.from(timestamp + rawBody),
       Buffer.from(signature, 'hex'),
-      Buffer.from(env.PUBLIC_KEY, 'hex') // from env
+      Buffer.from(secrets.env.PUBLIC_KEY, 'hex') // from env
     );
 
     if (!verified) {
@@ -74,4 +74,4 @@ export default {
         .respond(interaction, ...args);
     }
   },
-};
+} satisfies ExportedHandler<Env>;

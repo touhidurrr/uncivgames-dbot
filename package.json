@@ -10,7 +10,7 @@
     "wc": "wc $(find src utils -name '*.js' -o -name '*.ts')",
     "publish": "wrangler deploy",
     "typegen": "bun scripts/typegen.ts",
-    "sizecheck": "wrangler deploy --outdir .temp --dry-run && rm -rf .temp"
+    "sizecheck": "wrangler deploy --dry-run && rm -rf .wrangler"
   },
   "author": "Md. Touhidur Rahman",
   "license": "BSD-3-Clause",
@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "@libsql/client": "^0.15.14",
-    "@prisma/adapter-libsql": "^6.15.0",
-    "@prisma/client": "^6.15.0",
+    "@prisma/adapter-libsql": "^6.16.0-dev.25",
+    "@prisma/client": "^6.16.0-dev.25",
     "discord-api-types": "^0.38.22",
     "tweetnacl": "^1.0.3",
     "wrangler": "^4.34.0",

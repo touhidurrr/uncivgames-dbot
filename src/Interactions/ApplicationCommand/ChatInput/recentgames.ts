@@ -1,11 +1,12 @@
 import Message from '@modules/message.js';
-import prisma from '@modules/prisma.js';
+import { getPrisma } from '@modules/prisma.js';
 import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {
   name: 'recentgames',
   description: 'Check your Recently Active Games !',
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
+    const prisma = await getPrisma();
     const userId = !interaction.user
       ? interaction.member.user.id
       : interaction.user.id;

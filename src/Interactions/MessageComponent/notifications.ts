@@ -1,5 +1,5 @@
 import Message from '@modules/message.js';
-import prisma from '@modules/prisma.js';
+import { getPrisma } from '@modules/prisma.js';
 import {
   APIActionRowComponent,
   APIButtonComponent,
@@ -24,6 +24,7 @@ export default {
     }
 
     let { message } = interaction;
+    const prisma = await getPrisma();
 
     const { id, notifications } = await prisma.profile.findFirstOrThrow({
       where: { discordId: +user.id },
@@ -52,10 +53,7 @@ export default {
 
     await prisma.profile.update({
       where: { id },
-      data: {
-        notifications: toggle,
-        updatedAt: Date.now(),
-      },
+      data: { notifications: toggle },
     });
 
     const timeLeft = 300 - (Date.now() - parseInt(timestamp)) / 1000;

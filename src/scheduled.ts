@@ -1,4 +1,3 @@
-import type { Event } from '@cloudflare/workers-types';
 import {
   RESTPostAPIChannelMessageCrosspostResult,
   RESTPostAPIChannelMessageResult,
@@ -7,8 +6,8 @@ import {
 import { UNCIV_UPDATE_CHANNEL_ID } from './constants.js';
 import Discord from './modules/discord.js';
 import Message from './modules/message.js';
-import prisma from './modules/prisma.js';
-import secrects from './secrets.js';
+import { getPrisma } from './modules/prisma.js';
+import secrets from './secrets.js';
 
 //@ts-ignore
 BigInt.prototype.toJSON = function () {
@@ -16,9 +15,13 @@ BigInt.prototype.toJSON = function () {
 };
 
 var subRequestCount = 0;
-
-export async function scheduled(event: Event, env, ctx) {
-  secrects.setEnv(env);
+export async function scheduled(
+  event: ScheduledController,
+  env: Env,
+  ctx: ExecutionContext
+): Promise<void> {
+  secrets.setEnv(env);
+  const prisma = await getPrisma();
 
   const githubApi =
     'https://api.github.com/repos/yairm210/Unciv/releases/latest';
@@ -86,7 +89,7 @@ export async function scheduled(event: Event, env, ctx) {
     ),
     prisma.variable.update({
       where: { id: 'Unciv Release Id' },
-      data: { value: id.toString(), updatedAt: Date.now() },
+      data: { value: id.toString() },
     }),
   ]);
 

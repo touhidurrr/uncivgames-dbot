@@ -1,6 +1,6 @@
 import Discord from '@modules/discord.js';
 import Message from '@modules/message.js';
-import prisma from '@modules/prisma.js';
+import { getPrisma } from '@modules/prisma.js';
 import { UUID_REGEX } from '@src/constants.js';
 import {
   APIApplicationCommandOption,
@@ -38,6 +38,9 @@ export default {
         Message.Flags.Ephemeral
       ).toResponse();
     }
+
+    const prisma = await getPrisma();
+
     // query response gets the discordId of the profile containing the uncivUserId
     const queryResponse = await prisma.profile.findFirst({
       where: { users: { some: { userId: uncivUserId } } },

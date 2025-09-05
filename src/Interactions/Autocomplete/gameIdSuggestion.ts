@@ -1,4 +1,4 @@
-import prisma from '@modules/prisma.js';
+import { getPrisma } from '@modules/prisma.js';
 import {
   APIApplicationCommandAutocompleteInteraction,
   APIApplicationCommandAutocompleteResponse,
@@ -15,6 +15,7 @@ export default {
       ? interaction.user.id
       : interaction.member.user.id;
 
+    const prisma = await getPrisma();
     const profile = await prisma.profile.findFirst({
       where: { discordId: parseInt(userId) },
       select: { users: { select: { userId: true } } },

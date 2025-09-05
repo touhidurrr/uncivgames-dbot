@@ -1,6 +1,6 @@
 import Message from '@modules/message.js';
 import { getGame } from '@modules/onlineMultiplayer.js';
-import prisma from '@modules/prisma.js';
+import { getPrisma } from '@modules/prisma.js';
 import { MAX_GAME_NAME_LENGTH, UUID_REGEX } from '@src/constants.js';
 import {
   APIApplicationCommandOption,
@@ -52,6 +52,7 @@ export default {
       ).toResponse();
     }
 
+    const prisma = await getPrisma();
     const userId = !interaction.user
       ? interaction.member.user.id
       : interaction.user.id;

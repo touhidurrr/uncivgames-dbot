@@ -1,6 +1,6 @@
 import Message from '@modules/message.js';
 import { getFullGame } from '@modules/onlineMultiplayer.js';
-import prisma from '@modules/prisma.js';
+import { getPrisma } from '@modules/prisma.js';
 import { UUID_REGEX } from '@src/constants.js';
 import {
   APIApplicationCommandOption,
@@ -91,6 +91,7 @@ export default {
 
     uniquePlayers.delete(playerToKick);
 
+    const prisma = await getPrisma();
     const registeredPlayerIds = await prisma.profile
       .findMany({
         where: { users: { some: { userId: { in: [...uniquePlayers] } } } },

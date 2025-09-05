@@ -1,5 +1,5 @@
 import Message from '@modules/message.js';
-import prisma from '@modules/prisma.js';
+import { getPrisma } from '@modules/prisma.js';
 import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {
@@ -10,6 +10,7 @@ export default {
       ? interaction.member.user.id
       : interaction.user.id;
 
+    const prisma = await getPrisma();
     const profile = await prisma.profile.findFirst({
       where: { discordId: +userId },
       select: { users: { select: { userId: true } } },

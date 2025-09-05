@@ -1,6 +1,6 @@
 const { stringify } = require('yaml');
 import Message from '@modules/message.js';
-import prisma from '@src/modules/prisma.js';
+import { getPrisma } from '@modules/prisma.js';
 import {
   APIChatInputApplicationCommandInteraction,
   InteractionContextType,
@@ -10,6 +10,7 @@ export default {
   name: 'profile',
   description: 'Shows a Players Profile',
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
+    const prisma = await getPrisma();
     const user = interaction.user || interaction.member.user;
 
     let profile = await prisma.profile.findFirst({
@@ -48,7 +49,7 @@ export default {
     return new Message({
       title: 'Profile Prompt',
       description: `\`\`\`yml\n# ${user.username}'s Profile\n${stringify(profile)}\n\`\`\``,
-      footer: `Last Updated: <t:${profile.updatedAt / 1000n}:R>$`,
+      footer: `Last Updated: <t:${Math.floor(profile.updatedAt.getTime() / 1000)}:R>$`,
     }).toResponse();
   },
 };

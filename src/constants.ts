@@ -12,7 +12,6 @@ export const GAME_ID_REGEX =
 // SQL
 export const PRISMA_SCHEMA_URL =
   'https://raw.githubusercontent.com/touhidurrr/UncivServer.xyz/refs/heads/turso/prisma/schema.prisma';
-export const TIMESTAMP_SQL = "(cast(1000 * unixepoch('subsec') as integer))";
 
 // misc
 export const NUMBER_EMOJIS = [

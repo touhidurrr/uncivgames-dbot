@@ -1,33 +1,33 @@
-import { createClient } from '@libsql/client/web';
-import { PrismaLibSQL } from '@prisma/adapter-libsql';
-import { PrismaClient } from '@prisma/client/edge';
+import { PrismaLibSQL } from '@prisma/adapter-libsql/web';
+import { PrismaClient } from '@prisma/client';
+import { DefaultArgs } from '@prisma/client/runtime/library';
 import { env } from '@src/secrets.js';
 
-export const libsql = createClient({
-  url: env.TURSO_DATABASE_URL!,
-  authToken: env.TURSO_AUTH_TOKEN!,
-  intMode: 'bigint',
-});
+let prisma: PrismaClient<
+  {
+    adapter: PrismaLibSQL;
+  },
+  never,
+  DefaultArgs
+> | null = null;
 
-// @ts-ignore url is not supposed to be empty
-const adapter = new PrismaLibSQL(libsql);
-export const prisma = new PrismaClient({ adapter });
+export async function getPrisma() {
+  if (prisma) return prisma;
 
-export const getGameWithPrima = async (gameId: string) => {
-  if (gameId.endsWith('_Preview')) {
-    const game = await prisma.game.findUnique({
-      where: { id: gameId.replace('_Preview', '') },
-      select: { preview: true },
-    });
-    return game ? game.preview : null;
-  }
+  const [TURSO_DATABASE_URL, TURSO_AUTH_TOKEN] = await Promise.all([
+    env.TURSO_DATABASE_URL.get(),
+    env.TURSO_AUTH_TOKEN.get(),
+  ]);
 
-  const game = await prisma.game.findUnique({
-    where: { id: gameId },
-    select: { save: true },
-  });
-  return game ? game.save : null;
-};
+  const adapter = new PrismaLibSQL(
+    {
+      url: TURSO_DATABASE_URL,
+      authToken: TURSO_AUTH_TOKEN,
+      intMode: 'bigint',
+    },
+    { timestampFormat: 'unixepoch-ms' }
+  );
 
-await prisma.$connect();
-export default prisma;
+  prisma = new PrismaClient({ adapter });
+  return prisma;
+}

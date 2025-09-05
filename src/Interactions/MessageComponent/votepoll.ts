@@ -1,5 +1,5 @@
 import Message from '@modules/message.js';
-import prisma from '@modules/prisma.js';
+import { getPrisma } from '@modules/prisma.js';
 import { NUMBER_EMOJIS } from '@src/constants.js';
 import {
   APIActionRowComponent,
@@ -14,6 +14,7 @@ export default {
       ? interaction.user.id
       : interaction.member.user.id;
 
+    const prisma = await getPrisma();
     const votes = await prisma.discordPollVote.findMany({
       where: {
         discordId: BigInt(userId),
