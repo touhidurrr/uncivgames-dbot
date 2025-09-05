@@ -2,6 +2,7 @@ import { APIInteraction } from 'discord-api-types/v10';
 import { sign } from 'tweetnacl';
 import { ApplicationCommandResponses, InteractionResponses } from './responsesList.js';
 import { scheduled } from './scheduled.js';
+import { Env } from './types.js';
 
 //@ts-ignore
 BigInt.prototype.toJSON = function () {
@@ -68,7 +69,8 @@ export default {
 
       return await InteractionResponses[interaction.type]
         .find(i => i.name === cName)
+        //@ts-ignore TOO MUCH PAIN
         .respond(interaction, ...args);
     }
   },
-};
+} satisfies ExportedHandler<Env>;

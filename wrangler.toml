@@ -12,3 +12,8 @@ mode = "smart"
 
 [observability.logs]
 enabled = true
+
+[[secrets_store_secrets]]
+store_id = "9e971ed6e8da4b76b23294a49e1c287f"
+secret_name = "UNCIVGAMES_DBOT_DISCORD_TOKEN"
+binding = "DISCORD_TOKEN"

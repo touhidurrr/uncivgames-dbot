@@ -2,16 +2,17 @@ import { RequestMethod } from '@discordjs/rest';
 
 const discordApiEndpoint = 'https://discord.com/api/v10';
 
-export default function Discord<BodyType = any, ResponseType = unknown>(
+export default async function Discord<BodyType = any, ResponseType = unknown>(
   method: `${RequestMethod}`,
   path: string,
   data?: BodyType
 ): Promise<ResponseType> {
+  const token = await env.DISCORD_TOKEN.get();
   const config: RequestInit = {
     method,
     headers: {
       Accept: 'application/json',
-      Authorization: `Bot ${env.DISCORD_TOKEN}`,
+      Authorization: `Bot ${token}`,
     },
   };
 
