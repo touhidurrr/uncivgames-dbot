@@ -9,7 +9,7 @@ const JWT_BASE_URL = 'https://uncivserver.xyz/jwt';
 let jwtToken: string | null = null;
 
 const getJWTToken = async (): Promise<string | Response> => {
-  const syncToken = env.SYNC_TOKEN.get();
+  const syncToken = await env.SYNC_TOKEN.get();
 
   const url = `${JWT_BASE_URL}/${JWT_NAME}`;
   const config = {
@@ -20,12 +20,8 @@ const getJWTToken = async (): Promise<string | Response> => {
 
   let retries = 0;
   let res = await fetch(url, config);
-  const {status, statusText, headers} = res
-  console.log({ jwtToken, res:  {status, statusText, headers} });
   while (retries < MAX_RETRIES) {
     res = await fetch(url, config);
-    const {status, statusText, headers} = res
-  console.log({ jwtToken, res:  {status, statusText, headers} });
 
     if (!res.ok) {
       retries++;
@@ -45,7 +41,6 @@ const apiFetch = async (
 ) => {
   if (!jwtToken) {
     const token = await getJWTToken();
-    console.log({ token });
     if (typeof token !== 'string') return token;
     jwtToken = token;
   }
@@ -65,7 +60,6 @@ const apiFetch = async (
   const res = await fetch(`${BASE_URL}/${path}`, config);
   if (res.status === 401) {
     const token = await getJWTToken();
-    console.log({ token });
     if (typeof token !== 'string') return token;
     jwtToken = token;
 
