@@ -7,19 +7,20 @@
         "@libsql/client": "^0.15.14",
         "@prisma/adapter-libsql": "^6.16.0-dev.25",
         "@prisma/client": "^6.16.0-dev.25",
-        "discord-api-types": "^0.38.22",
-        "tweetnacl": "^1.0.3",
-        "wrangler": "^4.34.0",
-        "yaml": "^2.8.1",
+        "discord-api-types": "latest",
+        "mongodb-data-api": "latest",
+        "tweetnacl": "latest",
+        "wrangler": "latest",
+        "yaml": "latest",
       },
       "devDependencies": {
-        "@cloudflare/workers-types": "^4.20250905.0",
-        "@discordjs/rest": "^2.6.0",
-        "@types/bun": "^1.2.21",
-        "@types/node": "^24.3.1",
-        "prettier": "^3.6.2",
+        "@cloudflare/workers-types": "latest",
+        "@discordjs/rest": "latest",
+        "@types/bun": "latest",
+        "@types/node": "latest",
+        "prettier": "latest",
         "prisma": "^6.15.0",
-        "typescript": "^5.9.2",
+        "typescript": "latest",
       },
     },
   },
@@ -260,7 +261,7 @@
 
     "detect-libc": ["detect-libc@2.0.2", "", {}, "sha512-UX6sGumvvqSaXgdKGUsgZWqcUyIXZ/vZTrlRT/iobiKhGL0zL4d3osHj3uqllWJK+i+sixDS/3COVEOFbupFyw=="],
 
-    "discord-api-types": ["discord-api-types@0.38.22", "", {}, "sha512-2gnYrgXN3yTlv2cKBISI/A8btZwsSZLwKpIQXeI1cS8a7W7wP3sFVQOm3mPuuinTD8jJCKGPGNH399zE7Un1kA=="],
+    "discord-api-types": ["discord-api-types@0.38.23", "", {}, "sha512-C8VjK0yxBUq1dakxGpUXQm4VSC7R+aaD2SIr3paj2a0bP/LRok1AqHiezp30GruK6Ba9FtQAKqYUMJPzsqv7IQ=="],
 
     "dotenv": ["dotenv@16.6.1", "", {}, "sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow=="],
 
@@ -379,8 +380,6 @@
     "@libsql/isomorphic-ws/ws": ["ws@8.18.3", "", { "peerDependencies": { "bufferutil": "^4.0.1", "utf-8-validate": ">=5.0.2" }, "optionalPeers": ["bufferutil", "utf-8-validate"] }, "sha512-PEIGCY5tSlUt50cqyMXfCzX+oOPqN0vuGqWzbcJ2xvnkzkq46oOpz7dQaTDBdfICb4N14+GARUDw2XV2N4tvzg=="],
 
     "@prisma/adapter-libsql/@libsql/client": ["@libsql/client@0.8.1", "", { "dependencies": { "@libsql/core": "^0.8.1", "@libsql/hrana-client": "^0.6.2", "js-base64": "^3.7.5", "libsql": "^0.3.10", "promise-limit": "^2.7.0" } }, "sha512-xGg0F4iTDFpeBZ0r4pA6icGsYa5rG6RAG+i/iLDnpCAnSuTqEWMDdPlVseiq4Z/91lWI9jvvKKiKpovqJ1kZWA=="],
-
-    "@prisma/driver-adapter-utils/@prisma/debug": ["@prisma/debug@6.16.0-dev.25", "", {}, "sha512-66sebnnCocj0rmbzD0XL6nNvhSRrClrfqcK+puFJrC/bgYimDNHTwAy8zxNxOEx7YdOfnAcwwjWUXkrqTPQOWA=="],
 
     "miniflare/undici": ["undici@7.15.0", "", {}, "sha512-7oZJCPvvMvTd0OlqWsIxTuItTpJBpU1tcbVl24FMn3xt3+VSunwUasmfPJRE57oNO1KsZ4PgA1xTdAX4hq8NyQ=="],
 

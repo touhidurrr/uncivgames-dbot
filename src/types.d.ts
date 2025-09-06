@@ -25,4 +25,3 @@ declare namespace NodeJS {
         | 'TURSO_AUTH_TOKEN'
       >
     > {}
-}
