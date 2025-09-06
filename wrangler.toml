@@ -4,8 +4,8 @@ account_id = "2abd5f3a5cdcf01e98291c0a7a1f47e4"
 name = "dbot"
 workers_dev = true
 main = "src/index.ts"
+minify = true
 compatibility_flags = ["nodejs_compat"]
-minify = false
 
 [placement]
 mode = "smart"
@@ -17,3 +17,18 @@ enabled = true
 store_id = "9e971ed6e8da4b76b23294a49e1c287f"
 secret_name = "UNCIVGAMES_DBOT_DISCORD_TOKEN"
 binding = "DISCORD_TOKEN"
+
+[[secrets_store_secrets]]
+store_id = "9e971ed6e8da4b76b23294a49e1c287f"
+secret_name = "UNCIVSERVER_SYNC_TOKEN"
+binding = "SYNC_TOKEN"
+
+[[secrets_store_secrets]]
+store_id = "9e971ed6e8da4b76b23294a49e1c287f"
+secret_name = "UNCIVGAMES_DBOT_TURSO_AUTH_TOKEN"
+binding = "TURSO_AUTH_TOKEN"
+
+[[secrets_store_secrets]]
+store_id = "9e971ed6e8da4b76b23294a49e1c287f"
+secret_name = "UNCIVGAMES_DBOT_TURSO_DATABASE_URL"
+binding = "TURSO_DATABASE_URL"

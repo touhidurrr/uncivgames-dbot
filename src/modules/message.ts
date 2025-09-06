@@ -36,7 +36,7 @@ export default class Message {
     data: { embeds: [] },
   };
 
-  constructor(config, flags?: MessageFlags | MessageFlags[]) {
+  constructor(config?: any, flags?: MessageFlags | MessageFlags[]) {
     if (config === undefined) return;
     if (typeof config === 'number') this.body.data.content = String(config);
     else if (typeof config === 'string') this.body.data.content = config;
@@ -82,7 +82,7 @@ export default class Message {
       };
     }
 
-    if (config.fields) embed.fields = config.fields.filter(f => f);
+    if (config.fields) embed.fields = config.fields.filter(Boolean);
     if (config.image) embed.image = { url: config.image };
     if (config.footer) embed.footer = { text: config.footer };
 
@@ -131,11 +131,11 @@ export default class Message {
       });
 
       fd.append('payload_json', this.toJSON(type));
-      return new Response(fd);
+      return new Response(fd, { statusText: 'OK' });
     }
 
     return new Response(this.toJSON(type), {
-      status: 200,
+      statusText: 'OK',
       headers: { 'Content-Type': 'application/json' },
     });
   }

@@ -5,10 +5,11 @@
   "module": "src/index.js",
   "type": "module",
   "scripts": {
-    "build": "build/esbuild",
-    "format": "prettier --write .",
+    "format": "prettier --write . --config .prettierrc.yaml",
     "wc": "wc $(find src utils -name '*.js' -o -name '*.ts')",
-    "deploy": "wrangler deploy"
+    "publish": "wrangler deploy",
+    "typegen": "bun scripts/typegen.ts",
+    "sizecheck": "wrangler deploy --dry-run && rm -rf .wrangler"
   },
   "author": "Md. Touhidur Rahman",
   "license": "BSD-3-Clause",
@@ -16,19 +17,21 @@
     "node": "22.x"
   },
   "dependencies": {
+    "@libsql/client": "^0.15.14",
+    "@prisma/adapter-libsql": "^6.16.0-dev.29",
+    "@prisma/client": "^6.16.0-dev.29",
     "discord-api-types": "^0.38.23",
-    "mongodb-data-api": "^0.4.0",
     "tweetnacl": "^1.0.3",
     "wrangler": "^4.34.0",
     "yaml": "^2.8.1"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250905.0",
+    "@cloudflare/workers-types": "^4.20250906.0",
     "@discordjs/rest": "^2.6.0",
     "@types/bun": "^1.2.21",
     "@types/node": "^24.3.1",
-    "esbuild": "^0.25.9",
     "prettier": "^3.6.2",
+    "prisma": "^6.15.0",
     "typescript": "^5.9.2"
   }
 }

@@ -1,9 +1,9 @@
 .*
 test*
+temp.db
 node_modules
 !.github
 !.gitignore
 !.prettierignore
 !.prettierrc.yaml
 package-lock.json
-bun.lockb
