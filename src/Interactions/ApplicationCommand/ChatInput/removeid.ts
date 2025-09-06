@@ -1,8 +1,10 @@
+import { api } from '@modules/api.js';
 import Discord from '@modules/discord.js';
 import Message from '@modules/message.js';
-import { getPrisma } from '@modules/prisma.js';
 import { UUID_REGEX } from '@src/constants.js';
+import { getResponseInfoEmbed } from '@src/models.js';
 import {
+  APIApplicationCommandInteractionDataStringOption,
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,
   RESTGetAPIUserResult,
@@ -23,11 +25,14 @@ export default {
     },
   ] satisfies APIApplicationCommandOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    //@ts-ignore
-    const uncivUserId = interaction.data.options[0].value.trim();
     const userId = !interaction.user
       ? interaction.member.user.id
       : interaction.user.id;
+
+    const uncivUserId: string = (
+      interaction.data
+        .options[0] as APIApplicationCommandInteractionDataStringOption
+    ).value.trim();
 
     if (!uncivUserId || !UUID_REGEX.test(uncivUserId)) {
       return new Message(
@@ -39,21 +44,22 @@ export default {
       ).toResponse();
     }
 
-    const prisma = await getPrisma();
-
     // query response gets the discordId of the profile containing the uncivUserId
-    const queryResponse = await prisma.profile.findFirst({
-      where: { users: { some: { userId: uncivUserId } } },
-      select: { discordId: true },
-    });
+    const res = await api.getUserProfileId(uncivUserId);
 
-    if (queryResponse === null) {
+    if (res.status === 404) {
       return new Message({
         title: 'RemoveID Prompt',
         description: 'Nobody owns this user ID !',
       }).toResponse();
-    } else if (queryResponse.discordId.toString() === userId) {
-      await prisma.usersInProfile.delete({ where: { userId: uncivUserId } });
+    }
+
+    if (!res.ok) return getResponseInfoEmbed(res);
+    const discordId = await res.text();
+
+    if (discordId === userId) {
+      const res = await api.removeUserIdToProfile(userId, uncivUserId);
+      if (!res.ok) return getResponseInfoEmbed(res);
 
       return new Message({
         title: 'RemoveID Prompt',
@@ -64,7 +70,7 @@ export default {
     const { username, discriminator } = await Discord<
       any,
       RESTGetAPIUserResult
-    >('GET', Routes.user(queryResponse.discordId.toString()));
+    >('GET', Routes.user(discordId));
 
     const uniqueName =
       discriminator !== '0' ? `${username}#${discriminator}` : `@${username}`;

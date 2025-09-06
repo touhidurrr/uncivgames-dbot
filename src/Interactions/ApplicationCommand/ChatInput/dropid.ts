@@ -1,5 +1,6 @@
+import { api, APIProfile } from '@modules/api.js';
 import Message from '@modules/message.js';
-import { getPrisma } from '@modules/prisma.js';
+import { getResponseInfoEmbed } from '@src/models.js';
 import {
   APIApplicationCommandInteractionDataIntegerOption,
   APIApplicationCommandOption,
@@ -19,6 +20,10 @@ export default {
     },
   ] satisfies APIApplicationCommandOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
+    const userId = interaction.user
+      ? interaction.user.id
+      : interaction.member.user.id;
+
     const position: number =
       interaction.data.options && interaction.data.options.length > 0
         ? (
@@ -26,24 +31,20 @@ export default {
               .options[0] as APIApplicationCommandInteractionDataIntegerOption<InteractionType.ApplicationCommand>
           ).value
         : 1;
-    const userId = interaction.user
-      ? interaction.user.id
-      : interaction.member.user.id;
 
-    const prisma = await getPrisma();
-    const profile = await prisma.profile.findFirst({
-      where: { discordId: parseInt(userId) },
-      select: { discordId: true, users: { select: { userId: true } } },
-    });
+    const res = await api.getProfile(userId);
+    if (!res.ok) return getResponseInfoEmbed(res);
 
-    if (!profile || profile.users.length < 1) {
+    const { uncivUserIds } = (await res.json()) as APIProfile;
+
+    if (uncivUserIds.length < 1) {
       return new Message('You have no user Ids available!').toResponse();
     }
 
-    if (position > profile.users.length) {
+    if (position > uncivUserIds.length) {
       return new Message("Position doesn't exist !").toResponse();
     }
 
-    return new Message(profile.users[position - 1]).toResponse();
+    return new Message(uncivUserIds[position - 1]).toResponse();
   },
 };

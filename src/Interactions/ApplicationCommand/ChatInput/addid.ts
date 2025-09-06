@@ -1,10 +1,10 @@
 import { api, APIProfile } from '@modules/api.js';
 import Discord from '@modules/discord.js';
 import Message from '@modules/message.js';
-import { getPrisma } from '@modules/prisma.js';
-import { UUID_REGEX } from '@src/constants.js';
+import { AUTHOR_ID, UUID_REGEX } from '@src/constants.js';
 import { getResponseInfoEmbed } from '@src/models.js';
 import {
+  APIApplicationCommandInteractionDataStringOption,
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,
   RESTGetAPIUserResult,
@@ -25,11 +25,14 @@ export default {
     },
   ] satisfies APIApplicationCommandOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    //@ts-ignore
-    const uncivUserId: string = interaction.data.options[0].value.trim();
     const userId = !interaction.user
       ? interaction.member.user.id
       : interaction.user.id;
+
+    const uncivUserId: string = (
+      interaction.data
+        .options[0] as APIApplicationCommandInteractionDataStringOption
+    ).value.trim();
 
     if (!uncivUserId || !UUID_REGEX.test(uncivUserId)) {
       return new Message(
@@ -41,23 +44,16 @@ export default {
       ).toResponse();
     }
 
-    const prisma = await getPrisma();
+    const res = await api.getUserProfileId(uncivUserId);
 
-    // query response gets the discordId of the profile containing the uncivUserId
-    const queryResponse = await prisma.profile.findFirst({
-      where: { users: { some: { userId: uncivUserId } } },
-      select: { discordId: true },
-    });
-
-    // if nobody owns this id yet
-    if (!queryResponse) {
+    if (res.status === 404) {
       // we try to fetch the profile of the user
       const res = await api.getProfile(userId);
       if (!res.ok) return getResponseInfoEmbed(res);
 
       const profile = (await res.json()) as APIProfile;
 
-      if (profile.uncivUserIds.length >= 10) {
+      if (profile._id !== AUTHOR_ID && profile.uncivUserIds.length >= 10) {
         // profile already exists, but has 10 or more userId's
         return new Message({
           title: 'AddID Prompt',
@@ -65,28 +61,22 @@ export default {
             `You already have ${profile.uncivUserIds.length} userId's in your Profile !` +
             '\nRemove some to add another one.',
         }).toResponse();
-      } else {
-        // profile already exists, but has less than 10 userId's
-        await prisma.profile.update({
-          where: { id: playerProfile.id },
-          data: {
-            users: {
-              connectOrCreate: {
-                where: { userId: uncivUserId },
-                create: { userId: uncivUserId },
-              },
-            },
-          },
-        });
       }
 
-      // return success message
-      // one of above blocks already added the id
+      // profile already exists, but has less than 10 userId's
+      const res2 = await api.addUserIdToProfile(profile._id, uncivUserId);
+      if (!res2.ok) return getResponseInfoEmbed(res);
+
       return new Message({
         title: 'AddID Prompt',
         description: 'user ID added to your profile !',
       }).toResponse();
-    } else if (queryResponse.discordId.toString() === userId) {
+    }
+
+    if (!res.ok) return getResponseInfoEmbed(res);
+
+    const discordId = await res.text();
+    if (discordId === userId) {
       // profile already contains the id
       return new Message({
         title: 'AddID Prompt',
@@ -100,7 +90,8 @@ export default {
     const { username, discriminator } = await Discord<
       any,
       RESTGetAPIUserResult
-    >('GET', Routes.user(queryResponse.discordId.toString()));
+    >('GET', Routes.user(discordId));
+
     const uniqueName =
       discriminator !== '0' ? `${username}#${discriminator}` : `@${username}`;
 

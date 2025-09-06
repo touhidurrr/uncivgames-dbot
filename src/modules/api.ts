@@ -1,24 +1,73 @@
 import { RequestMethod } from '@discordjs/rest';
 import { env } from '@src/secrets.js';
 
-const baseURL = 'https://uncivserver.xyz/api';
+const MAX_RETRIES = 5;
+const BASE_URL = 'https://uncivserver.xyz/api';
+const JWT_NAME = 'uncivgames-dbot';
+const JWT_BASE_URL = 'https://uncivserver.xyz/jwt';
 
-const apiFetch = (method: `${RequestMethod}`, path: string, data?: any) =>
-  env.SYNC_TOKEN.get().then(token => {
-    const config: RequestInit = {
-      method,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+let jwtToken: string | null = null;
 
-    if (data) {
-      config.body = JSON.stringify(data);
-      config.headers['Content-Type'] = 'application/json';
+const getJWTToken = async (): Promise<string | Response> => {
+  const syncToken = env.SYNC_TOKEN.get();
+
+  const url = `${JWT_BASE_URL}/${JWT_NAME}`;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${syncToken}`,
+    },
+  };
+
+  let retries = 0;
+  let res = await fetch(url, config);
+  while (retries < MAX_RETRIES) {
+    res = await fetch(url, config);
+
+    if (!res.ok) {
+      retries++;
+      continue;
     }
 
-    return fetch(`${baseURL}/${path}`, config);
-  });
+    return res.text();
+  }
+
+  return res;
+};
+
+const apiFetch = async (
+  method: `${RequestMethod}`,
+  path: string,
+  data?: any
+) => {
+  if (!jwtToken) {
+    const token = await getJWTToken();
+    if (typeof token !== 'string') return token;
+    jwtToken = token;
+  }
+
+  const config: RequestInit = {
+    method,
+    headers: {
+      Authorization: `Bearer ${jwtToken}`,
+    },
+  };
+
+  if (data) {
+    config.body = JSON.stringify(data);
+    config.headers['Content-Type'] = 'application/json';
+  }
+
+  const res = await fetch(`${BASE_URL}/${path}`, config);
+  if (res.status === 401) {
+    const token = await getJWTToken();
+    if (typeof token !== 'string') return token;
+    jwtToken = token;
+
+    config.headers['Authorization'] = `Bearer ${jwtToken}`;
+    return fetch(`${BASE_URL}/${path}`, config);
+  }
+  return res;
+};
 
 export type APIGame = {
   _id: string;
@@ -52,6 +101,8 @@ export const api = {
     apiFetch('POST', `games/${gameId}/name`, { name }),
 
   getProfile: (id: string) => apiFetch('GET', `profiles/${id}`),
+  getUserProfileId: (userId: string) =>
+    apiFetch('GET', `users/${userId}/profileId`),
 
   getGamesByProfile: (
     id: string,
@@ -65,4 +116,12 @@ export const api = {
 
   setNotificationStatus: (profileId: string, status: 'enabled' | 'disabled') =>
     apiFetch('POST', `profiles/${profileId}/notifications`, { status }),
+
+  addUserIdToProfile: (profileId: string, userId: string) =>
+    apiFetch('POST', `profiles/${profileId}/uncivUserIds`, { userId }),
+  removeUserIdToProfile: (profileId: string, userId: string) =>
+    apiFetch('DELETE', `profiles/${profileId}/uncivUserIds`, { userId }),
+
+  filterUnregisteredUserIds: (userIds: string[]) =>
+    apiFetch('POST', `filterUnregisteredUserIds`, { userIds }),
 };

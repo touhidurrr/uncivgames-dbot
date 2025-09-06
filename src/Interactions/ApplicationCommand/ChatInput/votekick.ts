@@ -1,9 +1,11 @@
+import { api } from '@modules/api.js';
 import Message from '@modules/message.js';
 import { getFullGame } from '@modules/onlineMultiplayer.js';
-import { getPrisma } from '@modules/prisma.js';
 import { UUID_REGEX } from '@src/constants.js';
+import { getResponseInfoEmbed } from '@src/models.js';
 import {
-  APIApplicationCommandOption,
+  APIApplicationCommandInteractionDataStringOption,
+  APIApplicationCommandStringOption,
   APIChatInputApplicationCommandInteraction,
 } from 'discord-api-types/v10';
 
@@ -26,12 +28,17 @@ export default {
       type: 3,
       required: true,
     },
-  ] satisfies APIApplicationCommandOption[],
+  ] satisfies APIApplicationCommandStringOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    //@ts-ignore
-    const gameId: string = interaction.data.options[0].value.trim();
-    //@ts-ignore
-    const civName: string = interaction.data.options[1].value
+    const gameId: string = (
+      interaction.data
+        .options[0] as APIApplicationCommandInteractionDataStringOption
+    ).value.trim();
+
+    const civName: string = (
+      interaction.data
+        .options[0] as APIApplicationCommandInteractionDataStringOption
+    ).value
       .trim()
       .toLowerCase();
 
@@ -91,13 +98,10 @@ export default {
 
     uniquePlayers.delete(playerToKick);
 
-    const prisma = await getPrisma();
-    const registeredPlayerIds = await prisma.profile
-      .findMany({
-        where: { users: { some: { userId: { in: [...uniquePlayers] } } } },
-        select: { users: { select: { userId: true } } },
-      })
-      .then(p => p.map(u => u.users.map(u => u.userId)).flat());
+    const res = await api.filterUnregisteredUserIds([...uniquePlayers]);
+    if (!res.ok) return getResponseInfoEmbed(res);
+
+    const registeredPlayerIds = (await res.json()) as string[];
 
     if (registeredPlayerIds.length < playerCount - 1) {
       return new Message(
