@@ -21,7 +21,7 @@ export default {
     const choices = !res.ok
       ? []
       : ((await res.json()) as APIGame[]).map(({ _id, name }) => ({
-          name,
+          name: name ?? _id,
           value: _id,
         }));
 
