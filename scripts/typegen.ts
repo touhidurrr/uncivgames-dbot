@@ -5,7 +5,6 @@ const cleanup = () =>
   Promise.all([
     rm('prisma/temp.db', { force: true }),
     rm('.wrangler', { recursive: true, force: true }),
-    rm('prisma/migrations', { recursive: true, force: true }),
   ]);
 
 await cleanup();
