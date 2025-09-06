@@ -64,7 +64,7 @@ export default {
         authorId: BigInt(userId),
         entries: {
           createMany: {
-            data: entries.map((label, order) => ({ label, order })),
+            data: entries.map(label => ({ label })),
           },
         },
       },
