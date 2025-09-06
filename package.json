@@ -19,7 +19,7 @@
   "dependencies": {
     "@libsql/client": "^0.15.14",
     "@prisma/adapter-libsql": "^6.16.0-dev.29",
-    "@prisma/client": "^6.16.0-dev.29",
+    "@prisma/client": "^6.16.0-integration-push-prynymnkvlrn.4",
     "discord-api-types": "^0.38.23",
     "tweetnacl": "^1.0.3",
     "wrangler": "^4.34.0",

@@ -6,7 +6,7 @@
       "dependencies": {
         "@libsql/client": "^0.15.14",
         "@prisma/adapter-libsql": "^6.16.0-dev.29",
-        "@prisma/client": "^6.16.0-dev.29",
+        "@prisma/client": "^6.16.0-integration-push-prynymnkvlrn.4",
         "discord-api-types": "^0.38.23",
         "tweetnacl": "^1.0.3",
         "wrangler": "^4.34.0",
@@ -182,7 +182,7 @@
 
     "@prisma/adapter-libsql": ["@prisma/adapter-libsql@6.16.0-dev.29", "", { "dependencies": { "@libsql/client": "^0.3.5 || ^0.4.0 || ^0.5.0 || ^0.6.0 || ^0.7.0 || ^0.8.0", "@prisma/driver-adapter-utils": "6.16.0-dev.29", "async-mutex": "0.5.0" } }, "sha512-Il3kbBMM2+qo/jD1ZkuhQx7s9AmlIAedkHnpw5Tg9KGTmwrpYbOmmne3FfzrSZtPhXVWxK7X0G55+TnzbYO9qg=="],
 
-    "@prisma/client": ["@prisma/client@6.16.0-dev.29", "", { "peerDependencies": { "prisma": "*", "typescript": ">=5.1.0" }, "optionalPeers": ["prisma", "typescript"] }, "sha512-vQBifJFlb3ZaEELIMGo72aXx+sN/MtwG6jgJ7jUhl6FFkWomsfxfch+p81wTIsNud+pjyFxRgMTVT4aHeWhzMQ=="],
+    "@prisma/client": ["@prisma/client@6.16.0-integration-push-prynymnkvlrn.4", "", { "peerDependencies": { "prisma": "*", "typescript": ">=5.1.0" }, "optionalPeers": ["prisma", "typescript"] }, "sha512-ucKY7wWcGJiXM3hThwnxgwYpxCtnZe3cFRJs9LmjEf3r3bN8Iu1lf4YE9Oox+6BIDYG18tkJmVfpCTQVyJoGlg=="],
 
     "@prisma/config": ["@prisma/config@6.15.0", "", { "dependencies": { "c12": "3.1.0", "deepmerge-ts": "7.1.5", "effect": "3.16.12", "empathic": "2.0.0" } }, "sha512-KMEoec9b2u6zX0EbSEx/dRpx1oNLjqJEBZYyK0S3TTIbZ7GEGoVyGyFRk4C72+A38cuPLbfQGQvgOD+gBErKlA=="],
 
