@@ -20,8 +20,10 @@ const getJWTToken = async (): Promise<string | Response> => {
 
   let retries = 0;
   let res = await fetch(url, config);
+  console.log({ jwtToken, res });
   while (retries < MAX_RETRIES) {
     res = await fetch(url, config);
+    console.log({ jwtToken, res });
 
     if (!res.ok) {
       retries++;
