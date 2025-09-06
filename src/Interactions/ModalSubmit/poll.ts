@@ -1,18 +1,25 @@
 import Message from '@modules/message.js';
 import { getPrisma } from '@modules/prisma.js';
 import { NUMBER_EMOJIS } from '@src/constants.js';
-import { APISelectMenuOption } from 'discord-api-types/v10';
+import {
+  APIInteraction,
+  APIModalSubmitInteraction,
+  APISelectMenuOption,
+  ModalSubmitActionRowComponent,
+} from 'discord-api-types/v10';
 
 export default {
   name: 'poll',
-  async respond(interaction) {
-    const title = interaction.data.components[0].components[0].value.replace(
-      /[\s\n]+/g,
-      ' '
-    );
+  async respond(interaction: APIModalSubmitInteraction) {
+    const title = (
+      interaction.data.components[0] as ModalSubmitActionRowComponent
+    ).components[0].value.replace(/[\s\n]+/g, ' ');
+
     const entries = [
       ...new Set(
-        (interaction.data.components[1].components[0].value as string)
+        (
+          interaction.data.components[1] as ModalSubmitActionRowComponent
+        ).components[0].value
           .trim()
           .split(/\s*\n+\s*/)
       ),
@@ -53,8 +60,8 @@ export default {
     const userId = interaction.user.id || interaction.member.user.id;
     const poll = await prisma.discordPoll.create({
       data: {
-        id: interaction.id,
-        authorId: userId,
+        id: BigInt(interaction.id),
+        authorId: BigInt(userId),
         entries: {
           createMany: {
             data: entries.map((label, order) => ({ label, order })),
