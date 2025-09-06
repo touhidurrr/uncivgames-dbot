@@ -1,4 +1,8 @@
-import Message from '../../../modules/message';
+import Message from '@modules/message.js';
+import {
+  APIApplicationCommandOption,
+  APIChatInputApplicationCommandInteraction,
+} from 'discord-api-types/v10';
 
 export default {
   name: 'avatar',
@@ -10,10 +14,11 @@ export default {
       type: 6,
       required: false,
     },
-  ],
-  async respond(interaction) {
+  ] satisfies APIApplicationCommandOption[],
+  async respond(interaction: APIChatInputApplicationCommandInteraction) {
     const user = interaction.data.options
-      ? interaction.data.resolved.users[interaction.data.options[0].value]
+      ? // @ts-ignore
+        interaction.data.resolved.users[interaction.data.options[0].value]
       : interaction.user || interaction.member.user;
 
     const userIcon = !user.avatar

@@ -1,14 +1,21 @@
-import Message from '../../modules/message.js';
-import MongoDB from '../../modules/mongodb.js';
-
-const numberEmojis = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟'];
+import Message from '@modules/message.js';
+import { getPrisma } from '@modules/prisma.js';
+import { NUMBER_EMOJIS } from '@src/constants.js';
+import { APISelectMenuOption } from 'discord-api-types/v10';
 
 export default {
   name: 'poll',
   async respond(interaction) {
-    const title = interaction.data.components[0].components[0].value.replace(/[\s\n]+/g, ' ');
+    const title = interaction.data.components[0].components[0].value.replace(
+      /[\s\n]+/g,
+      ' '
+    );
     const entries = [
-      ...new Set(interaction.data.components[1].components[0].value.trim().split(/\s*\n+\s*/)),
+      ...new Set(
+        (interaction.data.components[1].components[0].value as string)
+          .trim()
+          .split(/\s*\n+\s*/)
+      ),
     ];
 
     if (entries.length < 2) {
@@ -42,27 +49,35 @@ export default {
       ).toResponse();
     }
 
-    var c = 0;
-    await MongoDB.insertOne('Polls', {
-      _id: interaction.id,
-      entries: entries.map(e => {
-        return { value: String(c++), label: e, voters: [] };
-      }),
+    const prisma = await getPrisma();
+    const userId = interaction.user.id || interaction.member.user.id;
+    const poll = await prisma.discordPoll.create({
+      data: {
+        id: interaction.id,
+        authorId: userId,
+        entries: {
+          createMany: {
+            data: entries.map((label, order) => ({ label, order })),
+          },
+        },
+      },
+      select: {
+        entries: { select: { id: true, label: true } },
+      },
     });
 
-    c = 0;
-    let options = [];
+    let options: APISelectMenuOption[] = [];
     let description = `**${title}**`;
-    for (const e of entries) {
+    poll.entries.forEach(({ label, id }, order) => {
       options.push({
-        value: String(c++),
-        label: e,
+        label,
+        value: id.toString(),
         emoji: {
-          name: numberEmojis[c],
+          name: NUMBER_EMOJIS[order + 1],
         },
       });
-      description += `\n**${c}.** ${e}`;
-    }
+      description += `\n**${order + 1}.** ${label}`;
+    });
 
     return new Message({
       title: 'Democracy Bot Polls',
@@ -74,7 +89,7 @@ export default {
             {
               type: 3,
               options,
-              custom_id: `votepoll-${interaction.id}`,
+              custom_id: `votepoll`,
               placeholder: 'Select your votes for the Poll !',
               min_values: 1,
               max_values: entries.length,

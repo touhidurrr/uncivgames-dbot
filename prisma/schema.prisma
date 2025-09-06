@@ -1,0 +1,57 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:temp.db"
+}
+
+model Variable {
+  id        String   @id @unique
+  value     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([createdAt])
+  @@index([updatedAt])
+}
+
+model DiscordPoll {
+  id        BigInt   @id
+  authorId  BigInt
+  createdAt DateTime @default(now())
+
+  entries DiscordPollEntry[]
+
+  @@index([createdAt])
+}
+
+model DiscordPollEntry {
+  id     Int    @id @default(autoincrement())
+  label  String
+  pollId BigInt
+  count  Int    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  poll  DiscordPoll       @relation(fields: [pollId], references: [id])
+  votes DiscordPollVote[]
+
+  @@index([createdAt])
+  @@index([updatedAt])
+}
+
+model DiscordPollVote {
+  id        Int      @id @default(autoincrement())
+  entryId   Int
+  discordId BigInt
+  createdAt DateTime @default(now())
+
+  entry DiscordPollEntry @relation(fields: [entryId], references: [id])
+
+  @@unique([entryId, discordId])
+  @@index([createdAt])
+}

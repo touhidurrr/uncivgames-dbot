@@ -1,8 +1,11 @@
+import Message from '@modules/message.js';
+import { getFullGame } from '@modules/onlineMultiplayer.js';
+import { UUID_REGEX } from '@src/constants.js';
+import {
+  APIApplicationCommandOption,
+  APIChatInputApplicationCommandInteraction,
+} from 'discord-api-types/v10';
 import { stringify } from 'yaml';
-import Message from '../../../modules/message.js';
-import { getFullGame } from '../../../modules/onlineMultiplayer.js';
-
-const gameIdRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/;
 
 export default {
   name: 'gameinfo',
@@ -17,11 +20,12 @@ export default {
       required: true,
       autocomplete: true,
     },
-  ],
-  async respond(interaction) {
-    const gameId = interaction.data.options[0].value.trim();
+  ] satisfies APIApplicationCommandOption[],
+  async respond(interaction: APIChatInputApplicationCommandInteraction) {
+    //@ts-ignore
+    const gameId: string = interaction.data.options[0].value.trim();
 
-    if (!gameId || !gameIdRegex.test(gameId)) {
+    if (!gameId || !UUID_REGEX.test(gameId)) {
       return new Message(
         {
           title: 'GameInfo Prompt',

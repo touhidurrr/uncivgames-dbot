@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "checkJs": true,
     "noEmit": true,
     "skipLibCheck": true,
     "target": "ESNext",
@@ -8,9 +9,12 @@
     "lib": ["ESNext"],
     "types": ["@types/node", "@types/bun", "@cloudflare/workers-types"],
     "paths": {
-      "@src/*": ["./src/*"],
+      "@interactions/*": ["./src/Interactions/*"],
       "@modules/*": ["./src/modules/*"],
-      "@interactions/*": ["./src/Interactions/*"]
+      "@src/*": ["./src/*"],
+
+      "@secrets": ["./src/secrets.ts"],
+      "@constants": ["./src/constants.ts"]
     }
   }
 }

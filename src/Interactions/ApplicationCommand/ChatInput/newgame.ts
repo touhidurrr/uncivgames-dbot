@@ -1,6 +1,6 @@
 import Discord from '@modules/discord.js';
 import Message from '@modules/message.js';
-import MongoDB from '@modules/mongodb.js';
+import { getPrisma } from '@modules/prisma.js';
 import {
   APIChatInputApplicationCommandInteraction,
   RESTPostAPIChannelMessageResult,
@@ -21,10 +21,15 @@ export default {
       ).toResponse();
     }
 
+    const prisma = await getPrisma();
+
     // Get Game Number
-    const gameNo = await MongoDB.findOne('Variables', 'Games Created', { _id: 0 }).then(
-      doc => doc.value
-    );
+    const gameNo = await prisma.variable
+      .findUniqueOrThrow({
+        where: { id: 'GamesCount' },
+        select: { value: true },
+      })
+      .then(({ value }) => value);
 
     // Create Message
     const { id, channel_id } = (await Discord(
@@ -55,7 +60,10 @@ export default {
       Discord('POST', Routes.threads(channel_id, id), {
         name: `Game ${gameNo}`,
       }),
-      MongoDB.updateOne('Variables', 'Games Created', { $inc: { value: 1 } }),
+      prisma.variable.update({
+        where: { id: 'GamesCount' },
+        data: { value: (BigInt(gameNo) + 1n).toString() },
+      }),
     ]);
 
     // Respond

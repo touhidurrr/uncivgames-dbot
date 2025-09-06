@@ -1,15 +1,22 @@
-import Message from '../../../modules/message.js';
-import MongoDB from '../../../modules/mongodb.js';
+import { api, APIGame } from '@modules/api.js';
+import Message from '@modules/message.js';
+import { getResponseInfoEmbed } from '@src/models.js';
+import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {
   name: 'myturn',
   description: 'Check the Games where it is your Turn !',
-  async respond(interaction) {
-    const userId = !interaction.user ? interaction.member.user.id : interaction.user.id;
+  async respond(interaction: APIChatInputApplicationCommandInteraction) {
+    const userId = !interaction.user
+      ? interaction.member.user.id
+      : interaction.user.id;
 
-    const profile = await MongoDB.findOne('PlayerProfiles', userId, { _id: 0, uncivUserIds: 1 });
+    const res = await api.getGamesByProfile(userId, {
+      playing: true,
+      limit: 5,
+    });
 
-    if (!profile || !profile.uncivUserIds.length) {
+    if (res.status in [204, 404]) {
       return new Message(
         {
           title: 'MyTurn Prompt',
@@ -21,14 +28,10 @@ export default {
       ).toResponse();
     }
 
-    const gamesFound = await MongoDB.find('UncivServer', {
-      filter: { playerId: { $in: profile.uncivUserIds } },
-      projection: { currentPlayer: 1, name: 1, updatedAt: 1, turns: 1 },
-      sort: { updatedAt: -1 },
-      limit: 5,
-    });
+    if (!res.ok) return getResponseInfoEmbed(res);
+    const games = (await res.json()) as APIGame[];
 
-    if (!gamesFound.length) {
+    if (games.length < 1) {
       return new Message(
         {
           title: 'MyTurn Prompt',
@@ -38,15 +41,14 @@ export default {
       ).toResponse();
     }
 
-    let Screen = new Message();
-    Screen.addFlag(Message.Flags.Ephemeral);
+    const Screen = new Message().addFlag(Message.Flags.Ephemeral);
 
-    gamesFound.forEach(game =>
+    games.forEach(game =>
       Screen.addEmbed({
         fields: [
           {
             name: 'Game ID',
-            value: `\`\`\`${game._id.slice(0, -8)}\`\`\``,
+            value: `\`\`\`${game._id.endsWith('_Preview') ? game._id.slice(0, -8) : game._id}\`\`\``,
           },
           !game.name
             ? undefined
@@ -67,8 +69,14 @@ export default {
                 inline: true,
               },
           {
+            name: 'Started',
+            value: `<t:${Math.floor(new Date(game.createdAt).getTime() / 1000)}:R>`,
+            inline: true,
+          },
+          {
             name: 'Last Activitity',
-            value: `<t:${Math.floor(game.updatedAt / 1000)}:R>`,
+            value: `<t:${Math.floor(new Date(game.updatedAt).getTime() / 1000)}:R>`,
+            inline: true,
           },
         ],
       })

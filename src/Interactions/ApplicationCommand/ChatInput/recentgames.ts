@@ -1,15 +1,19 @@
-import Message from '../../../modules/message.js';
-import MongoDB from '../../../modules/mongodb.js';
+import { api, APIGame } from '@modules/api.js';
+import Message from '@modules/message.js';
+import { getResponseInfoEmbed } from '@src/models.js';
+import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {
   name: 'recentgames',
   description: 'Check your Recently Active Games !',
-  async respond(interaction) {
-    const userId = !interaction.user ? interaction.member.user.id : interaction.user.id;
+  async respond(interaction: APIChatInputApplicationCommandInteraction) {
+    const userId = !interaction.user
+      ? interaction.member.user.id
+      : interaction.user.id;
 
-    const profile = await MongoDB.findOne('PlayerProfiles', userId, { _id: 0, uncivUserIds: 1 });
+    const res = await api.getGamesByProfile(userId, { limit: 5 });
 
-    if (!profile || !profile.uncivUserIds.length) {
+    if (res.status in [204, 404]) {
       return new Message(
         {
           title: 'RecentGames Prompt',
@@ -21,18 +25,15 @@ export default {
       ).toResponse();
     }
 
-    const gamesFound = await MongoDB.find('UncivServer', {
-      filter: { players: { $in: profile.uncivUserIds } },
-      projection: { currentPlayer: 1, name: 1, updatedAt: 1, turns: 1 },
-      sort: { updatedAt: -1 },
-      limit: 5,
-    });
+    if (!res.ok) return getResponseInfoEmbed(res);
+    const games = (await res.json()) as APIGame[];
 
-    if (!gamesFound.length) {
+    if (!games.length) {
       return new Message(
         {
           title: 'RecentGames Prompt',
-          description: 'Could not find any Game for you which was active Recently !',
+          description:
+            'Could not find any Game for you which was active Recently !',
         },
         Message.Flags.Ephemeral
       ).toResponse();
@@ -40,12 +41,12 @@ export default {
 
     const msg = new Message().addFlag(Message.Flags.Ephemeral);
 
-    gamesFound.forEach(game =>
+    games.forEach(game =>
       msg.addEmbed({
         fields: [
           {
             name: 'Game ID',
-            value: `\`\`\`${game._id.slice(0, -8)}\`\`\``,
+            value: `\`\`\`${game._id.endsWith('_Preview') ? game._id.slice(0, -8) : game._id}\`\`\``,
           },
           !game.name
             ? undefined
@@ -66,8 +67,14 @@ export default {
                 inline: true,
               },
           {
+            name: 'Started',
+            value: `<t:${Math.floor(new Date(game.createdAt).getTime() / 1000)}:R>`,
+            inline: true,
+          },
+          {
             name: 'Last Activitity',
-            value: `<t:${Math.floor(game.updatedAt / 1000)}:R>`,
+            value: `<t:${Math.floor(new Date(game.updatedAt).getTime() / 1000)}:R>`,
+            inline: true,
           },
         ],
       })

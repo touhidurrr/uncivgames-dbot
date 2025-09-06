@@ -1,4 +1,5 @@
 import { RequestMethod } from '@discordjs/rest';
+import { env } from '@src/secrets.js';
 
 const discordApiEndpoint = 'https://discord.com/api/v10';
 
@@ -7,11 +8,12 @@ export default async function Discord<BodyType = any, ResponseType = unknown>(
   path: string,
   data?: BodyType
 ): Promise<ResponseType> {
+  const token = await env.DISCORD_TOKEN.get();
   const config: RequestInit = {
     method,
     headers: {
       Accept: 'application/json',
-      Authorization: `Bot ${env.DISCORD_TOKEN}`,
+      Authorization: `Bot ${token}`,
     },
   };
 

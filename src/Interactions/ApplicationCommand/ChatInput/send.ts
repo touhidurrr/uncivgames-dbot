@@ -2,6 +2,7 @@ import Discord from '@modules/discord.js';
 import Message from '@modules/message.js';
 import { AUTHOR_ID } from '@src/constants.js';
 import {
+  APIApplicationCommandInteractionDataStringOption,
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,
   RESTPostAPIChannelMessageJSONBody,
@@ -54,11 +55,11 @@ export default {
       ).toResponse();
     }
 
-    //@ts-ignore
-    const title = interaction.data.options.find(o => o.name === 'title')?.value;
+    const options = interaction.data
+      .options as APIApplicationCommandInteractionDataStringOption[];
 
-    //@ts-ignore
-    const description = interaction.data.options.find(o => o.name === 'description')?.value;
+    const title = options.find(o => o.name === 'title')?.value;
+    const description = options.find(o => o.name === 'description')?.value;
 
     if (title && !description) {
       return new Message(
@@ -72,8 +73,7 @@ export default {
       ).toResponse();
     }
 
-    //@ts-ignore
-    const content = interaction.data.options.find(o => o.name === 'content')?.value;
+    const content = options.find(o => o.name === 'content')?.value;
 
     await Discord('POST', Routes.channelMessages(interaction.channel.id), {
       content,
