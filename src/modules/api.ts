@@ -20,10 +20,12 @@ const getJWTToken = async (): Promise<string | Response> => {
 
   let retries = 0;
   let res = await fetch(url, config);
-  console.log({ jwtToken, res });
+  const {status, statusText, headers} = res
+  console.log({ jwtToken, res:  {status, statusText, headers} });
   while (retries < MAX_RETRIES) {
     res = await fetch(url, config);
-    console.log({ jwtToken, res });
+    const {status, statusText, headers} = res
+  console.log({ jwtToken, res:  {status, statusText, headers} });
 
     if (!res.ok) {
       retries++;
@@ -63,6 +65,7 @@ const apiFetch = async (
   const res = await fetch(`${BASE_URL}/${path}`, config);
   if (res.status === 401) {
     const token = await getJWTToken();
+    console.log({ token });
     if (typeof token !== 'string') return token;
     jwtToken = token;
 
