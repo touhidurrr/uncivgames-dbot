@@ -1,9 +1,11 @@
+import { api, APIProfile } from '@modules/api.js';
 import Message from '@modules/message.js';
-import { getPrisma } from '@modules/prisma.js';
+import { getResponseInfoEmbed, JsonResponse } from '@src/models.js';
 import {
   APIActionRowComponent,
   APIButtonComponent,
   APIMessageComponentButtonInteraction,
+  InteractionResponseType,
 } from 'discord-api-types/v10';
 
 export default {
@@ -11,25 +13,22 @@ export default {
   async respond(
     interaction: APIMessageComponentButtonInteraction,
     initiatorId: string,
-    toggle: string,
+    toggle: 'enabled' | 'disabled',
     timestamp: string
   ) {
     const user = interaction.user || interaction.member.user;
 
     if (initiatorId !== user.id) {
-      return new Response('{"type":6}', {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
+      return new JsonResponse({
+        type: InteractionResponseType.DeferredMessageUpdate,
       });
     }
 
-    let { message } = interaction;
-    const prisma = await getPrisma();
+    const res = await api.getProfile(user.id);
+    if (!res.ok) return getResponseInfoEmbed(res);
 
-    const { id, notifications } = await prisma.profile.findFirstOrThrow({
-      where: { discordId: +user.id },
-      select: { id: true, notifications: true },
-    });
+    const { message } = interaction;
+    const { notifications } = (await res.json()) as APIProfile;
 
     if (toggle === notifications) {
       const timeLeft = 300 - (Date.now() - parseInt(timestamp)) / 1000;
@@ -39,22 +38,14 @@ export default {
           ? 'This Interaction will be Closed anytime soon'
           : `You have around ${timeLeft.toFixed(2)} seconds or more to react to this Message.`;
 
-      return new Response(
-        JSON.stringify({
-          type: Message.Types.UPDATE_MESSAGE,
-          data: message,
-        }),
-        {
-          status: 200,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      return new JsonResponse({
+        type: Message.Types.UPDATE_MESSAGE,
+        data: message,
+      });
     }
 
-    await prisma.profile.update({
-      where: { id },
-      data: { notifications: toggle },
-    });
+    const res2 = await api.setNotificationStatus(user.id, toggle);
+    if (!res2.ok) return getResponseInfoEmbed(res2);
 
     const timeLeft = 300 - (Date.now() - parseInt(timestamp)) / 1000;
 
@@ -71,15 +62,9 @@ export default {
     actionRow.components[0].disabled = toggle === 'enabled';
     actionRow.components[1].disabled = toggle === 'disabled';
 
-    return new Response(
-      JSON.stringify({
-        type: Message.Types.UPDATE_MESSAGE,
-        data: message,
-      }),
-      {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+    return new JsonResponse({
+      type: Message.Types.UPDATE_MESSAGE,
+      data: message,
+    });
   },
 };

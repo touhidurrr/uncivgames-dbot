@@ -20,11 +20,6 @@ binding = "DISCORD_TOKEN"
 
 [[secrets_store_secrets]]
 store_id = "9e971ed6e8da4b76b23294a49e1c287f"
-secret_name = "UNCIVSERVER_MONGO_URL"
-binding = "MONGO_URL"
-
-[[secrets_store_secrets]]
-store_id = "9e971ed6e8da4b76b23294a49e1c287f"
 secret_name = "UNCIVSERVER_SYNC_TOKEN"
 binding = "SYNC_TOKEN"
 

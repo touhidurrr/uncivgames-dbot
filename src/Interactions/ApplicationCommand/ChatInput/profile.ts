@@ -1,6 +1,7 @@
 const { stringify } = require('yaml');
+import { api, APIProfile } from '@modules/api.js';
 import Message from '@modules/message.js';
-import { getPrisma } from '@modules/prisma.js';
+import { getResponseInfoEmbed } from '@src/models.js';
 import {
   APIChatInputApplicationCommandInteraction,
   InteractionContextType,
@@ -10,46 +11,24 @@ export default {
   name: 'profile',
   description: 'Shows a Players Profile',
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    const prisma = await getPrisma();
     const user = interaction.user || interaction.member.user;
 
-    let profile = await prisma.profile.findFirst({
-      where: { discordId: +user.id },
-      select: {
-        rating: true,
-        updatedAt: true,
-        notifications: true,
-        users: { select: { userId: true } },
-      },
-    });
+    const res = await api.getProfile(user.id);
+    if (!res.ok) return getResponseInfoEmbed(res);
 
-    if (profile === null) {
-      profile = await prisma.profile.create({
-        data: { discordId: +user.id },
-        select: {
-          rating: true,
-          updatedAt: true,
-          notifications: true,
-          users: { select: { userId: true } },
-        },
-      });
-    }
+    const profile = (await res.json()) as APIProfile;
 
-    const shownProfile = {
-      rating: profile.rating,
-      notifications: profile.notifications,
-      uncivUserIds: profile.users.map(({ userId }) => userId),
-    };
+    delete profile['dmChannel'];
 
     if (interaction.context !== InteractionContextType.BotDM)
-      shownProfile.uncivUserIds = [
-        `Count: ${shownProfile.uncivUserIds.length}. You can only see your ids when dm the bot this command!`,
+      profile.uncivUserIds = [
+        `Count: ${profile.uncivUserIds.length}. You can only see your ids when dm the bot this command!`,
       ];
 
     return new Message({
       title: 'Profile Prompt',
       description: `\`\`\`yml\n# ${user.username}'s Profile\n${stringify(profile)}\n\`\`\``,
-      footer: `Last Updated: <t:${Math.floor(profile.updatedAt.getTime() / 1000)}:R>$`,
+      footer: `Last Updated: <t:${Math.floor(new Date(profile.updatedAt).getTime() / 1000)}:R>`,
     }).toResponse();
   },
 };

@@ -1,5 +1,6 @@
+import { api, APIGame } from '@modules/api.js';
 import Message from '@modules/message.js';
-import { getPrisma } from '@modules/prisma.js';
+import { getResponseInfoEmbed } from '@src/models.js';
 import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {
@@ -10,13 +11,12 @@ export default {
       ? interaction.member.user.id
       : interaction.user.id;
 
-    const prisma = await getPrisma();
-    const profile = await prisma.profile.findFirst({
-      where: { discordId: +userId },
-      select: { users: { select: { userId: true } } },
+    const res = await api.getGamesByProfile(userId, {
+      playing: true,
+      limit: 5,
     });
 
-    if (!profile || !profile.users.length) {
+    if (res.status in [204, 404]) {
       return new Message(
         {
           title: 'MyTurn Prompt',
@@ -28,26 +28,10 @@ export default {
       ).toResponse();
     }
 
-    const gamesFound = await prisma.usersInGame
-      .findMany({
-        where: { userId: { in: profile.users.map(u => u.userId) } },
-        select: {
-          game: {
-            select: {
-              id: true,
-              name: true,
-              turns: true,
-              currentPlayer: true,
-              updatedAt: true,
-            },
-          },
-        },
-        orderBy: { game: { updatedAt: 'desc' } },
-        take: 5,
-      })
-      .then(uig => uig.map(g => g.game));
+    if (!res.ok) return getResponseInfoEmbed(res);
+    const games = (await res.json()) as APIGame[];
 
-    if (!gamesFound.length) {
+    if (games.length < 1) {
       return new Message(
         {
           title: 'MyTurn Prompt',
@@ -59,12 +43,12 @@ export default {
 
     const Screen = new Message().addFlag(Message.Flags.Ephemeral);
 
-    gamesFound.forEach(game =>
+    games.forEach(game =>
       Screen.addEmbed({
         fields: [
           {
             name: 'Game ID',
-            value: `\`\`\`${game.id.slice(0, -8)}\`\`\``,
+            value: `\`\`\`${game._id.endsWith('_Preview') ? game._id.slice(0, -8) : game._id}\`\`\``,
           },
           !game.name
             ? undefined
@@ -85,8 +69,14 @@ export default {
                 inline: true,
               },
           {
+            name: 'Started',
+            value: `<t:${Math.floor(new Date(game.createdAt).getTime() / 1000)}:R>`,
+            inline: true,
+          },
+          {
             name: 'Last Activitity',
-            value: `<t:${game.updatedAt / 1000n}:R>`,
+            value: `<t:${Math.floor(new Date(game.updatedAt).getTime() / 1000)}:R>`,
+            inline: true,
           },
         ],
       })

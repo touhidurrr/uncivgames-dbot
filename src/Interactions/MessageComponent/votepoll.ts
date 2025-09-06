@@ -1,6 +1,7 @@
 import Message from '@modules/message.js';
 import { getPrisma } from '@modules/prisma.js';
 import { NUMBER_EMOJIS } from '@src/constants.js';
+import { JsonResponse } from '@src/models.js';
 import {
   APIActionRowComponent,
   APIMessageComponentSelectMenuInteraction,
@@ -71,15 +72,9 @@ export default {
       emoji: { name: NUMBER_EMOJIS[idx + 1] },
     }));
 
-    return new Response(
-      JSON.stringify({
-        type: Message.Types.UPDATE_MESSAGE,
-        data: interaction.message,
-      }),
-      {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+    return new JsonResponse({
+      type: Message.Types.UPDATE_MESSAGE,
+      data: interaction.message,
+    });
   },
 };

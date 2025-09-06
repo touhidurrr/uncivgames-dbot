@@ -1,7 +1,8 @@
+import { api, APIProfile } from '@modules/api.js';
 import Message from '@modules/message.js';
 import { getGame } from '@modules/onlineMultiplayer.js';
-import { getPrisma } from '@modules/prisma.js';
 import { MAX_GAME_NAME_LENGTH, UUID_REGEX } from '@src/constants.js';
+import { getResponseInfoEmbed } from '@src/models.js';
 import {
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,
@@ -52,19 +53,17 @@ export default {
       ).toResponse();
     }
 
-    const prisma = await getPrisma();
     const userId = !interaction.user
       ? interaction.member.user.id
       : interaction.user.id;
-    const profile = await prisma.profile.findFirst({
-      where: { discordId: parseInt(userId) },
-      select: { users: { select: { userId: true } } },
-    });
+
+    const res = await api.getProfile(userId);
+    if (!res.ok) return getResponseInfoEmbed(res);
+    const { uncivUserIds } = (await res.json()) as APIProfile;
 
     if (
-      !profile ||
       !(game.civilizations as { playerId?: string }[]).find(
-        c => c.playerId && profile.users.some(u => u.userId === c.playerId)
+        c => c.playerId && uncivUserIds.includes(c.playerId)
       )
     ) {
       return new Message(
@@ -91,25 +90,24 @@ export default {
       ).toResponse();
     }
 
-    await prisma.game.update({
-      where: { id: gameId },
-      data: { name, updatedAt: Date.now() },
-    });
+    const res2 = await api.setGameName(gameId, name);
 
-    return new Message({
-      title: 'SetGameName Prompt',
-      description: 'Name Set !',
-      fields: [
-        {
-          name: 'game ID',
-          value: `\`\`\`js\n${gameId}\n\`\`\``,
-        },
-        {
-          name: 'New Name',
-          value: `\`\`\`js\n${name}\n\`\`\``,
-          inline: true,
-        },
-      ],
-    }).toResponse();
+    return !res2.ok
+      ? getResponseInfoEmbed(res2)
+      : new Message({
+          title: 'SetGameName Prompt',
+          description: 'Name Set !',
+          fields: [
+            {
+              name: 'game ID',
+              value: `\`\`\`js\n${gameId}\n\`\`\``,
+            },
+            {
+              name: 'New Name',
+              value: `\`\`\`js\n${name}\n\`\`\``,
+              inline: true,
+            },
+          ],
+        }).toResponse();
   },
 };

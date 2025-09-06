@@ -48,19 +48,6 @@ export default {
     });
 
     if (queryResponse === null) {
-      // we try to fetch the profile of the user
-      let playerProfile = await prisma.profile.findFirst({
-        where: { discordId: parseInt(userId) },
-        select: { id: true, users: { select: { userId: true } } },
-      });
-
-      if (playerProfile === null) {
-        playerProfile = await prisma.profile.create({
-          data: { discordId: parseInt(userId) },
-          select: { id: true, users: { select: { userId: true } } },
-        });
-      }
-
       return new Message({
         title: 'RemoveID Prompt',
         description: 'Nobody owns this user ID !',
@@ -78,6 +65,7 @@ export default {
       any,
       RESTGetAPIUserResult
     >('GET', Routes.user(queryResponse.discordId.toString()));
+
     const uniqueName =
       discriminator !== '0' ? `${username}#${discriminator}` : `@${username}`;
 

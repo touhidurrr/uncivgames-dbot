@@ -1,4 +1,4 @@
-import { APIInteraction } from 'discord-api-types/v10';
+import { APIInteraction, InteractionResponseType } from 'discord-api-types/v10';
 import { sign } from 'tweetnacl';
 import {
   ApplicationCommandResponses,
@@ -6,6 +6,7 @@ import {
 } from './responsesList.js';
 import { scheduled } from './scheduled.js';
 import secrets from './secrets.js';
+import { JsonResponse } from './models.js';
 
 //@ts-ignore
 BigInt.prototype.toJSON = function () {
@@ -38,40 +39,33 @@ export default {
     // Log Interaction
     //console.dir(interaction, { depth: null });
 
-    // Respond to Ping
-    if (interaction.type === 1) {
-      return new Response('{"type":1}', {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
+    switch (interaction.type) {
+      case 1: // Respond to Ping
+        return new JsonResponse({ type: InteractionResponseType.Pong });
 
-    // Respond to Application Commands
-    if (interaction.type === 2) {
-      const command = ApplicationCommandResponses[interaction.data.type].find(
-        i => i.name === interaction.data.name
-      );
-      if (!command) new Response('Not Found', { status: 404 });
-      return await command.respond(interaction);
-    }
+      case 2: // Respond to Application Commands
+        const command = ApplicationCommandResponses[interaction.data.type].find(
+          i => i.name === interaction.data.name
+        );
+        if (!command) new Response('Not Found', { status: 404 });
+        return command.respond(interaction);
 
-    // Autocomplete
-    if (interaction.type === 4) {
-      return await InteractionResponses[4]
-        .filter(r => r.logic(interaction))
-        .sort((a, b) => b.priority - a.priority)[0]
-        .respond(interaction);
-    }
+      case 4: // Autocomplete
+        return InteractionResponses[4]
+          .filter(r => r.logic(interaction))
+          .sort((a, b) => b.priority - a.priority)[0]
+          .respond(interaction);
 
-    // Respond to other Interactions
-    if (InteractionResponses.hasOwnProperty(interaction.type)) {
-      const args = interaction.data.custom_id.split('-');
-      const cName = args.shift();
+      default: // Respond to other Interactions
+        if (InteractionResponses.hasOwnProperty(interaction.type)) {
+          //@ts-ignore ignore
+          const args = interaction.data.custom_id.split('-');
+          const cName = args.shift();
 
-      return await InteractionResponses[interaction.type]
-        .find(i => i.name === cName)
-        //@ts-ignore
-        .respond(interaction, ...args);
+          return InteractionResponses[interaction.type]
+            .find(i => i.name === cName)
+            .respond(interaction, ...args);
+        }
     }
   },
 } satisfies ExportedHandler<Env>;

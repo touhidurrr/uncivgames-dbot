@@ -1,4 +1,5 @@
-import { getPrisma } from '@modules/prisma.js';
+import { api, APIGame } from '@modules/api.js';
+import { getResponseInfoEmbed, JsonResponse } from '@src/models.js';
 import {
   APIApplicationCommandAutocompleteInteraction,
   APIApplicationCommandAutocompleteResponse,
@@ -15,36 +16,18 @@ export default {
       ? interaction.user.id
       : interaction.member.user.id;
 
-    const prisma = await getPrisma();
-    const profile = await prisma.profile.findFirst({
-      where: { discordId: parseInt(userId) },
-      select: { users: { select: { userId: true } } },
-    });
+    const res = await api.getGamesByProfile(userId);
 
-    if (!profile) {
-      return new Response('{"type":8,"data":{"choices":[]}}', {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
+    const choices = !res.ok
+      ? []
+      : ((await res.json()) as APIGame[]).map(({ _id, name }) => ({
+          name,
+          value: _id,
+        }));
 
-    const gamesFound = await prisma.usersInGame
-      .findMany({
-        where: { userId: { in: profile.users.map(u => u.userId) } },
-        select: { game: { select: { id: true, name: true } } },
-        orderBy: { game: { updatedAt: 'desc' } },
-        take: 25,
-      })
-      .then(uig => uig.map(g => g.game));
-
-    return new Response(
-      JSON.stringify({
-        type: InteractionResponseType.ApplicationCommandAutocompleteResult,
-        data: {
-          choices: gamesFound.map(({ id, name }) => ({ name, value: id })),
-        },
-      } satisfies APIApplicationCommandAutocompleteResponse),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
-    );
+    return new JsonResponse({
+      type: InteractionResponseType.ApplicationCommandAutocompleteResult,
+      data: { choices },
+    } satisfies APIApplicationCommandAutocompleteResponse);
   },
 };

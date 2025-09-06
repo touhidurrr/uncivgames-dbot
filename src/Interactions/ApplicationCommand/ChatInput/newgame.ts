@@ -21,12 +21,12 @@ export default {
       ).toResponse();
     }
 
-    const prisma = getPrisma();
+    const prisma = await getPrisma();
 
     // Get Game Number
     const gameNo = await prisma.variable
       .findUniqueOrThrow({
-        where: { id: 'Games Count' },
+        where: { id: 'GamesCount' },
         select: { value: true },
       })
       .then(({ value }) => value);
@@ -61,7 +61,7 @@ export default {
         name: `Game ${gameNo}`,
       }),
       prisma.variable.update({
-        where: { id: 'Games Count' },
+        where: { id: 'GamesCount' },
         data: { value: (BigInt(gameNo) + 1n).toString() },
       }),
     ]);

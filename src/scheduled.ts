@@ -28,7 +28,7 @@ export async function scheduled(
 
   const releaseId = await prisma.variable
     .findUniqueOrThrow({
-      where: { id: 'Unciv Release Id' },
+      where: { id: 'UncivReleaseId' },
       select: { value: true },
     })
     .then(({ value }) => +value);
@@ -88,7 +88,7 @@ export async function scheduled(
       )
     ),
     prisma.variable.update({
-      where: { id: 'Unciv Release Id' },
+      where: { id: 'UncivReleaseId' },
       data: { value: id.toString() },
     }),
   ]);

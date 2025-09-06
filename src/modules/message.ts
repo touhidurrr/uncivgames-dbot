@@ -131,11 +131,11 @@ export default class Message {
       });
 
       fd.append('payload_json', this.toJSON(type));
-      return new Response(fd);
+      return new Response(fd, { statusText: 'OK' });
     }
 
     return new Response(this.toJSON(type), {
-      status: 200,
+      statusText: 'OK',
       headers: { 'Content-Type': 'application/json' },
     });
   }
