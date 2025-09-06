@@ -23,11 +23,11 @@ export async function getResponseInfoEmbed(res: Response): Promise<Response> {
     title: 'Response Info',
     description: 'The detailed server response.',
     fields: [
-      { name: 'status', value: res.status.toString(), inline: true },
-      { name: 'statusText', value: res.statusText, inline: true },
+      { name: 'status', value: `${'```ts\n'}${res.status.toString()}${'\n```'}`, inline: true },
+      { name: 'statusText', value: `${'```ts\n'}${res.statusText}${'\n```'}`, inline: true },
       {
         name: 'body',
-        value: `${'```'}${isJSON ? `yml\n${stringify(body)}` : `\n${body}`}${'\n```'}`,
+        value: `${'```yml\n'}${isJSON ? stringify(body) : body}${'\n```'}`,
       },
     ],
   }).toResponse();
