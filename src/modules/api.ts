@@ -43,6 +43,7 @@ const apiFetch = async (
 ) => {
   if (!jwtToken) {
     const token = await getJWTToken();
+    console.log({ token });
     if (typeof token !== 'string') return token;
     jwtToken = token;
   }
