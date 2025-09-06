@@ -1,4 +1,4 @@
-import Message from '@modules/message.js';
+import Message, { enCode } from '@modules/message.js';
 import { stringify } from 'yaml';
 
 export class JsonResponse extends Response {
@@ -25,17 +25,17 @@ export async function getResponseInfoEmbed(res: Response): Promise<Response> {
     fields: [
       {
         name: 'status',
-        value: `${'```ts\n'}${res.status.toString()}${'\n```'}`,
+        value: enCode(res.status.toString()),
         inline: true,
       },
       {
         name: 'statusText',
-        value: `${'```ts\n'}${res.statusText}${'\n```'}`,
+        value: enCode(res.statusText),
         inline: true,
       },
       {
         name: 'body',
-        value: `${'```yml\n'}${isJSON ? stringify(body) : body}${'\n```'}`,
+        value: enCode(`${isJSON ? stringify(body) : body}`, 'yml'),
       },
     ],
   }).toResponse();

@@ -5,8 +5,8 @@ import {
   InteractionResponses,
 } from './responsesList.js';
 import { scheduled } from './scheduled.js';
-import secrets from './secrets.js';
-import { JsonResponse } from './models.js';
+import secrets from '@secrets';
+import { JsonResponse } from '@models';
 
 //@ts-ignore
 BigInt.prototype.toJSON = function () {

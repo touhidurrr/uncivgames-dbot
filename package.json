@@ -1,6 +1,6 @@
 {
   "name": "uncivgames-dbot",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "A bot owned by touhidurrr made for The Unciv Games Discord Server. Join link https://discord.gg/YYEmec3xr6",
   "module": "src/index.js",
   "type": "module",

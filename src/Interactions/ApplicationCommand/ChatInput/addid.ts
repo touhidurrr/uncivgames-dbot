@@ -2,7 +2,7 @@ import { api, APIProfile } from '@modules/api.js';
 import Discord from '@modules/discord.js';
 import Message from '@modules/message.js';
 import { AUTHOR_ID, UUID_REGEX } from '@src/constants.js';
-import { getResponseInfoEmbed } from '@src/models.js';
+import { getResponseInfoEmbed } from '@models';
 import {
   APIApplicationCommandInteractionDataStringOption,
   APIApplicationCommandOption,

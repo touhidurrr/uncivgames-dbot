@@ -13,6 +13,9 @@ export type MessageAttachment = Omit<RESTAPIAttachment, 'id'> & {
   data: (ArrayBuffer | string | Blob)[];
 };
 
+export const enCode = (input: string, ext: string = 'ts') =>
+  `${'```'}${ext}\n${input}${'\n```'}`;
+
 export default class Message {
   static Flags = MessageFlags;
 

@@ -1,7 +1,7 @@
 const { stringify } = require('yaml');
 import { api, APIProfile } from '@modules/api.js';
 import Message from '@modules/message.js';
-import { getResponseInfoEmbed } from '@src/models.js';
+import { getResponseInfoEmbed } from '@models';
 import {
   APIChatInputApplicationCommandInteraction,
   InteractionContextType,

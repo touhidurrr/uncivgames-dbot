@@ -1,4 +1,4 @@
-import Message from '@modules/message.js';
+import Message, { enCode } from '@modules/message.js';
 import { getFullGame } from '@modules/onlineMultiplayer.js';
 import { UUID_REGEX } from '@src/constants.js';
 import {
@@ -68,42 +68,44 @@ export default {
       fields: [
         {
           name: 'game ID',
-          value: `\`\`\`js\n${gameId}\n\`\`\``,
+          value: enCode(gameId),
         },
         {
           name: 'Turns',
-          value: `\`\`\`js\n${turns || 0}\n\`\`\``,
+          value: enCode(turns || 0),
           inline: true,
         },
         {
           name: 'Current Turn',
-          value: `\`\`\`js\n${currentPlayer}\n\`\`\``,
+          value: enCode(currentPlayer),
           inline: true,
         },
         {
           name: 'Players',
-          value: `\`\`\`js\n${civilizations
-            .filter(c => c.playerType === 'Human')
-            .map(c => c.civName)
-            .join(', ')}\n\`\`\``,
+          value: enCode(
+            civilizations
+              .filter(c => c.playerType === 'Human')
+              .map(c => c.civName)
+              .join(', ')
+          ),
         },
         {
           name: 'Seed',
-          value: `\`\`\`js\n${seed}\n\`\`\``,
+          value: enCode(seed),
           inline: true,
         },
         {
           name: 'Made With',
-          value: `\`\`\`js\n${createdWith.text} (Build ${createdWith.number})\n\`\`\``,
+          value: enCode(`${createdWith.text} (Build ${createdWith.number})`),
           inline: true,
         },
         {
           name: 'Map Parameters',
-          value: `\`\`\`yml\n${stringify(mapParameters)}\n\`\`\``,
+          value: enCode(stringify(mapParameters), 'yml'),
         },
         {
           name: 'Game Parameters',
-          value: `\`\`\`yml\n${stringify(gameParameters)}\n\`\`\``,
+          value: enCode(stringify(gameParameters), 'yml'),
         },
       ],
     }).toResponse();

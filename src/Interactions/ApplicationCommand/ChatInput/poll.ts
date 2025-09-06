@@ -1,4 +1,4 @@
-import { JsonResponse } from '@src/models.js';
+import { JsonResponse } from '@models';
 import {
   APIChatInputApplicationCommandInteraction,
   APIInteractionResponse,

@@ -14,6 +14,8 @@
       "@src/*": ["./src/*"],
 
       "@secrets": ["./src/secrets.ts"],
+      "@models": ["./src/models.ts"],
+      "@lib": ["./src/lib.ts"],
       "@constants": ["./src/constants.ts"]
     }
   }
