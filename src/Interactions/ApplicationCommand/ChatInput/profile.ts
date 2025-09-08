@@ -1,11 +1,15 @@
-const { stringify } = require('yaml');
 import { getResponseInfoEmbed } from '@models';
 import { api, APIProfile } from '@modules/api.js';
 import Message from '@modules/message.js';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime.js';
 import {
   APIChatInputApplicationCommandInteraction,
   InteractionContextType,
 } from 'discord-api-types/v10';
+import { stringify } from 'yaml';
+
+dayjs.extend(relativeTime);
 
 export default {
   name: 'profile',
@@ -34,7 +38,7 @@ export default {
     return new Message({
       title: 'Profile Prompt',
       description: `\`\`\`yml\n# ${user.username}'s Profile\n${stringify(profile)}\n\`\`\``,
-      footer: `Last Updated: <t:${Math.floor(Date.parse(profile.updatedAt) / 1000)}:R>`,
+      footer: `Last updated ${dayjs(profile.updatedAt).fromNow()}`,
     }).toResponse();
   },
 };

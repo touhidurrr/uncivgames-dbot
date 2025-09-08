@@ -10,8 +10,8 @@ import {
 import { stringify } from 'yaml';
 
 //@ts-ignore
-globalThis.env = Bun.env;
-const discord = new REST({ version: '10' }).setToken(Bun.env.DISCORD_TOKEN);
+globalThis.env = process.env;
+const discord = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
 const defaultContexts = Object.values(InteractionContextType).filter(
   v => typeof v !== 'string'
@@ -47,7 +47,7 @@ const allCommands: Partial<APIApplicationCommand>[] = Object.entries(
 
 const updateCommands = () => {
   return discord
-    .put(Routes.applicationCommands(Bun.env.APPLICATION_ID), {
+    .put(Routes.applicationCommands(process.env.APPLICATION_ID), {
       body: allCommands,
     })
     .then(res => Bun.write('.response.yml', stringify(res)));

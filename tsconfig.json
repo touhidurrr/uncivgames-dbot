@@ -4,8 +4,9 @@
     "checkJs": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "target": "ESNext",
-    "module": "NodeNext",
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "lib": ["ESNext"],
     "types": ["@types/node", "@types/bun", "@cloudflare/workers-types"],
     "paths": {
