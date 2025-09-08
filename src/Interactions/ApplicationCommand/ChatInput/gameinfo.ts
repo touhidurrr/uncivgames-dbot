@@ -48,7 +48,7 @@ export default {
     }
 
     const {
-      turns,
+      turns = 0,
       currentPlayer,
       civilizations,
       gameParameters,
@@ -72,7 +72,7 @@ export default {
         },
         {
           name: 'Turns',
-          value: enCode(turns || 0),
+          value: enCode(turns),
           inline: true,
         },
         {

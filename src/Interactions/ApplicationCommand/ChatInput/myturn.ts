@@ -43,43 +43,42 @@ export default {
 
     const Screen = new Message().addFlag(Message.Flags.Ephemeral);
 
-    games.forEach(game =>
-      Screen.addEmbed({
-        fields: [
-          {
-            name: 'Game ID',
-            value: `\`\`\`${game._id.endsWith('_Preview') ? game._id.slice(0, -8) : game._id}\`\`\``,
-          },
-          !game.name
-            ? undefined
-            : {
-                name: 'Name',
-                value: `\`\`\`${game.name}\`\`\``,
-              },
-          {
-            name: 'Your Civ',
-            value: `\`\`\`${game.currentPlayer}\`\`\``,
-            inline: true,
-          },
-          !game.turns
-            ? undefined
-            : {
-                name: 'Turns',
-                value: `\`\`\`${game.turns}\`\`\``,
-                inline: true,
-              },
-          {
-            name: 'Started',
-            value: `<t:${Math.floor(new Date(game.createdAt).getTime() / 1000)}:R>`,
-            inline: true,
-          },
-          {
-            name: 'Last Activitity',
-            value: `<t:${Math.floor(new Date(game.updatedAt).getTime() / 1000)}:R>`,
-            inline: true,
-          },
-        ],
-      })
+    games.forEach(
+      ({ _id, name, turns = 0, currentPlayer, createdAt, updatedAt }) =>
+        Screen.addEmbed({
+          fields: [
+            {
+              name: 'Game ID',
+              value: `\`\`\`${_id.endsWith('_Preview') ? _id.slice(0, -8) : _id}\`\`\``,
+            },
+            !name
+              ? undefined
+              : {
+                  name: 'Name',
+                  value: `\`\`\`${name}\`\`\``,
+                },
+            {
+              name: 'Your Civ',
+              value: `\`\`\`${currentPlayer}\`\`\``,
+              inline: true,
+            },
+            {
+              name: 'Turns',
+              value: `\`\`\`${turns}\`\`\``,
+              inline: true,
+            },
+            {
+              name: 'Started',
+              value: `<t:${Math.floor(new Date(createdAt).getTime() / 1000)}:R>`,
+              inline: true,
+            },
+            {
+              name: 'Last Activitity',
+              value: `<t:${Math.floor(new Date(updatedAt).getTime() / 1000)}:R>`,
+              inline: true,
+            },
+          ],
+        })
     );
 
     return Screen.toResponse();

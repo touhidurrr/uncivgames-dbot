@@ -18,7 +18,8 @@ export default {
 
     const profile = (await res.json()) as APIProfile;
 
-    delete profile['dmChannel'];
+    delete profile._id;
+    delete profile.dmChannel;
     delete profile.rating.mu;
     delete profile.rating.sigma;
 
