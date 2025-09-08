@@ -67,12 +67,12 @@ export default {
             },
             {
               name: 'Started',
-              value: `<t:${Math.floor(new Date(createdAt).getTime() / 1000)}:R>`,
+              value: `<t:${Math.floor(Date.parse(createdAt) / 1000)}:R>`,
               inline: true,
             },
             {
               name: 'Last Activitity',
-              value: `<t:${Math.floor(new Date(updatedAt).getTime() / 1000)}:R>`,
+              value: `<t:${Math.floor(Date.parse(updatedAt) / 1000)}:R>`,
               inline: true,
             },
           ],

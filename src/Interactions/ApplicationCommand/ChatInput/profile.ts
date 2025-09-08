@@ -23,6 +23,9 @@ export default {
     delete profile.rating.mu;
     delete profile.rating.sigma;
 
+    profile.createdAt = new Date(profile.createdAt).toUTCString();
+    profile.updatedAt = new Date(profile.updatedAt).toUTCString();
+
     if (interaction.context !== InteractionContextType.BotDM)
       profile.uncivUserIds = [
         `Count: ${profile.uncivUserIds.length}. You can only see your ids when dm the bot this command!`,
@@ -31,7 +34,7 @@ export default {
     return new Message({
       title: 'Profile Prompt',
       description: `\`\`\`yml\n# ${user.username}'s Profile\n${stringify(profile)}\n\`\`\``,
-      footer: `Last Updated: <t:${Math.floor(new Date(profile.updatedAt).getTime() / 1000)}:R>`,
+      footer: `Last Updated: <t:${Math.floor(Date.parse(profile.updatedAt) / 1000)}:R>`,
     }).toResponse();
   },
 };
