@@ -1,5 +1,5 @@
+import { JsonResponse } from '@models';
 import { api, APIGame } from '@modules/api.js';
-import { getResponseInfoEmbed, JsonResponse } from '@models';
 import {
   APIApplicationCommandAutocompleteInteraction,
   APIApplicationCommandAutocompleteResponse,

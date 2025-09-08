@@ -1,8 +1,8 @@
+import { getResponseInfoEmbed } from '@models';
 import { api } from '@modules/api.js';
 import Message from '@modules/message.js';
 import { getFullGame } from '@modules/onlineMultiplayer.js';
 import { UUID_REGEX } from '@src/constants.js';
-import { getResponseInfoEmbed } from '@models';
 import {
   APIApplicationCommandInteractionDataStringOption,
   APIApplicationCommandStringOption,

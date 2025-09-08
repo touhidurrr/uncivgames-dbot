@@ -82,11 +82,14 @@ export type APIProfile = {
   _id: string;
   games: {
     won: number;
-    lost: number;
     played: number;
-    winPercentage: number | null;
   };
-  rating: number | null;
+  rating: {
+    cur: number | null;
+    peak: number | null;
+    mu: number;
+    sigma: number;
+  };
   uncivUserIds: string[];
   notifications: 'enabled' | 'disabled';
   dmChannel?: string;

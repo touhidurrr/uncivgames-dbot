@@ -18,9 +18,10 @@
   },
   "dependencies": {
     "@libsql/client": "^0.15.15",
-    "@prisma/adapter-libsql": "^6.16.0-dev.29",
-    "@prisma/client": "^6.16.0-dev.29",
+    "@prisma/adapter-libsql": "^6.16.0-dev.30",
+    "@prisma/client": "^6.16.0-dev.30",
     "discord-api-types": "^0.38.23",
+    "openskill": "philihp/openskill.js",
     "tweetnacl": "^1.0.3",
     "wrangler": "^4.34.0",
     "yaml": "^2.8.1"

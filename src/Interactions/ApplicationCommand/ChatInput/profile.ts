@@ -1,7 +1,7 @@
 const { stringify } = require('yaml');
+import { getResponseInfoEmbed } from '@models';
 import { api, APIProfile } from '@modules/api.js';
 import Message from '@modules/message.js';
-import { getResponseInfoEmbed } from '@models';
 import {
   APIChatInputApplicationCommandInteraction,
   InteractionContextType,
@@ -19,6 +19,8 @@ export default {
     const profile = (await res.json()) as APIProfile;
 
     delete profile['dmChannel'];
+    delete profile.rating.mu;
+    delete profile.rating.sigma;
 
     if (interaction.context !== InteractionContextType.BotDM)
       profile.uncivUserIds = [

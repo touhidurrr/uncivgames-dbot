@@ -1,7 +1,7 @@
+import Discord from '@modules/discord.js';
 import Message from '@modules/message.js';
 import { getFullGame, getGame } from '@modules/onlineMultiplayer.js';
 import { UUID_REGEX } from '@src/constants.js';
-import Discord from '@modules/discord.js';
 import {
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,

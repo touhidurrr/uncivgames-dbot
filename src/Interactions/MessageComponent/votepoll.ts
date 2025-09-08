@@ -1,7 +1,7 @@
+import { JsonResponse } from '@models';
 import Message from '@modules/message.js';
 import { getPrisma } from '@modules/prisma.js';
 import { NUMBER_EMOJIS } from '@src/constants.js';
-import { JsonResponse } from '@models';
 import {
   APIActionRowComponent,
   APIMessageComponentSelectMenuInteraction,
@@ -19,7 +19,7 @@ export default {
     const votes = await prisma.discordPollVote.findMany({
       where: {
         discordId: BigInt(userId),
-        entryId: { in: interaction.data.values.map(parseInt) },
+        entryId: { in: interaction.data.values.map(Number) },
       },
       select: { id: true, entryId: true },
     });

@@ -2,7 +2,6 @@ import Message from '@modules/message.js';
 import { getPrisma } from '@modules/prisma.js';
 import { NUMBER_EMOJIS } from '@src/constants.js';
 import {
-  APIInteraction,
   APIModalSubmitInteraction,
   APISelectMenuOption,
   ModalSubmitActionRowComponent,
