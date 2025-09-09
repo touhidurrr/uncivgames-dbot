@@ -1,6 +1,6 @@
 import { getResponseInfoEmbed } from '@models';
 import { api, APIProfile } from '@modules/api.js';
-import Message from '@modules/message.js';
+import Message, { enCode } from '@modules/message.js';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import {
@@ -37,7 +37,9 @@ export default {
 
     return new Message({
       title: 'Profile Prompt',
-      description: `\`\`\`yml\n# ${user.username}'s Profile\n${stringify(profile)}\n\`\`\``,
+      description: enCode(
+        `# ${user.username}'s Profile\n${stringify(profile)}`
+      ),
       footer: `Last updated ${dayjs(profile.updatedAt).fromNow()}`,
     }).toResponse();
   },

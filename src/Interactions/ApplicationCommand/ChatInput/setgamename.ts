@@ -1,6 +1,6 @@
 import { getResponseInfoEmbed } from '@models';
 import { api, APIProfile } from '@modules/api.js';
-import Message from '@modules/message.js';
+import Message, { enCode } from '@modules/message.js';
 import { getGame } from '@modules/onlineMultiplayer.js';
 import { MAX_GAME_NAME_LENGTH, UUID_REGEX } from '@src/constants.js';
 import {
@@ -100,11 +100,11 @@ export default {
           fields: [
             {
               name: 'game ID',
-              value: `\`\`\`js\n${gameId}\n\`\`\``,
+              value: enCode(gameId),
             },
             {
               name: 'New Name',
-              value: `\`\`\`js\n${name}\n\`\`\``,
+              value: enCode(name),
               inline: true,
             },
           ],

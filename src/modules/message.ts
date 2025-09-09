@@ -13,7 +13,7 @@ export type MessageAttachment = Omit<RESTAPIAttachment, 'id'> & {
   data: (ArrayBuffer | string | Blob)[];
 };
 
-export const enCode = (input: string, ext: string = 'js') =>
+export const enCode = (input: any, ext: string = 'js') =>
   `${'```'}${ext}\n${input}${'\n```'}`;
 
 export default class Message {

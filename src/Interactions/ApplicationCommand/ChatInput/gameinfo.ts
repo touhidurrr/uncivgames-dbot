@@ -48,6 +48,7 @@ export default {
     }
 
     const {
+      name,
       turns = 0,
       currentPlayer,
       civilizations,
@@ -70,6 +71,12 @@ export default {
           name: 'game ID',
           value: enCode(gameId),
         },
+        !name
+          ? undefined
+          : {
+              name: 'Name',
+              value: enCode(name),
+            },
         {
           name: 'Turns',
           value: enCode(turns),

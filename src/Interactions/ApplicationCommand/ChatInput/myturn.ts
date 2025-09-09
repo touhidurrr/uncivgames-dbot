@@ -1,6 +1,6 @@
 import { getResponseInfoEmbed } from '@models';
 import { api, APIGame } from '@modules/api.js';
-import Message from '@modules/message.js';
+import Message, { enCode } from '@modules/message.js';
 import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {
@@ -49,22 +49,22 @@ export default {
           fields: [
             {
               name: 'Game ID',
-              value: `\`\`\`${_id}\`\`\``,
+              value: enCode(_id),
             },
             !name
               ? undefined
               : {
                   name: 'Name',
-                  value: `\`\`\`${name}\`\`\``,
+                  value: enCode(name),
                 },
             {
               name: 'Your Civ',
-              value: `\`\`\`${currentPlayer}\`\`\``,
+              value: enCode(currentPlayer),
               inline: true,
             },
             {
               name: 'Turns',
-              value: `\`\`\`${turns}\`\`\``,
+              value: enCode(turns),
               inline: true,
             },
             {
