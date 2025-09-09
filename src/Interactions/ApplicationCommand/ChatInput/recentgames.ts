@@ -47,7 +47,7 @@ export default {
           fields: [
             {
               name: 'Game ID',
-              value: `\`\`\`${_id.endsWith('_Preview') ? _id.slice(0, -8) : _id}\`\`\``,
+              value: `\`\`\`${_id}\`\`\``,
             },
             !name
               ? undefined
