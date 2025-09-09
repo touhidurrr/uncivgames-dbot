@@ -1,6 +1,6 @@
-import Discord from '@modules/discord.js';
-import Message from '@modules/message.js';
-import { getPrisma } from '@modules/prisma.js';
+import Discord from '@modules/discord';
+import Message from '@modules/message';
+import { getPrisma } from '@modules/prisma';
 import {
   APIChatInputApplicationCommandInteraction,
   RESTPostAPIChannelMessageResult,

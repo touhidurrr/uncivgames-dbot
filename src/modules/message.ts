@@ -6,15 +6,12 @@ import {
   MessageFlags,
   RESTAPIAttachment,
 } from 'discord-api-types/v10';
-import { getRandomColor } from './materialColors.js';
+import { getRandomColor } from './materialColors';
 
 export type MessageAttachment = Omit<RESTAPIAttachment, 'id'> & {
   id?: number;
   data: (ArrayBuffer | string | Blob)[];
 };
-
-export const enCode = (input: any, ext: string = 'js') =>
-  `${'```'}${ext}\n${input}${'\n```'}`;
 
 export default class Message {
   static Flags = MessageFlags;

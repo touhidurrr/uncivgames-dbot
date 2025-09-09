@@ -1,4 +1,4 @@
-import Message from '@modules/message.js';
+import Message from '@modules/message';
 import { APIUserApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {

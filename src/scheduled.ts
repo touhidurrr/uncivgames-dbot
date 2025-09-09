@@ -3,11 +3,11 @@ import {
   RESTPostAPIChannelMessageResult,
   Routes,
 } from 'discord-api-types/v10';
-import { UNCIV_UPDATE_CHANNEL_ID } from './constants.js';
-import Discord from './modules/discord.js';
-import Message from './modules/message.js';
-import { getPrisma } from './modules/prisma.js';
-import secrets from './secrets.js';
+import { UNCIV_UPDATE_CHANNEL_ID } from './constants';
+import Discord from './modules/discord';
+import Message from './modules/message';
+import { getPrisma } from './modules/prisma';
+import secrets from './secrets';
 
 //@ts-ignore
 BigInt.prototype.toJSON = function () {

@@ -1,6 +1,6 @@
-import { getResponseInfoEmbed } from '@models';
-import { api, APIProfile } from '@modules/api.js';
-import Message from '@modules/message.js';
+import { api, APIProfile } from '@modules/api';
+import Message from '@modules/message';
+import { getResponseInfoEmbed } from '@lib';
 import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {

@@ -1,8 +1,8 @@
-import { getResponseInfoEmbed } from '@models';
-import { api } from '@modules/api.js';
-import Discord from '@modules/discord.js';
-import Message from '@modules/message.js';
-import { UUID_REGEX } from '@src/constants.js';
+import { getResponseInfoEmbed } from '@lib';
+import { api } from '@modules/api';
+import Discord from '@modules/discord';
+import Message from '@modules/message';
+import { UUID_REGEX } from '@src/constants';
 import {
   APIApplicationCommandInteractionDataStringOption,
   APIApplicationCommandOption,

@@ -1,8 +1,8 @@
-import { getResponseInfoEmbed } from '@models';
-import { api, APIProfile } from '@modules/api.js';
-import Message, { enCode } from '@modules/message.js';
+import { enCode, getResponseInfoEmbed } from '@lib';
+import { api, APIProfile } from '@modules/api';
+import Message from '@modules/message';
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime.js';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import {
   APIChatInputApplicationCommandInteraction,
   InteractionContextType,

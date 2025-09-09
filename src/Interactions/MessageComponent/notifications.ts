@@ -1,6 +1,7 @@
-import { getResponseInfoEmbed, JsonResponse } from '@models';
-import { api, APIProfile } from '@modules/api.js';
-import Message from '@modules/message.js';
+import { JsonResponse } from '@models';
+import { api, APIProfile } from '@modules/api';
+import Message from '@modules/message';
+import { getResponseInfoEmbed } from '@lib';
 import {
   APIActionRowComponent,
   APIButtonComponent,

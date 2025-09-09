@@ -1,5 +1,5 @@
 import { RequestMethod } from '@discordjs/rest';
-import { env } from '@src/secrets.js';
+import { env } from '@src/secrets';
 
 const discordApiEndpoint = 'https://discord.com/api/v10';
 

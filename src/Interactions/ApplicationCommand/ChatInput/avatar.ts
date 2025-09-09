@@ -1,4 +1,4 @@
-import Message from '@modules/message.js';
+import Message from '@modules/message';
 import {
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,

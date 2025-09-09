@@ -1,5 +1,5 @@
 import { REST } from '@discordjs/rest';
-import { ApplicationCommandResponses } from '@src/responsesList.js';
+import { ApplicationCommandResponses } from '@src/responsesList';
 import {
   APIApplicationCommand,
   ApplicationCommandType,

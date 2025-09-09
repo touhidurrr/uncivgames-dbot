@@ -1,12 +1,12 @@
+import { JsonResponse } from '@models';
+import secrets from '@secrets';
 import { APIInteraction, InteractionResponseType } from 'discord-api-types/v10';
 import { sign } from 'tweetnacl';
 import {
   ApplicationCommandResponses,
   InteractionResponses,
-} from './responsesList.js';
-import { scheduled } from './scheduled.js';
-import secrets from '@secrets';
-import { JsonResponse } from '@models';
+} from './responsesList';
+import { scheduled } from './scheduled';
 
 //@ts-ignore
 BigInt.prototype.toJSON = function () {

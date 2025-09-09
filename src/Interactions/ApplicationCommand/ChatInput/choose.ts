@@ -1,5 +1,5 @@
-import Message from '@modules/message.js';
-import { choose } from '@modules/randomOrg.js';
+import Message from '@modules/message';
+import { choose } from '@modules/randomOrg';
 import {
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,

@@ -1,6 +1,6 @@
-import { getResponseInfoEmbed } from '@models';
-import { api, APIGame } from '@modules/api.js';
-import Message, { enCode } from '@modules/message.js';
+import { enCode, getResponseInfoEmbed } from '@lib';
+import { api, APIGame } from '@modules/api';
+import Message from '@modules/message';
 import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {
@@ -64,7 +64,7 @@ export default {
             },
             {
               name: 'Turns',
-              value: enCode(turns),
+              value: enCode(turns.toString()),
               inline: true,
             },
             {

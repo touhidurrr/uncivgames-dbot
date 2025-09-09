@@ -1,6 +1,7 @@
-import Message, { enCode } from '@modules/message.js';
-import { getFullGame } from '@modules/onlineMultiplayer.js';
-import { UUID_REGEX } from '@src/constants.js';
+import { enCode } from '@lib';
+import Message from '@modules/message';
+import { getFullGame } from '@modules/onlineMultiplayer';
+import { UUID_REGEX } from '@src/constants';
 import {
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,

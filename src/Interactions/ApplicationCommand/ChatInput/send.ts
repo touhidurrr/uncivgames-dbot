@@ -1,6 +1,6 @@
-import Discord from '@modules/discord.js';
-import Message from '@modules/message.js';
-import { AUTHOR_ID } from '@src/constants.js';
+import Discord from '@modules/discord';
+import Message from '@modules/message';
+import { AUTHOR_ID } from '@src/constants';
 import {
   APIApplicationCommandInteractionDataStringOption,
   APIApplicationCommandOption,

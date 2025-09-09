@@ -1,9 +1,9 @@
-import { getResponseInfoEmbed } from '@models';
-import { api, APIProfile } from '@modules/api.js';
-import Message from '@modules/message.js';
-import { getGame } from '@modules/onlineMultiplayer.js';
-import { getPrisma } from '@modules/prisma.js';
-import { UUID_REGEX } from '@src/constants.js';
+import { getResponseInfoEmbed } from '@lib';
+import { api, APIProfile } from '@modules/api';
+import Message from '@modules/message';
+import { getGame } from '@modules/onlineMultiplayer';
+import { getPrisma } from '@modules/prisma';
+import { UUID_REGEX } from '@src/constants';
 import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {

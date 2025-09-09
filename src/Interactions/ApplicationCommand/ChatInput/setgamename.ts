@@ -1,8 +1,8 @@
-import { getResponseInfoEmbed } from '@models';
-import { api, APIProfile } from '@modules/api.js';
-import Message, { enCode } from '@modules/message.js';
-import { getGame } from '@modules/onlineMultiplayer.js';
-import { MAX_GAME_NAME_LENGTH, UUID_REGEX } from '@src/constants.js';
+import { enCode, getResponseInfoEmbed } from '@lib';
+import { api, APIProfile } from '@modules/api';
+import Message from '@modules/message';
+import { getGame } from '@modules/onlineMultiplayer';
+import { MAX_GAME_NAME_LENGTH, UUID_REGEX } from '@src/constants';
 import {
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,

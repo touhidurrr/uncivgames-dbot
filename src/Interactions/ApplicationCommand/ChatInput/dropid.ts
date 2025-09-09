@@ -1,6 +1,6 @@
-import { getResponseInfoEmbed } from '@models';
-import { api, APIProfile } from '@modules/api.js';
-import Message from '@modules/message.js';
+import { getResponseInfoEmbed } from '@lib';
+import { api, APIProfile } from '@modules/api';
+import Message from '@modules/message';
 import {
   APIApplicationCommandInteractionDataIntegerOption,
   APIApplicationCommandOption,

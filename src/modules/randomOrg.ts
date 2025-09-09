@@ -1,4 +1,4 @@
-import { env } from '@src/secrets.js';
+import { env } from '@src/secrets';
 
 const randomOrgFetch = (method: string, params: object) =>
   fetch('https://api.random.org/json-rpc/4/invoke', {

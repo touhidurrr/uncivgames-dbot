@@ -1,7 +1,7 @@
 import { JsonResponse } from '@models';
-import Message from '@modules/message.js';
-import { getPrisma } from '@modules/prisma.js';
-import { NUMBER_EMOJIS } from '@src/constants.js';
+import Message from '@modules/message';
+import { getPrisma } from '@modules/prisma';
+import { NUMBER_EMOJIS } from '@src/constants';
 import {
   APIActionRowComponent,
   APIMessageComponentSelectMenuInteraction,

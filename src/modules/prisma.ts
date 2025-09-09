@@ -1,7 +1,7 @@
 import { PrismaLibSQL } from '@prisma/adapter-libsql/web';
 import { PrismaClient } from '@prisma/client';
 import { DefaultArgs } from '@prisma/client/runtime/library';
-import { env } from '@src/secrets.js';
+import { env } from '@src/secrets';
 
 let prisma: PrismaClient<
   {

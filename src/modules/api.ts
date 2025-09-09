@@ -1,5 +1,5 @@
 import { RequestMethod } from '@discordjs/rest';
-import { env } from '@src/secrets.js';
+import { env } from '@src/secrets';
 
 const MAX_RETRIES = 5;
 const BASE_URL = 'https://uncivserver.xyz/api';
