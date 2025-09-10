@@ -1,4 +1,3 @@
-import { PRISMA_SCHEMA_URL } from '@src/constants.js';
 import { rm } from 'node:fs/promises';
 
 const cleanup = () =>

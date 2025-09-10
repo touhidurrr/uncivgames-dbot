@@ -1,5 +1,5 @@
 import { PrismaLibSQL } from '@prisma/adapter-libsql/web';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client/edge';
 import { DefaultArgs } from '@prisma/client/runtime/library';
 import { env } from '@src/secrets';
 

@@ -127,4 +127,7 @@ export const api = {
 
   filterUnregisteredUserIds: (userIds: string[]) =>
     apiFetch('POST', `filterUnregisteredUserIds`, { userIds }),
+
+  updateRatings: (ids: string[]) =>
+    apiFetch('POST', `profiles/rating`, { ids }),
 };
