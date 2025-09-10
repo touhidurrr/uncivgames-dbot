@@ -1,11 +1,12 @@
 {
   "name": "uncivgames-dbot",
-  "version": "3.5.0",
+  "version": "3.5.1",
   "description": "A bot owned by touhidurrr made for The Unciv Games Discord Server. Join link https://discord.gg/YYEmec3xr6",
   "module": "src/index.js",
   "type": "module",
   "scripts": {
     "format": "prettier --write . --config .prettierrc.yaml",
+    "sync": "bun scripts/refreshCommandList.ts",
     "wc": "wc $(find src utils -name '*.js' -o -name '*.ts')",
     "publish": "wrangler deploy",
     "typegen": "bun scripts/typegen.ts",

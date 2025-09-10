@@ -9,13 +9,12 @@ import {
 } from 'discord-api-types/v10';
 import { stringify } from 'yaml';
 
-//@ts-ignore
-globalThis.env = process.env;
 const discord = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
 const defaultContexts = Object.values(InteractionContextType).filter(
   v => typeof v !== 'string'
 );
+
 const defaultIntegrationTypes = Object.values(
   ApplicationIntegrationType
 ).filter(v => typeof v !== 'string');
