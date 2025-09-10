@@ -1,15 +1,15 @@
 {
   "name": "uncivgames-dbot",
-  "version": "3.5.1",
+  "version": "3.5.2",
   "description": "A bot owned by touhidurrr made for The Unciv Games Discord Server. Join link https://discord.gg/YYEmec3xr6",
   "module": "src/index.js",
   "type": "module",
   "scripts": {
     "format": "prettier --write . --config .prettierrc.yaml",
-    "sync": "bun scripts/refreshCommandList.ts",
+    "sync": "bun --bun scripts/refreshCommandList.ts",
     "wc": "wc $(find src utils -name '*.js' -o -name '*.ts')",
     "publish": "wrangler deploy",
-    "typegen": "bun scripts/typegen.ts",
+    "typegen": "bun --bun scripts/typegen.ts",
     "sizecheck": "wrangler deploy --dry-run && rm -rf .wrangler"
   },
   "author": "Md. Touhidur Rahman",
@@ -22,7 +22,7 @@
     "@prisma/adapter-libsql": "^6.16.0",
     "@prisma/client": "^6.16.0",
     "dayjs": "^1.11.18",
-    "discord-api-types": "^0.38.23",
+    "discord-api-types": "^0.38.24",
     "tweetnacl": "^1.0.3",
     "wrangler": "^4.35.0",
     "yaml": "^2.8.1"

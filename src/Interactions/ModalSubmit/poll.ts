@@ -2,8 +2,10 @@ import Message from '@modules/message';
 import { getPrisma } from '@modules/prisma';
 import { NUMBER_EMOJIS } from '@src/constants';
 import {
+  APIActionRowComponent,
   APIModalSubmitInteraction,
   APISelectMenuOption,
+  APIStringSelectComponent,
   ModalSubmitActionRowComponent,
 } from 'discord-api-types/v10';
 
@@ -56,10 +58,11 @@ export default {
     }
 
     const prisma = await getPrisma();
+    const pollId = BigInt(interaction.id);
     const userId = interaction.user.id || interaction.member.user.id;
     const poll = await prisma.discordPoll.create({
       data: {
-        id: BigInt(interaction.id),
+        id: pollId,
         authorId: BigInt(userId),
         entries: {
           createMany: {
@@ -95,14 +98,14 @@ export default {
             {
               type: 3,
               options,
-              custom_id: `votepoll`,
+              custom_id: `votepoll-${pollId}`,
               placeholder: 'Select your votes for the Poll !',
               min_values: 1,
               max_values: entries.length,
             },
           ],
         },
-      ],
+      ] satisfies APIActionRowComponent<APIStringSelectComponent>[],
     }).toResponse();
   },
 };
