@@ -23,11 +23,11 @@ jobs:
       - name: Generate Prisma Types
         run: bun typegen
 
-      - name: Update Commands
-        run: >
-          DISCORD_TOKEN='${{ secrets.DISCORD_TOKEN }}'
-          APPLICATION_ID='${{ secrets.APPLICATION_ID }}'
-          bun utils/refreshCommandList.ts
+      # - name: Update Commands
+      #   run: >
+      #     DISCORD_TOKEN='${{ secrets.DISCORD_TOKEN }}'
+      #     APPLICATION_ID='${{ secrets.APPLICATION_ID }}'
+      #     bun scripts/refreshCommandList.ts
 
       - name: Deploy
         run: >
