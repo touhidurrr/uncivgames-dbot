@@ -20,7 +20,7 @@
   "dependencies": {
     "@libsql/client": "^0.15.15",
     "@prisma/adapter-libsql": "^6.16.0",
-    "@prisma/client": "^6.16.0",
+    "@prisma/client": "^6.16.1",
     "dayjs": "^1.11.18",
     "discord-api-types": "^0.38.24",
     "tweetnacl": "^1.0.3",
