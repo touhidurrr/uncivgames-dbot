@@ -23,15 +23,13 @@ jobs:
       - name: Generate Prisma Types
         run: bun typegen
 
-      # Comment for now
-      #      - name: Update Commands
-      #        run: >
-      #          DISCORD_TOKEN='${{ secrets.DISCORD_TOKEN }}'
-      #          APPLICATION_ID='${{ secrets.APPLICATION_ID }}'
-      #          bun utils/refreshCommandList.ts
+      - name: Update Commands
+        run: >
+          DISCORD_TOKEN='${{ secrets.DISCORD_TOKEN }}'
+          APPLICATION_ID='${{ secrets.APPLICATION_ID }}'
+          bun utils/refreshCommandList.ts
 
       - name: Deploy
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CF_AUTH }}
-          wranglerVersion: latest
+        run: >
+          CLOUDFLARE_API_TOKEN='${{ secrets.CF_AUTH }}'
+          bun run publish
