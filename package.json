@@ -24,7 +24,7 @@
     "dayjs": "^1.11.18",
     "discord-api-types": "^0.38.24",
     "tweetnacl": "^1.0.3",
-    "wrangler": "^4.35.0",
+    "wrangler": "^4.37.0",
     "yaml": "^2.8.1"
   },
   "devDependencies": {
