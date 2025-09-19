@@ -112,7 +112,7 @@ export const api = {
     options: { playing?: boolean; limit?: number } = {}
   ) => {
     const qs = new URLSearchParams();
-    if (options.playing) qs.append('playing', 'true');
+    if (options.playing) qs.append('playing', 'y');
     if (options.limit) qs.append('limit', options.limit.toString());
     return apiFetch('GET', `profiles/${id}/games?${qs.toString()}`);
   },
