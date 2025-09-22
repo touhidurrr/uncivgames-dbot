@@ -24,8 +24,7 @@
     "dayjs": "^1.11.18",
     "discord-api-types": "^0.38.26",
     "tweetnacl": "^1.0.3",
-    "wrangler": "^4.38.0",
-    "yaml": "^2.8.1"
+    "wrangler": "^4.38.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250922.0",

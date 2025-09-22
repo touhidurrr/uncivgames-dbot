@@ -1,5 +1,4 @@
 import Message from '@modules/message';
-import { stringify } from 'yaml';
 
 export const enCode = (input: string, ext: string = 'js'): string => {
   return `${'```'}${ext}\n${input}${'\n```'}`;
@@ -25,7 +24,10 @@ export async function getResponseInfoEmbed(res: Response): Promise<Response> {
       },
       {
         name: 'body',
-        value: enCode(`${isJSON ? stringify(body) : body}`, 'yml'),
+        value: enCode(
+          `${isJSON ? JSON.stringify(body, null, 2) : body}`,
+          'json'
+        ),
       },
     ],
   }).toResponse();

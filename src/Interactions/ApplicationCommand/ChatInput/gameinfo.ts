@@ -6,7 +6,6 @@ import {
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,
 } from 'discord-api-types/v10';
-import { stringify } from 'yaml';
 
 export default {
   name: 'gameinfo',
@@ -109,11 +108,11 @@ export default {
         },
         {
           name: 'Map Parameters',
-          value: enCode(stringify(mapParameters), 'yml'),
+          value: enCode(JSON.stringify(mapParameters, null, 2), 'json'),
         },
         {
           name: 'Game Parameters',
-          value: enCode(stringify(gameParameters), 'yml'),
+          value: enCode(JSON.stringify(gameParameters, null, 2), 'json'),
         },
       ],
     }).toResponse();

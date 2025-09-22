@@ -7,7 +7,6 @@ import {
   APIChatInputApplicationCommandInteraction,
   InteractionContextType,
 } from 'discord-api-types/v10';
-import { stringify } from 'yaml';
 
 dayjs.extend(relativeTime);
 
@@ -37,10 +36,10 @@ export default {
 
     return new Message({
       title: 'Profile Prompt',
-      description: enCode(
-        `# ${user.username}'s Profile\n${stringify(profile)}`,
-        'yml'
-      ),
+      description: `# ${user.username}'s Profile\n${enCode(
+        JSON.stringify(profile, null, 2),
+        'json'
+      )}`,
       footer: `Last updated ${dayjs(profile.updatedAt).fromNow()}`,
     }).toResponse();
   },

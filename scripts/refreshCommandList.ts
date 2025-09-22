@@ -7,7 +7,6 @@ import {
   InteractionContextType,
   Routes,
 } from 'discord-api-types/v10';
-import { stringify } from 'yaml';
 
 const discord = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
@@ -49,7 +48,7 @@ const updateCommands = () => {
     .put(Routes.applicationCommands(process.env.APPLICATION_ID), {
       body: allCommands,
     })
-    .then(res => Bun.write('.response.yml', stringify(res)));
+    .then(res => Bun.write('.response.yml', Bun.YAML.stringify(res)));
 };
 
 (async () => {
