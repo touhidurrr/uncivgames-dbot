@@ -1,6 +1,8 @@
 {
   "name": "uncivgames-dbot",
-  "version": "3.5.6",
+  "version": "3.5.7",
+  "license": "BSD-3-Clause",
+  "author": "Md. Touhidur Rahman",
   "description": "A bot owned by touhidurrr made for The Unciv Games Discord Server. Join link https://discord.gg/YYEmec3xr6",
   "module": "src/index.js",
   "type": "module",
@@ -12,8 +14,6 @@
     "typegen": "bun --bun scripts/typegen.ts",
     "sizecheck": "wrangler deploy --dry-run && rm -rf .wrangler"
   },
-  "author": "Md. Touhidur Rahman",
-  "license": "BSD-3-Clause",
   "engines": {
     "node": "22.x"
   },
@@ -28,7 +28,7 @@
     "yaml": "^2.8.1"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250919.0",
+    "@cloudflare/workers-types": "^4.20250922.0",
     "@discordjs/rest": "^2.6.0",
     "@types/bun": "^1.2.22",
     "@types/node": "^24.5.2",
