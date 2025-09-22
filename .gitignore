@@ -2,6 +2,7 @@
 test*
 temp.db
 node_modules
+!.vscode
 !.github
 !.gitignore
 !.prettierignore
