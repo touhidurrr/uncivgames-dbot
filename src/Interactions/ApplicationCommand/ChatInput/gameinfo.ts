@@ -108,11 +108,11 @@ export default {
         },
         {
           name: 'Map Parameters',
-          value: enCode(JSON.stringify(mapParameters, null, 2), 'json'),
+          value: enCode(JSON.stringify(mapParameters, null, 2)),
         },
         {
           name: 'Game Parameters',
-          value: enCode(JSON.stringify(gameParameters, null, 2), 'json'),
+          value: enCode(JSON.stringify(gameParameters, null, 2)),
         },
       ],
     }).toResponse();

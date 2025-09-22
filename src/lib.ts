@@ -24,10 +24,7 @@ export async function getResponseInfoEmbed(res: Response): Promise<Response> {
       },
       {
         name: 'body',
-        value: enCode(
-          `${isJSON ? JSON.stringify(body, null, 2) : body}`,
-          'json'
-        ),
+        value: enCode(`${isJSON ? JSON.stringify(body, null, 2) : body}`),
       },
     ],
   }).toResponse();

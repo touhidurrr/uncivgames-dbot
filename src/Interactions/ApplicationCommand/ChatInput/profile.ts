@@ -37,8 +37,7 @@ export default {
     return new Message({
       title: 'Profile Prompt',
       description: `# ${user.username}'s Profile\n${enCode(
-        JSON.stringify(profile, null, 2),
-        'json'
+        JSON.stringify(profile, null, 2)
       )}`,
       footer: `Last updated ${dayjs(profile.updatedAt).fromNow()}`,
     }).toResponse();
