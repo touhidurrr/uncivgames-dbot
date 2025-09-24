@@ -1,7 +1,7 @@
+import { verifySignature } from '@lib';
 import { JsonResponse } from '@models';
 import secrets from '@secrets';
 import { APIInteraction, InteractionResponseType } from 'discord-api-types/v10';
-import { sign } from 'tweetnacl';
 import {
   ApplicationCommandResponses,
   InteractionResponses,
@@ -19,16 +19,11 @@ export default {
     secrets.setEnv(env);
 
     // Check if the Request is Verified
-    const signature = String(req.headers.get('X-Signature-Ed25519'));
-    const timestamp = String(req.headers.get('X-Signature-Timestamp'));
+    const signature = req.headers.get('X-Signature-Ed25519');
+    const timestamp = req.headers.get('X-Signature-Timestamp');
     const rawBody = await req.text();
 
-    const verified = await sign.detached.verify(
-      Buffer.from(timestamp + rawBody),
-      Buffer.from(signature, 'hex'),
-      Buffer.from(secrets.env.PUBLIC_KEY, 'hex') // from env
-    );
-
+    const verified = await verifySignature(signature!, timestamp!, rawBody);
     if (!verified) {
       return new Response('invalid request signature', { status: 401 });
     }
