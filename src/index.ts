@@ -1,7 +1,7 @@
-import { verifySignature } from '@lib';
+import { validateDiscordInteractionRequest } from '@lib';
 import { JsonResponse } from '@models';
 import secrets from '@secrets';
-import { APIInteraction, InteractionResponseType } from 'discord-api-types/v10';
+import { InteractionResponseType } from 'discord-api-types/v10';
 import {
   ApplicationCommandResponses,
   InteractionResponses,
@@ -18,18 +18,15 @@ export default {
   async fetch(req, env, ctx) {
     secrets.setEnv(env);
 
-    // Check if the Request is Verified
-    const signature = req.headers.get('X-Signature-Ed25519');
-    const timestamp = req.headers.get('X-Signature-Timestamp');
-    const rawBody = await req.text();
+    const { success, interaction } =
+      await validateDiscordInteractionRequest(req);
 
-    const verified = await verifySignature(signature!, timestamp!, rawBody);
-    if (!verified) {
-      return new Response('invalid request signature', { status: 401 });
+    if (!success) {
+      return new Response('invalid request signature', {
+        status: 401,
+        statusText: 'Unauthorized',
+      });
     }
-
-    // Parse Request
-    const interaction = JSON.parse(rawBody) as APIInteraction;
 
     // Log Interaction
     //console.dir(interaction, { depth: null });

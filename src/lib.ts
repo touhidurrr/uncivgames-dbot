@@ -1,5 +1,6 @@
 import Message from '@modules/message';
 import secrets from '@secrets';
+import { APIInteraction } from 'discord-api-types/v10';
 
 export const enCode = (input: string, ext: string = 'js'): string => {
   return `${'```'}${ext}\n${input}${'\n```'}`;
@@ -34,11 +35,21 @@ export async function getResponseInfoEmbed(res: Response): Promise<Response> {
 const enc = new TextEncoder('utf-8');
 let publicKey: CryptoKey | null = null;
 
-export const verifySignature = async (
-  signature: string,
-  timestamp: string,
-  body: string
-): Promise<boolean> => {
+export const validateDiscordInteractionRequest = async (
+  req: Parameters<ExportedHandler<Env>['fetch']>[0]
+): Promise<
+  | { success: true; interaction: APIInteraction }
+  | { success: false; interaction: null }
+> => {
+  const signature = req.headers.get('X-Signature-Ed25519');
+  const timestamp = req.headers.get('X-Signature-Timestamp');
+  const payload = await req.text();
+
+  if (!(signature && timestamp && payload)) {
+    return { success: false, interaction: null };
+  }
+
+  // cache public key
   if (!publicKey) {
     publicKey = await crypto.subtle.importKey(
       'raw',
@@ -48,7 +59,16 @@ export const verifySignature = async (
       ['verify']
     );
   }
-  const data = enc.encode(timestamp + body);
-  const sigBuffer = Buffer.from(signature, 'hex');
-  return crypto.subtle.verify('Ed25519', publicKey, sigBuffer, data);
+
+  const verified = await crypto.subtle.verify(
+    'Ed25519',
+    publicKey,
+    Buffer.from(signature, 'hex'),
+    enc.encode(timestamp + payload)
+  );
+
+  return {
+    success: verified,
+    interaction: verified ? JSON.parse(payload) : null,
+  };
 };
