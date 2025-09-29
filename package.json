@@ -23,7 +23,7 @@
     "@prisma/client": "^6.16.2",
     "dayjs": "^1.11.18",
     "discord-api-types": "^0.38.26",
-    "wrangler": "^4.40.0"
+    "wrangler": "^4.40.2"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250924.0",
