@@ -40,7 +40,7 @@ export default {
               style: TextInputStyle.Paragraph,
               placeholder: 'My Cool Entry 1\nMy another cool entry 2 !',
               custom_id: 'entries',
-              min_length: 2,
+              min_length: 3,
               max_length: 1100,
               required: true,
             },
