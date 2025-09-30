@@ -33,11 +33,12 @@ export default {
           {
             type: ComponentType.Label,
             label: 'Entries',
+            description:
+              'The voting options in the poll. Put each entry in a separate line',
             component: {
               type: ComponentType.TextInput,
               style: TextInputStyle.Paragraph,
-              placeholder:
-                'Poll Entries.\nPut each entry in a separate line.\nExample:\n\nMy Cool Entry 1\nMy another cool entry 2 !',
+              placeholder: 'My Cool Entry 1\nMy another cool entry 2 !',
               custom_id: 'entries',
               min_length: 2,
               max_length: 1100,
