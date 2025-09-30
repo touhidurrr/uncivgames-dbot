@@ -6,23 +6,40 @@ import {
   APIModalSubmitInteraction,
   APISelectMenuOption,
   APIStringSelectComponent,
-  ModalSubmitActionRowComponent,
+  ComponentType,
 } from 'discord-api-types/v10';
 
 export default {
   name: 'poll',
   async respond(interaction: APIModalSubmitInteraction) {
-    const title = (
-      interaction.data.components[0] as ModalSubmitActionRowComponent
-    ).components[0].value.replace(/[\s\n]+/g, ' ');
+    if (
+      interaction.data.components.length < 2 ||
+      interaction.data.components[0].type !== ComponentType.Label ||
+      interaction.data.components[1].type !== ComponentType.Label ||
+      interaction.data.components[0].component.type !==
+        ComponentType.TextInput ||
+      interaction.data.components[1].component.type !== ComponentType.TextInput
+    ) {
+      return new Message(
+        {
+          title: 'Poll Prompt Legacy Poll Error',
+          description:
+            'This kind of poll is too old and is not supported anymore. Kindly open a new one.',
+        },
+        Message.Flags.Ephemeral
+      ).toResponse();
+    }
+
+    const title = interaction.data.components[0].component.value
+      .replace(/[\s\n]+/g, ' ')
+      .trim();
 
     const entries = [
       ...new Set(
-        (
-          interaction.data.components[1] as ModalSubmitActionRowComponent
-        ).components[0].value
+        interaction.data.components[1].component.value
           .trim()
-          .split(/\s*\n+\s*/)
+          .split(/\n+/)
+          .map(s => s.trim())
       ),
     ];
 
