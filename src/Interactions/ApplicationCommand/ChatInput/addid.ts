@@ -64,7 +64,7 @@ export default {
       }
 
       // profile already exists, but has less than 10 userId's
-      const res2 = await api.addUserIdToProfile(profile._id, uncivUserId);
+      const res2 = await api.addUserIdToProfile(userId, uncivUserId);
       if (!res2.ok) return getResponseInfoEmbed(res);
 
       return new Message({
