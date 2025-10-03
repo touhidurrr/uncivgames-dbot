@@ -3,6 +3,7 @@ import { choose } from '@modules/randomOrg';
 import {
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,
+  ApplicationCommandOptionType,
 } from 'discord-api-types/v10';
 
 export default {
@@ -19,7 +20,18 @@ export default {
     },
   ] satisfies APIApplicationCommandOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    // @ts-ignore
+    if (
+      interaction.data.options[0]?.type !== ApplicationCommandOptionType.String
+    ) {
+      return new Message(
+        {
+          title: 'Choose Prompt Error',
+          description: 'Unrecognized option type !',
+        },
+        Message.Flags.Ephemeral
+      ).toResponse();
+    }
+
     const variables: string[] = interaction.data.options[0].value
       .trim()
       .split(/\s*,\s*/);

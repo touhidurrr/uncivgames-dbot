@@ -68,7 +68,7 @@ export default {
     }
 
     const { username, discriminator } = await Discord<
-      any,
+      unknown,
       RESTGetAPIUserResult
     >('GET', Routes.user(discordId));
 

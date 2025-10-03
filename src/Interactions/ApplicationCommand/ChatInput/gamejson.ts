@@ -34,10 +34,19 @@ export default {
     },
   ] satisfies APIApplicationCommandOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    const gameId: string | undefined = interaction.data.options.find(
-      o => o.name === 'game-id'
-      //@ts-ignore
-    )?.value;
+    if (
+      interaction.data.options[0]?.type !== ApplicationCommandOptionType.String
+    ) {
+      return new Message(
+        {
+          title: 'GameJSON Prompt Error',
+          description: 'No options provided !',
+        },
+        Message.Flags.Ephemeral
+      ).toResponse();
+    }
+
+    const gameId = interaction.data.options[0].value;
 
     if (!gameId || !UUID_REGEX.test(gameId)) {
       return new Message(
@@ -49,10 +58,10 @@ export default {
       ).toResponse();
     }
 
-    const preview: boolean | undefined = interaction.data.options.find(
-      o => o.name === 'preview'
-      //@ts-ignore
-    )?.value;
+    const preview =
+      interaction.data.options[1]?.type === ApplicationCommandOptionType.Boolean
+        ? interaction.data.options[1].value
+        : false;
 
     const game = await (preview ? getGame(gameId) : getFullGame(gameId));
 
@@ -95,7 +104,7 @@ export default {
         })
         .getDataFormData();
 
-      await Discord<any, RESTPostAPIChannelMessageResult>(
+      await Discord<unknown, RESTPostAPIChannelMessageResult>(
         'POST',
         Routes.channelMessages(id),
         fd

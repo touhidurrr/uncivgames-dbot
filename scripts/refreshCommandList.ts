@@ -19,6 +19,7 @@ const defaultIntegrationTypes = Object.values(
 ).filter(v => typeof v !== 'string');
 
 const parseCommand = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   cmd: any,
   type: ApplicationCommandType = ApplicationCommandType.ChatInput
 ) => {

@@ -5,6 +5,7 @@ import { UUID_REGEX } from '@src/constants';
 import {
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,
+  ApplicationCommandOptionType,
 } from 'discord-api-types/v10';
 
 export default {
@@ -22,7 +23,18 @@ export default {
     },
   ] satisfies APIApplicationCommandOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    //@ts-ignore
+    if (
+      interaction.data.options[0]?.type !== ApplicationCommandOptionType.String
+    ) {
+      return new Message(
+        {
+          title: 'GameInfo Prompt Error',
+          description: 'Unrecognized option type !',
+        },
+        Message.Flags.Ephemeral
+      ).toResponse();
+    }
+
     const gameId: string = interaction.data.options[0].value.trim();
 
     if (!gameId || !UUID_REGEX.test(gameId)) {

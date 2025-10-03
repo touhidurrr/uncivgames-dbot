@@ -2,6 +2,7 @@ import {
   APIEmbed,
   APIInteractionResponse,
   APIInteractionResponseCallbackData,
+  APIMessageTopLevelComponent,
   InteractionResponseType,
   MessageFlags,
   RESTAPIAttachment,
@@ -28,15 +29,28 @@ export default class Message {
 
   body: Partial<APIInteractionResponse> & {
     type: InteractionResponseType;
-    data: Omit<APIInteractionResponseCallbackData, 'attachments'> & {
+    data: Omit<APIInteractionResponseCallbackData, 'attachments' | 'flags'> & {
       attachments?: MessageAttachment[];
+      flags?: number;
     };
   } = {
     type: InteractionResponseType.ChannelMessageWithSource,
     data: { embeds: [] },
   };
 
-  constructor(config?: any, flags?: MessageFlags | MessageFlags[]) {
+  constructor(
+    config?:
+      | number
+      | string
+      | Partial<
+          Omit<APIEmbed, 'image' | 'footer'> & {
+            image: string;
+            footer: string;
+            components: APIMessageTopLevelComponent[];
+          }
+        >,
+    flags?: MessageFlags | MessageFlags[]
+  ) {
     if (config === undefined) return;
     if (typeof config === 'number') this.body.data.content = String(config);
     else if (typeof config === 'string') this.body.data.content = config;
@@ -46,7 +60,7 @@ export default class Message {
         delete config.components;
       }
       this.addEmbed(config);
-    } else throw 'Unknow Type of Data passed into Message constructor!';
+    } else throw 'Unknown Type of Data passed into Message constructor!';
 
     if (flags) {
       if (typeof flags === 'number') this.addFlag(flags);
@@ -63,13 +77,16 @@ export default class Message {
   }
 
   addFlags(flags: MessageFlags[]) {
-    //@ts-ignore
-    if (!this.body.data.flags) this.body.data.flags = 0;
+    this.body.data.flags ??= 0;
     for (const flag of flags) this.body.data.flags |= flag;
     return this;
   }
 
-  addEmbed(config: Partial<APIEmbed> & { image?: string; footer?: string }) {
+  addEmbed(
+    config: Partial<
+      Omit<APIEmbed, 'image' | 'footer'> & { image: string; footer: string }
+    >
+  ) {
     const embed: APIEmbed = {
       color: config.color || getRandomColor(),
       description: config.description,
@@ -90,7 +107,7 @@ export default class Message {
     return this;
   }
 
-  addComponents(components) {
+  addComponents(components: APIMessageTopLevelComponent[]) {
     this.body.data.components = components;
     return this;
   }
@@ -102,7 +119,6 @@ export default class Message {
   }
 
   toJSON(type?: InteractionResponseType) {
-    //@ts-ignore
     if (type) this.body.type = type;
     return JSON.stringify(this.body);
   }

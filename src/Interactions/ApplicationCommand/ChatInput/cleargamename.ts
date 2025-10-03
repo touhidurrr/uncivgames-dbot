@@ -2,9 +2,12 @@ import { getResponseInfoEmbed } from '@lib';
 import { api, APIProfile } from '@modules/api';
 import Message from '@modules/message';
 import { getGame } from '@modules/onlineMultiplayer';
-import { getPrisma } from '@modules/prisma';
 import { UUID_REGEX } from '@src/constants';
-import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
+import {
+  APIApplicationCommandOption,
+  APIChatInputApplicationCommandInteraction,
+  ApplicationCommandOptionType,
+} from 'discord-api-types/v10';
 
 export default {
   name: 'cleargamename',
@@ -14,13 +17,24 @@ export default {
     {
       name: 'game-id',
       description: 'UncivServer.xyz game ID!',
-      type: 3,
+      type: ApplicationCommandOptionType.String,
       required: true,
       autocomplete: true,
     },
-  ],
+  ] satisfies APIApplicationCommandOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    //@ts-ignore
+    if (
+      interaction.data.options[0]?.type !== ApplicationCommandOptionType.String
+    ) {
+      return new Message(
+        {
+          title: 'ClearGameName Prompt Error',
+          description: 'Unrecognized option type !',
+        },
+        Message.Flags.Ephemeral
+      ).toResponse();
+    }
+
     const gameId = interaction.data.options[0].value.trim();
 
     if (!gameId || !UUID_REGEX.test(gameId)) {

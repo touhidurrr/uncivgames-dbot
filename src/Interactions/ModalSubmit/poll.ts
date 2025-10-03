@@ -92,7 +92,7 @@ export default {
       },
     });
 
-    let options: APISelectMenuOption[] = [];
+    const options: APISelectMenuOption[] = [];
     let description = `**${title}**`;
     poll.entries.forEach(({ label, id }, order) => {
       options.push({
@@ -110,10 +110,10 @@ export default {
       description,
       components: [
         {
-          type: 1,
+          type: ComponentType.ActionRow,
           components: [
             {
-              type: 3,
+              type: ComponentType.StringSelect,
               options,
               custom_id: `votepoll-${pollId}`,
               placeholder: 'Select your votes for the Poll !',

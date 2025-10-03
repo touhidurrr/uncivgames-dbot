@@ -3,7 +3,10 @@ import { env } from '@src/secrets';
 
 const discordApiEndpoint = 'https://discord.com/api/v10';
 
-export default async function Discord<BodyType = any, ResponseType = unknown>(
+export default async function Discord<
+  BodyType = unknown,
+  ResponseType = unknown,
+>(
   method: `${RequestMethod}`,
   path: string,
   data?: BodyType

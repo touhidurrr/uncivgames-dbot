@@ -1,5 +1,5 @@
 export class JsonResponse extends Response {
-  constructor(body: any, init?: ResponseInit) {
+  constructor(body: unknown, init?: ResponseInit) {
     const json = JSON.stringify(body);
     init = {
       statusText: 'OK',

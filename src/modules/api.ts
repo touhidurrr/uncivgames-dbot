@@ -37,7 +37,7 @@ const getJWTToken = async (): Promise<string | Response> => {
 const apiFetch = async (
   method: `${RequestMethod}`,
   path: string,
-  data?: any
+  data?: object
 ) => {
   if (!jwtToken) {
     const token = await getJWTToken();

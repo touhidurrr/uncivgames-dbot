@@ -9,7 +9,7 @@ import {
 export default {
   priority: 0,
   logic: (i: APIApplicationCommandAutocompleteInteraction) =>
-    //@ts-ignore
+    //@ts-expect-error unknown error
     i.data.options.some(o => o.focused && o.name === 'game-id'),
   async respond(interaction: APIApplicationCommandAutocompleteInteraction) {
     const userId = interaction.user

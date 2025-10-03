@@ -1,11 +1,10 @@
 import Message from '@modules/message';
-import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {
   name: 'credits',
   description: 'See Bot Credits',
-  async respond(_: APIChatInputApplicationCommandInteraction) {
-    return new Message({
+  respond: () =>
+    new Message({
       title: 'Democracy Bot Credits',
       fields: [
         {
@@ -23,6 +22,5 @@ export default {
             '\nMultiplayer by Roy Charles from NounProject.com • [Source](https://thenounproject.com/icon/multiplayer-1215652/)',
         },
       ],
-    }).toResponse();
-  },
+    }).toResponse(),
 };

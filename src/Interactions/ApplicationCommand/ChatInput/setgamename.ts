@@ -6,6 +6,7 @@ import { MAX_GAME_NAME_LENGTH, UUID_REGEX } from '@src/constants';
 import {
   APIApplicationCommandOption,
   APIChatInputApplicationCommandInteraction,
+  ApplicationCommandOptionType,
 } from 'discord-api-types/v10';
 
 export default {
@@ -22,13 +23,26 @@ export default {
     {
       name: 'game-id',
       description: 'UncivServer.xyz game ID!',
-      type: 3,
+      type: ApplicationCommandOptionType.String,
       required: true,
       autocomplete: true,
     },
   ] satisfies APIApplicationCommandOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    // @ts-ignore
+    if (
+      interaction.data.options[0]?.type !==
+        ApplicationCommandOptionType.String ||
+      interaction.data.options[1]?.type !== ApplicationCommandOptionType.String
+    ) {
+      return new Message(
+        {
+          title: 'SetGameName Prompt Error',
+          description: 'Unrecognized option type !',
+        },
+        Message.Flags.Ephemeral
+      ).toResponse();
+    }
+
     const gameId = interaction.data.options[1].value.trim();
 
     if (!gameId || !UUID_REGEX.test(gameId)) {
@@ -77,7 +91,6 @@ export default {
       ).toResponse();
     }
 
-    //@ts-ignore
     const name = interaction.data.options[0].value.trim().replace(/\s+/g, ' ');
 
     if (name.length > MAX_GAME_NAME_LENGTH) {

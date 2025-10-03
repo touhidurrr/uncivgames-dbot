@@ -87,7 +87,7 @@ export default {
     // we fetch the username and discriminator of the owner
     // and return a message with the owner's name
     const { username, discriminator } = await Discord<
-      any,
+      unknown,
       RESTGetAPIUserResult
     >('GET', Routes.user(discordId));
 

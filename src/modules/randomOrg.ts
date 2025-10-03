@@ -28,7 +28,7 @@ export const choose = async <T>(arr: T[]): Promise<T> => {
       replacement: true,
       base: 10,
       pregeneratedRandomization: null,
-      // @ts-ignore
+      // @ts-expect-error dont want to define a type for this
     }).then(json => json.result.random.data[0])
   ];
 };
@@ -42,7 +42,7 @@ export const scramble = async <T>(arr: T[]): Promise<T[]> => {
     replacement: false,
     base: 10,
     pregeneratedRandomization: null,
-    // @ts-ignore
+    // @ts-expect-error dont want to define a type for this
   }).then(json => json.result.random.data);
 
   const scrambledArr = [];

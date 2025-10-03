@@ -9,16 +9,9 @@ import Message from './modules/message';
 import { getPrisma } from './modules/prisma';
 import secrets from './secrets';
 
-//@ts-ignore
-BigInt.prototype.toJSON = function () {
-  return this.toString();
-};
-
-var subRequestCount = 0;
 export async function scheduled(
-  event: ScheduledController,
-  env: Env,
-  ctx: ExecutionContext
+  _event: ScheduledController,
+  env: Env
 ): Promise<void> {
   secrets.setEnv(env);
   const prisma = await getPrisma();
@@ -33,7 +26,7 @@ export async function scheduled(
     })
     .then(({ value }) => +value);
 
-  let { id, tag_name, html_url, assets } = await fetch(githubApi, {
+  const { id, tag_name, html_url, assets } = await fetch(githubApi, {
     headers: {
       Accept: 'application/json',
       'User-Agent': 'UncivGames Democracy Bot',
@@ -44,17 +37,15 @@ export async function scheduled(
         id: number;
         tag_name: string;
         html_url: string;
-        assets: any[];
+        assets: { name: string; browser_download_url: string }[];
       }>
   );
-
-  ++subRequestCount;
 
   if (!(id > releaseId)) return;
   if (assets.length < 6) return;
 
   await Promise.all([
-    Discord<any, RESTPostAPIChannelMessageResult>(
+    Discord<unknown, RESTPostAPIChannelMessageResult>(
       'POST',
       Routes.channelMessages(UNCIV_UPDATE_CHANNEL_ID),
       new Message('<@&1110904546642886679>')
@@ -82,7 +73,7 @@ export async function scheduled(
         })
         .getData()
     ).then(({ id }) =>
-      Discord<any, RESTPostAPIChannelMessageCrosspostResult>(
+      Discord<unknown, RESTPostAPIChannelMessageCrosspostResult>(
         'POST',
         Routes.channelMessageCrosspost(UNCIV_UPDATE_CHANNEL_ID, id)
       )
@@ -92,6 +83,4 @@ export async function scheduled(
       data: { value: id.toString() },
     }),
   ]);
-
-  subRequestCount += 2;
 }

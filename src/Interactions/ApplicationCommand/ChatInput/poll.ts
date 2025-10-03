@@ -1,6 +1,5 @@
 import { JsonResponse } from '@models';
 import {
-  APIChatInputApplicationCommandInteraction,
   APIModalInteractionResponse,
   ComponentType,
   InteractionResponseType,
@@ -10,7 +9,7 @@ import {
 export default {
   name: 'poll',
   description: 'Open a Cool Poll',
-  respond: async (_: APIChatInputApplicationCommandInteraction) =>
+  respond: () =>
     new JsonResponse({
       type: InteractionResponseType.Modal,
       data: {
