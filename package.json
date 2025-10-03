@@ -12,6 +12,7 @@
     "wc": "wc $(find src utils -name '*.js' -o -name '*.ts')",
     "publish": "wrangler deploy",
     "typegen": "bun --bun scripts/typegen.ts",
+    "lint": "eslint .",
     "sizecheck": "wrangler deploy --dry-run && rm -rf .wrangler"
   },
   "engines": {

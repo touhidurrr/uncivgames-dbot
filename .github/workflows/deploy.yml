@@ -3,7 +3,7 @@ name: Deploy to Cloudflare Workers
 on:
   push:
     branches:
-      - 'main'
+      - "main"
   workflow_dispatch:
 
 jobs:
@@ -22,6 +22,9 @@ jobs:
 
       - name: Generate Prisma Types
         run: bun typegen
+
+      - name: Lint
+        run: bun lint
 
       # - name: Update Commands
       #   run: >
