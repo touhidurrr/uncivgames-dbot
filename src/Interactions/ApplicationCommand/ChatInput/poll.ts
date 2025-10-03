@@ -10,8 +10,8 @@ import {
 export default {
   name: 'poll',
   description: 'Open a Cool Poll',
-  async respond(_: APIChatInputApplicationCommandInteraction) {
-    return new JsonResponse({
+  respond: async (_: APIChatInputApplicationCommandInteraction) =>
+    new JsonResponse({
       type: InteractionResponseType.Modal,
       data: {
         title: 'Democracy Bot Poll Maker',
@@ -47,6 +47,5 @@ export default {
           },
         ],
       },
-    } satisfies APIModalInteractionResponse);
-  },
+    } satisfies APIModalInteractionResponse),
 };

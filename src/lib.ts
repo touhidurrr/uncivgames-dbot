@@ -53,7 +53,7 @@ export const validateDiscordInteractionRequest = async (
   if (!publicKey) {
     publicKey = await crypto.subtle.importKey(
       'raw',
-      Buffer.from(secrets.env.PUBLIC_KEY, 'hex'),
+      Uint8Array.fromHex(secrets.env.PUBLIC_KEY),
       'Ed25519',
       false,
       ['verify']
@@ -63,7 +63,7 @@ export const validateDiscordInteractionRequest = async (
   const verified = await crypto.subtle.verify(
     'Ed25519',
     publicKey,
-    Buffer.from(signature, 'hex'),
+    Uint8Array.fromHex(signature),
     enc.encode(timestamp + payload)
   );
 

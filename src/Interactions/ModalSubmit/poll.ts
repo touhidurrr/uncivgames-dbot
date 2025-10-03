@@ -24,7 +24,7 @@ export default {
         {
           title: 'Poll Prompt Legacy Poll Error',
           description:
-            'This kind of poll is too old and is not supported anymore. Kindly open a new one.',
+            'You are submitting the response to an old type of poll which is not supported anymore. Kindly open a new poll.',
         },
         Message.Flags.Ephemeral
       ).toResponse();
