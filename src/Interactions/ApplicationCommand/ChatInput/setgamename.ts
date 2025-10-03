@@ -57,9 +57,9 @@ export default {
       ? interaction.member.user.id
       : interaction.user.id;
 
-    const res = await api.getProfile(userId);
-    if (!res.ok) return getResponseInfoEmbed(res);
-    const { uncivUserIds } = (await res.json()) as APIProfile;
+    const profRes = await api.getProfile(userId);
+    if (!profRes.ok) return getResponseInfoEmbed(profRes);
+    const { uncivUserIds } = (await profRes.json()) as APIProfile;
 
     if (
       !(game.civilizations as { playerId?: string }[]).find(
@@ -90,10 +90,9 @@ export default {
       ).toResponse();
     }
 
-    const res2 = await api.setGameName(gameId, name);
-
-    return !res2.ok
-      ? getResponseInfoEmbed(res2)
+    const setRes = await api.setGameName(gameId, name);
+    return !setRes.ok
+      ? getResponseInfoEmbed(setRes)
       : new Message({
           title: 'SetGameName Prompt',
           description: 'Name Set !',

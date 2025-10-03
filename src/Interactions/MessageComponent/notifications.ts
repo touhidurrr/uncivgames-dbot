@@ -26,10 +26,10 @@ export default {
       });
     }
 
-    const res = await api.getProfile(user.id);
-    if (!res.ok) return getResponseInfoEmbed(res);
+    const profRes = await api.getProfile(user.id);
+    if (!profRes.ok) return getResponseInfoEmbed(profRes);
 
-    const { notifications } = (await res.json()) as APIProfile;
+    const { notifications } = (await profRes.json()) as APIProfile;
 
     const {
       message,
@@ -55,8 +55,8 @@ export default {
       });
     }
 
-    const res2 = await api.setNotificationStatus(user.id, toggle);
-    if (!res2.ok) return getResponseInfoEmbed(res2);
+    const setRes = await api.setNotificationStatus(user.id, toggle);
+    if (!setRes.ok) return getResponseInfoEmbed(setRes);
 
     const timeLeft = 300 - (Date.now() - parseInt(timestamp)) / 1000;
 

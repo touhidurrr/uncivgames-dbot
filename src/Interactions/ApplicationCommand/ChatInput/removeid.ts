@@ -45,21 +45,21 @@ export default {
     }
 
     // query response gets the discordId of the profile containing the uncivUserId
-    const res = await api.getUserProfileId(uncivUserId);
+    const idRes = await api.getUserProfileId(uncivUserId);
 
-    if (res.status === 404) {
+    if (idRes.status === 404) {
       return new Message({
         title: 'RemoveID Prompt',
         description: 'Nobody owns this user ID !',
       }).toResponse();
     }
 
-    if (!res.ok) return getResponseInfoEmbed(res);
-    const discordId = await res.text();
+    if (!idRes.ok) return getResponseInfoEmbed(idRes);
+    const discordId = await idRes.text();
 
     if (discordId === userId) {
-      const res = await api.removeUserIdToProfile(userId, uncivUserId);
-      if (!res.ok) return getResponseInfoEmbed(res);
+      const delIdRes = await api.removeUserIdToProfile(userId, uncivUserId);
+      if (!delIdRes.ok) return getResponseInfoEmbed(delIdRes);
 
       return new Message({
         title: 'RemoveID Prompt',

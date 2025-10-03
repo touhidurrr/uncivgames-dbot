@@ -45,14 +45,13 @@ export default {
       ).toResponse();
     }
 
-    const prisma = await getPrisma();
     const userId = !interaction.user
       ? interaction.member.user.id
       : interaction.user.id;
 
-    const res = await api.getProfile(userId);
-    if (!res.ok) return getResponseInfoEmbed(res);
-    const { uncivUserIds } = (await res.json()) as APIProfile;
+    const profRes = await api.getProfile(userId);
+    if (!profRes.ok) return getResponseInfoEmbed(profRes);
+    const { uncivUserIds } = (await profRes.json()) as APIProfile;
 
     if (
       !(game.civilizations as { playerId?: string }[]).find(
@@ -70,10 +69,9 @@ export default {
       ).toResponse();
     }
 
-    const res2 = await api.clearGameName(gameId);
-
-    return !res2.ok
-      ? getResponseInfoEmbed(res2)
+    const clearRes = await api.clearGameName(gameId);
+    return !clearRes.ok
+      ? getResponseInfoEmbed(clearRes)
       : new Message({
           title: 'ClearGameName Prompt',
           description: 'Name Cleared !',

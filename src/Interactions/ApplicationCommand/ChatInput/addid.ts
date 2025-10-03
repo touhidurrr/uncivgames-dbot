@@ -44,14 +44,13 @@ export default {
       ).toResponse();
     }
 
-    const res = await api.getUserProfileId(uncivUserId);
-
-    if (res.status === 404) {
+    const idRes = await api.getUserProfileId(uncivUserId);
+    if (idRes.status === 404) {
       // we try to fetch the profile of the user
-      const res = await api.getProfile(userId);
-      if (!res.ok) return getResponseInfoEmbed(res);
+      const profRes = await api.getProfile(userId);
+      if (!profRes.ok) return getResponseInfoEmbed(profRes);
 
-      const profile = (await res.json()) as APIProfile;
+      const profile = (await profRes.json()) as APIProfile;
 
       if (profile._id !== AUTHOR_ID && profile.uncivUserIds.length >= 10) {
         // profile already exists, but has 10 or more userId's
@@ -64,8 +63,8 @@ export default {
       }
 
       // profile already exists, but has less than 10 userId's
-      const res2 = await api.addUserIdToProfile(userId, uncivUserId);
-      if (!res2.ok) return getResponseInfoEmbed(res);
+      const addIdRes = await api.addUserIdToProfile(userId, uncivUserId);
+      if (!addIdRes.ok) return getResponseInfoEmbed(addIdRes);
 
       return new Message({
         title: 'AddID Prompt',
@@ -73,9 +72,9 @@ export default {
       }).toResponse();
     }
 
-    if (!res.ok) return getResponseInfoEmbed(res);
+    if (!idRes.ok) return getResponseInfoEmbed(idRes);
 
-    const discordId = await res.text();
+    const discordId = await idRes.text();
     if (discordId === userId) {
       // profile already contains the id
       return new Message({
