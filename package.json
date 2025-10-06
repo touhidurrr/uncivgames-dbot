@@ -23,7 +23,7 @@
     "@prisma/adapter-libsql": "^6.16.3",
     "@prisma/client": "^6.16.3",
     "dayjs": "^1.11.18",
-    "discord-api-types": "^0.38.26",
+    "discord-api-types": "^0.38.28",
     "wrangler": "^4.41.0"
   },
   "devDependencies": {
