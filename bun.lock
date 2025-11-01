@@ -4,25 +4,25 @@
     "": {
       "name": "uncivgames-dbot",
       "dependencies": {
-        "@libsql/client": "latest",
-        "@prisma/adapter-libsql": "latest",
-        "@prisma/client": "latest",
-        "dayjs": "latest",
-        "discord-api-types": "latest",
-        "wrangler": "latest",
+        "@libsql/client": "^0.15.15",
+        "@prisma/adapter-libsql": "^6.18.0",
+        "@prisma/client": "^6.16.3",
+        "dayjs": "^1.11.18",
+        "discord-api-types": "^0.38.28",
+        "wrangler": "^4.42.0",
       },
       "devDependencies": {
-        "@cloudflare/workers-types": "latest",
-        "@discordjs/rest": "latest",
-        "@eslint/js": "latest",
-        "@types/bun": "latest",
-        "@types/node": "latest",
-        "eslint": "latest",
-        "jiti": "latest",
-        "prettier": "latest",
-        "prisma": "latest",
-        "typescript": "latest",
-        "typescript-eslint": "latest",
+        "@cloudflare/workers-types": "^4.20251004.0",
+        "@discordjs/rest": "^2.6.0",
+        "@eslint/js": "^9.37.0",
+        "@types/bun": "^1.2.23",
+        "@types/node": "^24.7.0",
+        "eslint": "^9.37.0",
+        "jiti": "^2.6.1",
+        "prettier": "^3.6.2",
+        "prisma": "^6.16.3",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.45.0",
       },
     },
   },
@@ -215,7 +215,7 @@
 
     "@poppinss/exception": ["@poppinss/exception@1.2.2", "", {}, "sha512-m7bpKCD4QMlFCjA/nKTs23fuvoVFoA83brRKmObCUNmi/9tVu8Ve3w4YQAnJu4q3Tjf5fr685HYIC/IA2zHRSg=="],
 
-    "@prisma/adapter-libsql": ["@prisma/adapter-libsql@6.16.3", "", { "dependencies": { "@libsql/client": "^0.3.5 || ^0.4.0 || ^0.5.0 || ^0.6.0 || ^0.7.0 || ^0.8.0", "@prisma/driver-adapter-utils": "6.16.3", "async-mutex": "0.5.0" } }, "sha512-Mb5p/Aubtq+tct4noBYbvRe6ZsxcZC5B33EO66IDzozm7oxCq7UtTC2RgnJxeWgGKLc9UUJbZaPulHRmdC/olQ=="],
+    "@prisma/adapter-libsql": ["@prisma/adapter-libsql@6.18.0", "", { "dependencies": { "@libsql/client": "^0.3.5 || ^0.4.0 || ^0.5.0 || ^0.6.0 || ^0.7.0 || ^0.8.0", "@prisma/driver-adapter-utils": "6.18.0", "async-mutex": "0.5.0" } }, "sha512-AjmAK8QEnSHRwg0yXWFhI2yomqiZDwBlDCowDl3fItyWQ+ceTwQ0yZdV/Dbu1Yc4hPTNFfCs9QYHELaQqfRARA=="],
 
     "@prisma/client": ["@prisma/client@6.16.3", "", { "peerDependencies": { "prisma": "*", "typescript": ">=5.1.0" }, "optionalPeers": ["prisma", "typescript"] }, "sha512-JfNfAtXG+/lIopsvoZlZiH2k5yNx87mcTS4t9/S5oufM1nKdXYxOvpDC1XoTCFBa5cQh7uXnbMPsmZrwZY80xw=="],
 
@@ -223,7 +223,7 @@
 
     "@prisma/debug": ["@prisma/debug@6.16.3", "", {}, "sha512-89DdqWtdKd7qoc9/qJCKLTazj3W3zPEiz0hc7HfZdpjzm21c7orOUB5oHWJsG+4KbV4cWU5pefq3CuDVYF9vgA=="],
 
-    "@prisma/driver-adapter-utils": ["@prisma/driver-adapter-utils@6.16.3", "", { "dependencies": { "@prisma/debug": "6.16.3" } }, "sha512-FliuxCf08NTsV0lexYe5YuT7rlwdb0yofd3fROONnEUuo60Tu4DMe2URoVpkDScOaCDtWi/2VFyAhOMQNgIeHw=="],
+    "@prisma/driver-adapter-utils": ["@prisma/driver-adapter-utils@6.18.0", "", { "dependencies": { "@prisma/debug": "6.18.0" } }, "sha512-9wgSriEKs4j1ePxlv1/RNfJV9Gu5rzG37Neshg+DfrCcUY3amroERvTjyR04w5J1THdGdOTgGL9VdJcVaKRMmQ=="],
 
     "@prisma/engines": ["@prisma/engines@6.16.3", "", { "dependencies": { "@prisma/debug": "6.16.3", "@prisma/engines-version": "6.16.1-1.bb420e667c1820a8c05a38023385f6cc7ef8e83a", "@prisma/fetch-engine": "6.16.3", "@prisma/get-platform": "6.16.3" } }, "sha512-b+Rl4nzQDcoqe6RIpSHv8f5lLnwdDGvXhHjGDiokObguAAv/O1KaX1Oc69mBW/GFWKQpCkOraobLjU6s1h8HGg=="],
 
@@ -602,6 +602,8 @@
     "@poppinss/dumper/supports-color": ["supports-color@10.2.0", "", {}, "sha512-5eG9FQjEjDbAlI5+kdpdyPIBMRH4GfTVDGREVupaZHmVoppknhM29b/S9BkQz7cathp85BVgRi/As3Siln7e0Q=="],
 
     "@prisma/adapter-libsql/@libsql/client": ["@libsql/client@0.8.1", "", { "dependencies": { "@libsql/core": "^0.8.1", "@libsql/hrana-client": "^0.6.2", "js-base64": "^3.7.5", "libsql": "^0.3.10", "promise-limit": "^2.7.0" } }, "sha512-xGg0F4iTDFpeBZ0r4pA6icGsYa5rG6RAG+i/iLDnpCAnSuTqEWMDdPlVseiq4Z/91lWI9jvvKKiKpovqJ1kZWA=="],
+
+    "@prisma/driver-adapter-utils/@prisma/debug": ["@prisma/debug@6.18.0", "", {}, "sha512-PMVPMmxPj0ps1VY75DIrT430MoOyQx9hmm174k6cmLZpcI95rAPXOQ+pp8ANQkJtNyLVDxnxVJ0QLbrm/ViBcg=="],
 
     "@types/ws/@types/node": ["@types/node@24.3.1", "", { "dependencies": { "undici-types": "~7.10.0" } }, "sha512-3vXmQDXy+woz+gnrTvuvNrPzekOi+Ds0ReMxw0LzBiK3a+1k0kQn9f2NWk+lgD4rJehFUmYy2gMhJ2ZI+7YP9g=="],
 
