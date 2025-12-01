@@ -31,7 +31,7 @@
     "@types/node": "^24.9.2",
     "eslint": "^9.39.0",
     "jiti": "^2.6.1",
-    "prettier": "^3.6.2",
+    "prettier": "^3.7.3",
     "prisma": "^6.18.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.2"
