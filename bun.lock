@@ -4,25 +4,25 @@
     "": {
       "name": "uncivgames-dbot",
       "dependencies": {
-        "@libsql/client": "latest",
-        "@prisma/adapter-libsql": "latest",
-        "@prisma/client": "latest",
-        "dayjs": "latest",
-        "discord-api-types": "latest",
-        "wrangler": "latest",
+        "@libsql/client": "^0.15.15",
+        "@prisma/adapter-libsql": "^6.18.0",
+        "@prisma/client": "^7.0.1",
+        "dayjs": "^1.11.19",
+        "discord-api-types": "^0.38.31",
+        "wrangler": "^4.45.3",
       },
       "devDependencies": {
-        "@cloudflare/workers-types": "latest",
-        "@discordjs/rest": "latest",
-        "@eslint/js": "latest",
-        "@types/bun": "latest",
-        "@types/node": "latest",
-        "eslint": "latest",
-        "jiti": "latest",
-        "prettier": "latest",
-        "prisma": "latest",
-        "typescript": "latest",
-        "typescript-eslint": "latest",
+        "@cloudflare/workers-types": "^4.20251014.0",
+        "@discordjs/rest": "^2.6.0",
+        "@eslint/js": "^9.39.0",
+        "@types/bun": "^1.3.1",
+        "@types/node": "^24.9.2",
+        "eslint": "^9.39.0",
+        "jiti": "^2.6.1",
+        "prettier": "^3.6.2",
+        "prisma": "^6.18.0",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.46.2",
       },
     },
   },
@@ -217,7 +217,9 @@
 
     "@prisma/adapter-libsql": ["@prisma/adapter-libsql@6.18.0", "", { "dependencies": { "@libsql/client": "^0.3.5 || ^0.4.0 || ^0.5.0 || ^0.6.0 || ^0.7.0 || ^0.8.0", "@prisma/driver-adapter-utils": "6.18.0", "async-mutex": "0.5.0" } }, "sha512-AjmAK8QEnSHRwg0yXWFhI2yomqiZDwBlDCowDl3fItyWQ+ceTwQ0yZdV/Dbu1Yc4hPTNFfCs9QYHELaQqfRARA=="],
 
-    "@prisma/client": ["@prisma/client@6.18.0", "", { "peerDependencies": { "prisma": "*", "typescript": ">=5.1.0" }, "optionalPeers": ["prisma", "typescript"] }, "sha512-jnL2I9gDnPnw4A+4h5SuNn8Gc+1mL1Z79U/3I9eE2gbxJG1oSA+62ByPW4xkeDgwE0fqMzzpAZ7IHxYnLZ4iQA=="],
+    "@prisma/client": ["@prisma/client@7.0.1", "", { "dependencies": { "@prisma/client-runtime-utils": "7.0.1" }, "peerDependencies": { "prisma": "*", "typescript": ">=5.4.0" }, "optionalPeers": ["prisma", "typescript"] }, "sha512-O74T6xcfaGAq5gXwCAvfTLvI6fmC3and2g5yLRMkNjri1K8mSpEgclDNuUWs9xj5AwNEMQ88NeD3asI+sovm1g=="],
+
+    "@prisma/client-runtime-utils": ["@prisma/client-runtime-utils@7.0.1", "", {}, "sha512-R26BVX9D/iw4toUmZKZf3jniM/9pMGHHdZN5LVP2L7HNiCQKNQQx/9LuMtjepbgRqSqQO3oHN0yzojHLnKTGEw=="],
 
     "@prisma/config": ["@prisma/config@6.18.0", "", { "dependencies": { "c12": "3.1.0", "deepmerge-ts": "7.1.5", "effect": "3.18.4", "empathic": "2.0.0" } }, "sha512-rgFzspCpwsE+q3OF/xkp0fI2SJ3PfNe9LLMmuSVbAZ4nN66WfBiKqJKo/hLz3ysxiPQZf8h1SMf2ilqPMeWATQ=="],
 
