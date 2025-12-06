@@ -8,6 +8,7 @@
     "lib": ["ESNext"],
     "types": ["@types/node", "@types/bun", "@cloudflare/workers-types"],
     "paths": {
+      "@prismaGenerated/*": ["./prisma/generated/*"],
       "@interactions/*": ["./src/Interactions/*"],
       "@modules/*": ["./src/modules/*"],
       "@src/*": ["./src/*"],

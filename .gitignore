@@ -7,4 +7,5 @@ node_modules
 !.gitignore
 !.prettierignore
 !.prettierrc.yaml
+prisma/generated
 package-lock.json

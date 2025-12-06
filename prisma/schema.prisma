@@ -1,11 +1,10 @@
 generator client {
-  provider = "prisma-client-js"
-  engineType = "client"
+  provider = "prisma-client"
+  output = "generated"
 }
 
 datasource db {
   provider = "sqlite"
-  url      = "file:temp.db"
 }
 
 model Variable {

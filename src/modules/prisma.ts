@@ -1,15 +1,8 @@
-import { PrismaLibSQL } from '@prisma/adapter-libsql/web';
-import { PrismaClient } from '@prisma/client';
-import type { DefaultArgs } from '@prisma/client/runtime/library';
+import { PrismaLibSql } from '@prisma/adapter-libsql/web';
+import { PrismaClient } from '@prismaGenerated/client';
 import { env } from '@src/secrets';
 
-let prisma: PrismaClient<
-  {
-    adapter: PrismaLibSQL;
-  },
-  never,
-  DefaultArgs
-> | null = null;
+let prisma: PrismaClient | null = null;
 
 export async function getPrisma() {
   if (prisma) return prisma;
@@ -19,7 +12,7 @@ export async function getPrisma() {
     env.TURSO_AUTH_TOKEN.get(),
   ]);
 
-  const adapter = new PrismaLibSQL(
+  const adapter = new PrismaLibSql(
     {
       url: TURSO_DATABASE_URL,
       authToken: TURSO_AUTH_TOKEN,
