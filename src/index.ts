@@ -7,6 +7,7 @@ import {
   InteractionResponses,
 } from './responsesList';
 import { scheduled } from './scheduled';
+import Message from '@modules/message';
 
 //@ts-expect-error needed to parse BigInt in JSON
 BigInt.prototype.toJSON = function () {
@@ -53,15 +54,21 @@ export default {
       }
       default: {
         // Respond to other Interactions
-        if (!InteractionResponses[interaction.type]) {
-          const cid = interaction.data['custom_id'];
-          const args = (typeof cid === 'string' ? cid : '').split('-');
-          const cName = args.shift();
-
-          return InteractionResponses[interaction.type]
-            .find(i => i.name === cName)
-            .respond(interaction, ...args);
+        const responses = InteractionResponses[interaction.type];
+        if (!responses) {
+          return new Message({
+            title: 'Error',
+            description: `Unknown Interaction Type **${interaction.type}** !`,
+          }).toResponse();
         }
+
+        const cid = interaction.data['custom_id'];
+        const args = (typeof cid === 'string' ? cid : '').split('-');
+        const cName = args.shift();
+
+        return responses
+          .find(i => i.name === cName)
+          .respond(interaction, ...args);
       }
     }
   },

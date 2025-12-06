@@ -1,4 +1,5 @@
 {
+  "exclude": ["prisma/generated"],
   "compilerOptions": {
     "noEmit": true,
     "skipLibCheck": true,
