@@ -4,6 +4,5 @@ import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
   eslint.configs.recommended,
-  tseslint.configs.strict,
-  { rules: { '@typescript-eslint/unified-signatures': 'off' } },
+  tseslint.configs.strict
 ]);
