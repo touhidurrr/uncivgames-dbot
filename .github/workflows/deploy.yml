@@ -33,6 +33,7 @@ jobs:
       #     bun scripts/refreshCommandList.ts
 
       - name: Deploy
-        run: >
-          CLOUDFLARE_API_TOKEN='${{ secrets.CF_AUTH }}'
-          bun run publish
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_AUTH }}
+          wranglerVersion: latest
