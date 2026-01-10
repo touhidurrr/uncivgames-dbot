@@ -36,4 +36,3 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_AUTH }}
-          wranglerVersion: latest
