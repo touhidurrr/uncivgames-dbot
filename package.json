@@ -18,7 +18,7 @@
   "dependencies": {
     "@libsql/client": "^0.17.0",
     "@prisma/adapter-libsql": "^7.4.1",
-    "@prisma/client": "^7.4.1",
+    "@prisma/client": "^7.4.2",
     "dayjs": "^1.11.19",
     "discord-api-types": "^0.38.40",
     "wrangler": "^4.67.0"
