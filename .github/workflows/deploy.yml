@@ -20,11 +20,11 @@ jobs:
       - name: Install Packages
         run: bun install --frozen-lockfile
 
-      - name: Generate Prisma Types
-        run: bun typegen
-
       - name: Lint
         run: bun lint
+
+      - name: Generate Prisma Types
+        run: bun typegen
 
       # - name: Update Commands
       #   run: >
