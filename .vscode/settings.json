@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["dbot", "libsql", "typegen", "uncivgames"]
+  "cSpell.words": ["dbot", "libsql", "typegen", "uncivgames"],
+  "js/ts.tsdk.path": "node_modules\\typescript\\lib"
 }

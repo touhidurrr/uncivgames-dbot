@@ -1,3 +1,5 @@
+import { APIEmbed } from 'discord-api-types/v10';
+
 export const AUTHOR_ID = '577491473100963840';
 export const MOD_ROLE_ID = '872192680095023215';
 export const GUILD_ID = '866650187211210762';
@@ -27,3 +29,18 @@ export const NUMBER_EMOJIS = [
   '9️⃣',
   '🔟',
 ];
+
+// Support
+export const SUPPORT_CHANNEL_NAME = 'Buy Me A Coffee';
+export const SUPPORT_URL = 'https://buymeacoffee.com/touhidurrr';
+export const SUPPORT_MESSAGE = `Enjoying UncivServer.xyz? Consider supporting the project at https://uncivserver.xyz/support !`;
+export const SUPPORT_EMBED_MESSAGE = `Enjoying **UncivServer.xyz**? **[${SUPPORT_CHANNEL_NAME}](${SUPPORT_URL})**!`;
+
+export const SUPPORT_EMBED: Readonly<APIEmbed> = {
+  author: {
+    name: 'Buy touhidurrr a Coffee!',
+    icon_url: 'https://media.giphy.com/media/TDQOtnWgsBx99cNoyH/giphy.gif',
+  },
+  description: SUPPORT_EMBED_MESSAGE,
+  color: 0xffdd00,
+};

@@ -1,3 +1,4 @@
+import { SUPPORT_EMBED } from '@src/constants';
 import {
   APIEmbed,
   APIInteractionResponse,
@@ -103,7 +104,7 @@ export default class Message {
     if (config.image) embed.image = { url: config.image };
     if (config.footer) embed.footer = { text: config.footer };
 
-    this.body.data.embeds.push(embed);
+    this.body.data.embeds?.push(embed);
     return this;
   }
 
@@ -118,28 +119,48 @@ export default class Message {
     return this;
   }
 
+  addSupportEmbed() {
+    const { embeds = [] } = this.body.data;
+    if (embeds.length > 0 && embeds.at(-1) !== SUPPORT_EMBED) {
+      embeds.push(SUPPORT_EMBED);
+    }
+    this.body.data.embeds = embeds;
+    return this;
+  }
+
+  getBody() {
+    return this.addSupportEmbed().body;
+  }
+
+  getData() {
+    return this.getBody().data;
+  }
+
   toJSON(type?: InteractionResponseType) {
-    if (type) this.body.type = type;
-    return JSON.stringify(this.body);
+    const body = this.getBody();
+    if (type) body.type = type;
+    return JSON.stringify(body);
   }
 
   getDataFormData() {
     const fd = new FormData();
-    this.body.data.attachments?.forEach((attachment, idx) => {
+    const data = this.getData();
+    data.attachments?.forEach((attachment, idx) => {
       attachment.id = idx;
       const { filename, data } = attachment;
       fd.append(`files[${idx}]`, new File(data, filename), filename);
       delete attachment.data;
     });
-    fd.append('payload_json', JSON.stringify(this.body.data));
+    fd.append('payload_json', JSON.stringify(data));
     return fd;
   }
 
   toResponse(type?: InteractionResponseType) {
-    if (this.body.data.attachments && this.body.data.attachments.length) {
+    const data = this.getData();
+    if (data.attachments && data.attachments.length) {
       const fd = new FormData();
 
-      this.body.data.attachments.forEach((attachment, idx) => {
+      data.attachments.forEach((attachment, idx) => {
         attachment.id = idx;
         const { filename, data } = attachment;
         fd.append(`files[${idx}]`, new File(data, filename), filename);
@@ -154,13 +175,5 @@ export default class Message {
       statusText: 'OK',
       headers: { 'Content-Type': 'application/json' },
     });
-  }
-
-  getData() {
-    return this.body.data;
-  }
-
-  getBody() {
-    return this.body;
   }
 }
