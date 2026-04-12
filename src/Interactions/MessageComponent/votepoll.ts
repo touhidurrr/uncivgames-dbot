@@ -1,7 +1,7 @@
 import { JsonResponse } from '@models';
 import { getRandomColor } from '@modules/materialColors';
 import Message from '@modules/message';
-import { getPrisma } from '@modules/prisma';
+import { prisma } from '@modules/prisma';
 import { NUMBER_EMOJIS } from '@src/constants';
 import {
   APIActionRowComponent,
@@ -30,7 +30,6 @@ export default {
       ? interaction.user.id
       : interaction.member.user.id;
 
-    const prisma = await getPrisma();
     const entries = await prisma.discordPollEntry.findMany({
       where: { pollId: BigInt(pollId) },
       select: {

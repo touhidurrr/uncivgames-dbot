@@ -1,6 +1,6 @@
+import { getResponseInfoEmbed } from '@lib';
 import { api, APIProfile } from '@modules/api';
 import Message from '@modules/message';
-import { getResponseInfoEmbed } from '@lib';
 import { APIChatInputApplicationCommandInteraction } from 'discord-api-types/v10';
 
 export default {
@@ -9,9 +9,7 @@ export default {
   usage: '/notifications',
   example: '/notifications',
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    const userId = !interaction.user
-      ? interaction.member.user.id
-      : interaction.user.id;
+    const userId = interaction.member?.user?.id || interaction.user?.id;
 
     const res = await api.getProfile(userId);
     if (!res.ok) return getResponseInfoEmbed(res);

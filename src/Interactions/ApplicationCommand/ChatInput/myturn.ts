@@ -7,11 +7,9 @@ export default {
   name: 'myturn',
   description: 'Check the Games where it is your Turn !',
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    const userId = !interaction.user
-      ? interaction.member.user.id
-      : interaction.user.id;
+    const userId = interaction.member?.user?.id || interaction.user?.id;
 
-    const res = await api.getGamesByProfile(userId, {
+    const res = await api.getGamesByProfile(userId!, {
       playing: true,
       limit: 5,
     });
@@ -59,7 +57,7 @@ export default {
                 },
             {
               name: 'Your Civ',
-              value: enCode(currentPlayer),
+              value: enCode(currentPlayer ?? 'Unknown'),
               inline: true,
             },
             {

@@ -1,5 +1,5 @@
 import { RequestMethod } from '@discordjs/rest';
-import { env } from '@src/secrets';
+import { env } from 'cloudflare:workers';
 
 const MAX_RETRIES = 5;
 const BASE_URL = 'https://uncivserver.xyz/api';
@@ -9,9 +9,9 @@ const JWT_BASE_URL = 'https://uncivserver.xyz/jwt';
 let jwtToken: string | null = null;
 
 const getJWTToken = async (): Promise<string | Response> => {
+  const url = `${JWT_BASE_URL}/${JWT_NAME}`;
   const syncToken = await env.SYNC_TOKEN.get();
 
-  const url = `${JWT_BASE_URL}/${JWT_NAME}`;
   const config = {
     headers: {
       Authorization: `Bearer ${syncToken}`,
@@ -45,7 +45,11 @@ const apiFetch = async (
     jwtToken = token;
   }
 
-  const config: RequestInit = {
+  const config: {
+    method: string;
+    body?: string;
+    headers: Record<string, string>;
+  } = {
     method,
     headers: {
       Authorization: `Bearer ${jwtToken}`,

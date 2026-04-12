@@ -1,7 +1,8 @@
 import { RequestMethod } from '@discordjs/rest';
-import { env } from '@src/secrets';
+import { env } from 'cloudflare:workers';
 
 const discordApiEndpoint = 'https://discord.com/api/v10';
+const token = await env.DISCORD_TOKEN.get();
 
 export default async function Discord<
   BodyType = unknown,
@@ -11,8 +12,11 @@ export default async function Discord<
   path: string,
   data?: BodyType
 ): Promise<ResponseType> {
-  const token = await env.DISCORD_TOKEN.get();
-  const config: RequestInit = {
+  const config: {
+    method: string;
+    body?: string | FormData;
+    headers: Record<string, string>;
+  } = {
     method,
     headers: {
       Accept: 'application/json',
@@ -35,7 +39,7 @@ export default async function Discord<
       throw new Error('Discord API Error');
     }
 
-    const isJSON = res.headers.get('Content-Type').includes('json');
+    const isJSON = res.headers.get('Content-Type')?.includes('json');
     if (isJSON) return res.json();
   }) as Promise<ResponseType>;
 }

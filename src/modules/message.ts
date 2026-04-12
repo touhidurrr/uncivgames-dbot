@@ -1,6 +1,7 @@
 import { SUPPORT_EMBED } from '@src/constants';
 import {
   APIEmbed,
+  APIEmbedField,
   APIInteractionResponse,
   APIInteractionResponseCallbackData,
   APIMessageTopLevelComponent,
@@ -85,7 +86,11 @@ export default class Message {
 
   addEmbed(
     config: Partial<
-      Omit<APIEmbed, 'image' | 'footer'> & { image: string; footer: string }
+      Omit<APIEmbed, 'image' | 'footer' | 'fields'> & {
+        image: string;
+        footer: string;
+        fields: (APIEmbedField | undefined | null)[];
+      }
     >
   ) {
     const embed: APIEmbed = {
@@ -100,9 +105,9 @@ export default class Message {
       };
     }
 
-    if (config.fields) embed.fields = config.fields.filter(Boolean);
     if (config.image) embed.image = { url: config.image };
     if (config.footer) embed.footer = { text: config.footer };
+    if (config.fields) embed.fields = config.fields.filter(field => !!field);
 
     this.body.data.embeds?.push(embed);
     return this;

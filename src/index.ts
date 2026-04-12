@@ -1,13 +1,12 @@
 import { validateDiscordInteractionRequest } from '@lib';
 import { JsonResponse } from '@models';
-import secrets from '@secrets';
+import Message from '@modules/message';
 import { InteractionResponseType } from 'discord-api-types/v10';
 import {
   ApplicationCommandResponses,
   InteractionResponses,
 } from './responsesList';
 import { scheduled } from './scheduled';
-import Message from '@modules/message';
 
 //@ts-expect-error needed to parse BigInt in JSON
 BigInt.prototype.toJSON = function () {
@@ -16,9 +15,7 @@ BigInt.prototype.toJSON = function () {
 
 export default {
   scheduled,
-  async fetch(req, env) {
-    secrets.setEnv(env);
-
+  async fetch(req) {
     const { success, interaction } =
       await validateDiscordInteractionRequest(req);
 

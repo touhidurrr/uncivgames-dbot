@@ -6,16 +6,9 @@ import {
 import { UNCIV_UPDATE_CHANNEL_ID } from './constants';
 import Discord from './modules/discord';
 import Message from './modules/message';
-import { getPrisma } from './modules/prisma';
-import secrets from './secrets';
+import { prisma } from './modules/prisma';
 
-export async function scheduled(
-  _event: ScheduledController,
-  env: Env
-): Promise<void> {
-  secrets.setEnv(env);
-  const prisma = await getPrisma();
-
+export async function scheduled(): Promise<void> {
   const githubApi =
     'https://api.github.com/repos/yairm210/Unciv/releases/latest';
 
@@ -24,7 +17,7 @@ export async function scheduled(
       where: { id: 'UncivReleaseId' },
       select: { value: true },
     })
-    .then(({ value }) => +value);
+    .then(({ value }) => Number(value));
 
   const { id, tag_name, html_url, assets } = await fetch(githubApi, {
     headers: {

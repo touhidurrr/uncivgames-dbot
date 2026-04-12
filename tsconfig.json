@@ -12,15 +12,17 @@
     "lib": ["ESNext"],
 
     "paths": {
-      "@prismaGenerated/*": ["./prisma/generated/*"],
-      "@interactions/*": ["./src/Interactions/*"],
-      "@modules/*": ["./src/modules/*"],
       "@src/*": ["./src/*"],
 
-      "@secrets": ["./src/secrets.ts"],
-      "@models": ["./src/models.ts"],
+      "@modules/*": ["./src/modules/*"],
+      "@interactions/*": ["./src/Interactions/*"],
+
       "@lib": ["./src/lib.ts"],
-      "@constants": ["./src/constants.ts"]
+      "@models": ["./src/models.ts"],
+      "@secrets": ["./src/secrets.ts"],
+      "@constants": ["./src/constants.ts"],
+
+      "@prismaGenerated/*": ["./prisma/generated/*"]
     }
   }
 }

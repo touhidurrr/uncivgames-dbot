@@ -1,6 +1,6 @@
 import Discord from '@modules/discord';
 import Message from '@modules/message';
-import { getPrisma } from '@modules/prisma';
+import { prisma } from '@modules/prisma';
 import {
   APIChatInputApplicationCommandInteraction,
   RESTPostAPIChannelMessageResult,
@@ -20,8 +20,6 @@ export default {
         Message.Flags.Ephemeral
       ).toResponse();
     }
-
-    const prisma = await getPrisma();
 
     // Get Game Number
     const gameNo = await prisma.variable

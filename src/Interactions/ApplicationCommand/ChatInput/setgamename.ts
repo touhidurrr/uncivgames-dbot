@@ -67,9 +67,7 @@ export default {
       ).toResponse();
     }
 
-    const userId = !interaction.user
-      ? interaction.member.user.id
-      : interaction.user.id;
+    const userId = interaction.member?.user?.id || interaction.user?.id;
 
     const profRes = await api.getProfile(userId);
     if (!profRes.ok) return getResponseInfoEmbed(profRes);

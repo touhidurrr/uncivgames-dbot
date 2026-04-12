@@ -25,9 +25,7 @@ export default {
     },
   ] satisfies APIApplicationCommandOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    const userId = !interaction.user
-      ? interaction.member.user.id
-      : interaction.user.id;
+    const userId = interaction.member?.user?.id || interaction.user?.id;
 
     const uncivUserId: string = (
       interaction.data

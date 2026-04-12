@@ -8,7 +8,9 @@ import {
   Routes,
 } from 'discord-api-types/v10';
 
-const discord = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
+const discord = new REST({ version: '10' }).setToken(
+  process.env.DISCORD_TOKEN!
+);
 
 const defaultContexts = Object.values(InteractionContextType).filter(
   v => typeof v !== 'string'
@@ -42,11 +44,11 @@ const allCommands: Partial<APIApplicationCommand>[] = Object.entries(
     acc.push(parseCommand(entry, cType));
   });
   return acc;
-}, []);
+}, [] as Partial<APIApplicationCommand>[]);
 
 const updateCommands = () => {
   return discord
-    .put(Routes.applicationCommands(process.env.APPLICATION_ID), {
+    .put(Routes.applicationCommands(process.env.APPLICATION_ID!), {
       body: allCommands,
     })
     .then(res => Bun.write('.response.yml', Bun.YAML.stringify(res)));

@@ -1,4 +1,4 @@
-import { env } from '@src/secrets';
+import { env } from 'cloudflare:workers';
 
 const randomOrgFetch = (method: string, params: object) =>
   fetch('https://api.random.org/json-rpc/4/invoke', {
@@ -11,8 +11,8 @@ const randomOrgFetch = (method: string, params: object) =>
       jsonrpc: '2.0',
       method,
       params: {
-        apiKey: env.RANDOM_ORG_TOKEN,
         ...params,
+        apiKey: env.RANDOM_ORG_TOKEN,
       },
       id: Date.now(),
     }),

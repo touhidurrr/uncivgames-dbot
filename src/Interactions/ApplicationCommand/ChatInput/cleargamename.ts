@@ -24,7 +24,8 @@ export default {
   ] satisfies APIApplicationCommandOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
     if (
-      interaction.data.options[0]?.type !== ApplicationCommandOptionType.String
+      interaction.data.options?.[0]?.type !==
+      ApplicationCommandOptionType.String
     ) {
       return new Message(
         {
@@ -59,11 +60,9 @@ export default {
       ).toResponse();
     }
 
-    const userId = !interaction.user
-      ? interaction.member.user.id
-      : interaction.user.id;
+    const userId = interaction.member?.user?.id || interaction.user?.id;
 
-    const profRes = await api.getProfile(userId);
+    const profRes = await api.getProfile(userId!);
     if (!profRes.ok) return getResponseInfoEmbed(profRes);
     const { uncivUserIds } = (await profRes.json()) as APIProfile;
 

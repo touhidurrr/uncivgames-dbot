@@ -1,3 +1,5 @@
+import { ApplicationCommandType, InteractionType } from 'discord-api-types/v10';
+
 // Import statements for ApplicationCommandResponses
 import addid from './Interactions/ApplicationCommand/ChatInput/addid';
 import avatar from './Interactions/ApplicationCommand/ChatInput/avatar';
@@ -29,7 +31,7 @@ import pollModalSubmit from './Interactions/ModalSubmit/poll';
 
 // Exporting ApplicationCommandResponses
 export const ApplicationCommandResponses = {
-  1: [
+  [ApplicationCommandType.ChatInput]: [
     addid,
     avatar,
     choose,
@@ -51,13 +53,13 @@ export const ApplicationCommandResponses = {
     dropid,
     votekick,
   ],
-  2: [userAvatar],
-  3: [],
+  [ApplicationCommandType.User]: [userAvatar],
+  [ApplicationCommandType.Message]: [],
 };
 
 // Exporting InteractionResponses
 export const InteractionResponses = {
-  3: [notificationsComponent, votepoll],
-  4: [gameIdSuggestion],
-  5: [pollModalSubmit],
+  [InteractionType.MessageComponent]: [notificationsComponent, votepoll],
+  [InteractionType.ApplicationCommandAutocomplete]: [gameIdSuggestion],
+  [InteractionType.ModalSubmit]: [pollModalSubmit],
 };

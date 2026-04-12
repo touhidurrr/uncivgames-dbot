@@ -18,15 +18,15 @@ export default {
     toggle: 'enabled' | 'disabled',
     timestamp: string
   ) {
-    const user = interaction.user || interaction.member.user;
+    const userId = interaction.member?.user?.id || interaction.user?.id;
 
-    if (initiatorId !== user.id) {
+    if (initiatorId !== userId) {
       return new JsonResponse({
         type: InteractionResponseType.DeferredMessageUpdate,
       });
     }
 
-    const profRes = await api.getProfile(user.id);
+    const profRes = await api.getProfile(userId);
     if (!profRes.ok) return getResponseInfoEmbed(profRes);
 
     const { notifications } = (await profRes.json()) as APIProfile;
@@ -41,13 +41,18 @@ export default {
     // update color
     embed.color = getRandomColor();
 
-    if (toggle === notifications) {
+    function updateEmbedFooter() {
       const timeLeft = 300 - (Date.now() - parseInt(timestamp)) / 1000;
+      embed.footer = {
+        text:
+          timeLeft < 0.001
+            ? 'This Interaction will be Closed anytime soon'
+            : `You have around ${timeLeft.toFixed(2)} seconds or more to react to this Message.`,
+      };
+    }
 
-      embed.footer.text = embed.footer.text =
-        timeLeft < 0.001
-          ? 'This Interaction will be Closed anytime soon'
-          : `You have around ${timeLeft.toFixed(2)} seconds or more to react to this Message.`;
+    if (toggle === notifications) {
+      updateEmbedFooter();
 
       return new JsonResponse({
         type: Message.Types.UPDATE_MESSAGE,
@@ -55,21 +60,17 @@ export default {
       });
     }
 
-    const setRes = await api.setNotificationStatus(user.id, toggle);
+    const setRes = await api.setNotificationStatus(userId, toggle);
     if (!setRes.ok) return getResponseInfoEmbed(setRes);
 
-    const timeLeft = 300 - (Date.now() - parseInt(timestamp)) / 1000;
-
     embed.description = `Your Notifications are currently **${
-      toggle.at(0).toUpperCase() + toggle.slice(1)
+      toggle.at(0)?.toUpperCase() + toggle.slice(1)
     }**.\nUse the buttons below to change this setting.`;
-    embed.footer.text =
-      timeLeft < 0.001
-        ? 'This Interaction will be Closed anytime soon'
-        : `You have around ${timeLeft.toFixed(2)} seconds or more to react to this Message.`;
+
+    updateEmbedFooter();
 
     const actionRow = message
-      .components[0] as APIActionRowComponent<APIButtonComponent>;
+      ?.components?.[0] as APIActionRowComponent<APIButtonComponent>;
 
     actionRow.components[0].disabled = toggle === 'enabled';
     actionRow.components[1].disabled = toggle === 'disabled';

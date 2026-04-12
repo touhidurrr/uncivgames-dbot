@@ -7,9 +7,7 @@ export default {
   name: 'recentgames',
   description: 'Check your Recently Active Games !',
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    const userId = !interaction.user
-      ? interaction.member.user.id
-      : interaction.user.id;
+    const userId = interaction.member?.user?.id || interaction.user?.id;
 
     const res = await api.getGamesByProfile(userId, { limit: 5 });
 

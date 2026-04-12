@@ -25,13 +25,11 @@ export default {
     },
   ] satisfies APIApplicationCommandOption[],
   async respond(interaction: APIChatInputApplicationCommandInteraction) {
-    const userId = !interaction.user
-      ? interaction.member.user.id
-      : interaction.user.id;
+    const userId = interaction.member?.user?.id || interaction.user?.id;
 
     const uncivUserId: string = (
       interaction.data
-        .options[0] as APIApplicationCommandInteractionDataStringOption
+        .options?.[0] as APIApplicationCommandInteractionDataStringOption
     ).value.trim();
 
     if (!uncivUserId || !UUID_REGEX.test(uncivUserId)) {
@@ -47,7 +45,7 @@ export default {
     const idRes = await api.getUserProfileId(uncivUserId);
     if (idRes.status === 404) {
       // we try to fetch the profile of the user
-      const profRes = await api.getProfile(userId);
+      const profRes = await api.getProfile(userId!);
       if (!profRes.ok) return getResponseInfoEmbed(profRes);
 
       const profile = (await profRes.json()) as APIProfile;
@@ -63,7 +61,7 @@ export default {
       }
 
       // profile already exists, but has less than 10 userId's
-      const addIdRes = await api.addUserIdToProfile(userId, uncivUserId);
+      const addIdRes = await api.addUserIdToProfile(userId!, uncivUserId);
       if (!addIdRes.ok) return getResponseInfoEmbed(addIdRes);
 
       return new Message({

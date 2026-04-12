@@ -1,5 +1,5 @@
 import Message from '@modules/message';
-import secrets from '@secrets';
+import { env } from 'cloudflare:workers';
 import { APIInteraction } from 'discord-api-types/v10';
 
 export const enCode = (input: string, ext: string = 'js'): string => {
@@ -8,7 +8,7 @@ export const enCode = (input: string, ext: string = 'js'): string => {
 
 export async function getResponseInfoEmbed(res: Response): Promise<Response> {
   const ct = res.headers.get('content-type');
-  const isJSON = ct !== undefined && ct.includes('json');
+  const isJSON = ct?.includes('json');
   const body = await (isJSON ? res.json() : res.text());
   return new Message({
     title: 'Response Info',
@@ -36,7 +36,7 @@ const enc = new TextEncoder('utf-8');
 let publicKey: CryptoKey | null = null;
 
 export const validateDiscordInteractionRequest = async (
-  req: Parameters<ExportedHandler<Env>['fetch']>[0]
+  req: Parameters<ExportedHandlerFetchHandler<Env>>[0]
 ): Promise<
   | { success: true; interaction: APIInteraction }
   | { success: false; interaction: null }
@@ -53,7 +53,7 @@ export const validateDiscordInteractionRequest = async (
   if (!publicKey) {
     publicKey = await crypto.subtle.importKey(
       'raw',
-      Buffer.from(secrets.env.PUBLIC_KEY, 'hex'),
+      Buffer.from(env.PUBLIC_KEY, 'hex'),
       'Ed25519',
       false,
       ['verify']

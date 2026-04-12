@@ -1,26 +1,19 @@
 import { PrismaLibSql } from '@prisma/adapter-libsql/web';
 import { PrismaClient } from '@prismaGenerated/edge';
-import { env } from '@src/secrets';
+import { env } from 'cloudflare:workers';
 
-let prisma: PrismaClient | null = null;
+const [TURSO_DATABASE_URL, TURSO_AUTH_TOKEN] = await Promise.all([
+  env.TURSO_DATABASE_URL.get(),
+  env.TURSO_AUTH_TOKEN.get(),
+]);
 
-export async function getPrisma() {
-  if (prisma) return prisma;
+const adapter = new PrismaLibSql(
+  {
+    url: TURSO_DATABASE_URL,
+    authToken: TURSO_AUTH_TOKEN,
+    intMode: 'bigint',
+  },
+  { timestampFormat: 'unixepoch-ms' }
+);
 
-  const [TURSO_DATABASE_URL, TURSO_AUTH_TOKEN] = await Promise.all([
-    env.TURSO_DATABASE_URL.get(),
-    env.TURSO_AUTH_TOKEN.get(),
-  ]);
-
-  const adapter = new PrismaLibSql(
-    {
-      url: TURSO_DATABASE_URL,
-      authToken: TURSO_AUTH_TOKEN,
-      intMode: 'bigint',
-    },
-    { timestampFormat: 'unixepoch-ms' }
-  );
-
-  prisma = new PrismaClient({ adapter });
-  return prisma;
-}
+export const prisma = new PrismaClient({ adapter });
