@@ -38,7 +38,7 @@ export const SUPPORT_EMBED_MESSAGE = `Enjoying **UncivServer.xyz**? **[${SUPPORT
 
 export const SUPPORT_EMBED: Readonly<APIEmbed> = {
   author: {
-    name: 'Support [UncivServer.xyz](https://uncivserver.xyz) & <@866759632617996308>!',
+    name: 'Support UncivServer.xyz & UncivGames Democracy Bot!',
     icon_url: 'https://media.giphy.com/media/TDQOtnWgsBx99cNoyH/giphy.gif',
   },
   description: SUPPORT_EMBED_MESSAGE,
