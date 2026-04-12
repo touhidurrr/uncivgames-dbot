@@ -1,5 +1,5 @@
 import Message from '@modules/message';
-import { prisma } from '@modules/prisma';
+import { getPrisma } from '@modules/prisma';
 import { NUMBER_EMOJIS } from '@src/constants';
 import {
   APIActionRowComponent,
@@ -74,12 +74,14 @@ export default {
       ).toResponse();
     }
 
+    const prisma = await getPrisma();
     const pollId = BigInt(interaction.id);
-    const userId = interaction.user.id || interaction.member.user.id;
+    const userId = interaction.user?.id || interaction.member?.user?.id;
+
     const poll = await prisma.discordPoll.create({
       data: {
         id: pollId,
-        authorId: BigInt(userId),
+        authorId: BigInt(userId!),
         entries: {
           createMany: {
             data: entries.map(label => ({ label })),

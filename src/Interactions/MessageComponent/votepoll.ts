@@ -1,7 +1,7 @@
 import { JsonResponse } from '@models';
 import { getRandomColor } from '@modules/materialColors';
 import Message from '@modules/message';
-import { prisma } from '@modules/prisma';
+import { getPrisma } from '@modules/prisma';
 import { NUMBER_EMOJIS } from '@src/constants';
 import {
   APIActionRowComponent,
@@ -26,9 +26,8 @@ export default {
       ).toResponse();
     }
 
-    const userId = interaction.user
-      ? interaction.user.id
-      : interaction.member.user.id;
+    const prisma = await getPrisma();
+    const userId = interaction.member?.user?.id || interaction.user?.id;
 
     const entries = await prisma.discordPollEntry.findMany({
       where: { pollId: BigInt(pollId) },
@@ -36,7 +35,7 @@ export default {
         id: true,
         count: true,
         label: true,
-        votes: { where: { discordId: BigInt(userId) } },
+        votes: { where: { discordId: BigInt(userId!) } },
       },
     });
 
@@ -64,7 +63,7 @@ export default {
             where: { id: entry.id },
             data: {
               count: { increment: 1 },
-              votes: { create: { discordId: BigInt(userId) } },
+              votes: { create: { discordId: BigInt(userId!) } },
             },
             select: { id: true, count: true, label: true },
           });
@@ -96,7 +95,7 @@ export default {
     embed.color = getRandomColor();
 
     // add title to embed description
-    let description = embed.description.match(/[^\n]+/)[0];
+    let description = embed.description?.match(/[^\n]+/)?.[0];
 
     // add entries to embed description
     updatedEntries.forEach(({ label, count }, idx) => {
@@ -107,7 +106,7 @@ export default {
     embed.description = description;
 
     const actionRow = message
-      .components[0] as APIActionRowComponent<APIStringSelectComponent>;
+      .components?.[0] as APIActionRowComponent<APIStringSelectComponent>;
 
     // update select menu options
     (

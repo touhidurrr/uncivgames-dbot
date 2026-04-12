@@ -1,6 +1,6 @@
 import Discord from '@modules/discord';
 import Message from '@modules/message';
-import { prisma } from '@modules/prisma';
+import { getPrisma } from '@modules/prisma';
 import {
   APIChatInputApplicationCommandInteraction,
   RESTPostAPIChannelMessageResult,
@@ -21,13 +21,16 @@ export default {
       ).toResponse();
     }
 
+    const prisma = await getPrisma();
+    const userId = interaction.member?.user?.id || interaction.user?.id;
+
     // Get Game Number
     const gameNo = await prisma.variable
       .findUniqueOrThrow({
         where: { id: 'GamesCount' },
         select: { value: true },
       })
-      .then(({ value }) => value);
+      .then(({ value }) => value!);
 
     // Create Message
     const { id, channel_id } = (await Discord(
@@ -37,7 +40,7 @@ export default {
         title: `Game ${gameNo} Prompt`,
         description:
           'A new Game Chat has been Opened !**' +
-          `\nOpened By\t:\t<@${interaction.member.user.id}>` +
+          `\nOpened By\t:\t<@${userId}>` +
           `\nTime\t\t\t:\t<t:${Math.floor(Date.now() / 1000)}:R>**`,
       }).getData()
     )) as RESTPostAPIChannelMessageResult;

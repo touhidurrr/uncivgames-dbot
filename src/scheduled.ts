@@ -6,12 +6,13 @@ import {
 import { UNCIV_UPDATE_CHANNEL_ID } from './constants';
 import Discord from './modules/discord';
 import Message from './modules/message';
-import { prisma } from './modules/prisma';
+import { getPrisma } from './modules/prisma';
 
 export async function scheduled(): Promise<void> {
   const githubApi =
     'https://api.github.com/repos/yairm210/Unciv/releases/latest';
 
+  const prisma = await getPrisma();
   const releaseId = await prisma.variable
     .findUniqueOrThrow({
       where: { id: 'UncivReleaseId' },
