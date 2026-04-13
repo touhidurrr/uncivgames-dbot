@@ -1,5 +1,6 @@
 import { APIEmbed } from 'discord-api-types/v10';
 
+export const APP_ID = '866759632617996308';
 export const AUTHOR_ID = '577491473100963840';
 export const MOD_ROLE_ID = '872192680095023215';
 export const GUILD_ID = '866650187211210762';
@@ -34,7 +35,7 @@ export const NUMBER_EMOJIS = [
 export const SUPPORT_CHANNEL_NAME = 'Buy Me A Coffee';
 export const SUPPORT_URL = 'https://buymeacoffee.com/touhidurrr';
 export const SUPPORT_MESSAGE = `Enjoying UncivServer.xyz? Consider supporting the project at https://uncivserver.xyz/support !`;
-export const SUPPORT_EMBED_MESSAGE = `Enjoying **UncivServer.xyz**? **[${SUPPORT_CHANNEL_NAME}](${SUPPORT_URL})**!`;
+export const SUPPORT_EMBED_MESSAGE = `Enjoying **<@${APP_ID}>**? **[${SUPPORT_CHANNEL_NAME}](${SUPPORT_URL})**!`;
 
 export const SUPPORT_EMBED: Readonly<APIEmbed> = {
   author: {
