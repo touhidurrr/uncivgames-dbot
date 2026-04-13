@@ -32,10 +32,10 @@ export const NUMBER_EMOJIS = [
 ];
 
 // Support
-export const SUPPORT_CHANNEL_NAME = 'Buy Me A Coffee';
+export const SUPPORT_CHANNEL_NAME = 'Buy Us A Coffee';
 export const SUPPORT_URL = 'https://buymeacoffee.com/touhidurrr';
 export const SUPPORT_MESSAGE = `Enjoying UncivServer.xyz? Consider supporting the project at https://uncivserver.xyz/support !`;
-export const SUPPORT_EMBED_MESSAGE = `Enjoying **<@${APP_ID}>**? **[${SUPPORT_CHANNEL_NAME}](${SUPPORT_URL})**!`;
+export const SUPPORT_EMBED_MESSAGE = `Enjoying **UncivGames Democracy Bot**? **[${SUPPORT_CHANNEL_NAME}](${SUPPORT_URL})**!`;
 
 export const SUPPORT_EMBED: Readonly<APIEmbed> = {
   author: {
