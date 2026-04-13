@@ -10,7 +10,7 @@ export default {
         {
           name: 'Author',
           value:
-            '`@touhidurrr` - <@577491473100963840> • [Github](https://github.com/touhidurrr) • [Email](https://tinyurl.com/dbotmail)',
+            '`@touhidurrr` - <@577491473100963840> • [Github](https://github.com/touhidurrr) • [Email](https://uncivserver.xyz/dbotmail)',
         },
         {
           name: 'Bot Avatar',
