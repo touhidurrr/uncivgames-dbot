@@ -6,6 +6,9 @@ on:
       - "main"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   start:
     runs-on: ubuntu-24.04-arm
