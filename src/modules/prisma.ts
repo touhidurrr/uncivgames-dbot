@@ -1,5 +1,5 @@
 import { PrismaLibSql } from '@prisma/adapter-libsql/web';
-import { PrismaClient } from '@prismaGenerated/edge';
+import { PrismaClient } from '@prismaGenerated/client';
 import { env } from 'cloudflare:workers';
 
 let prisma: PrismaClient | null = null;
