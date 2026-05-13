@@ -36,6 +36,6 @@ jobs:
       #     bun scripts/refreshCommandList.ts
 
       - name: Deploy
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CF_AUTH }}
