@@ -5,25 +5,25 @@
     "": {
       "name": "uncivgames-dbot",
       "dependencies": {
-        "@libsql/client": "^0.17.2",
+        "@libsql/client": "^0.17.3",
         "@prisma/adapter-libsql": "^7.8.0",
-        "@prisma/client": "^7.7.0",
+        "@prisma/client": "^7.8.0",
         "dayjs": "^1.11.20",
-        "discord-api-types": "^0.38.45",
-        "wrangler": "^4.81.1",
+        "discord-api-types": "^0.38.48",
+        "wrangler": "^4.85.0",
       },
       "devDependencies": {
-        "@cloudflare/workers-types": "^4.20260411.1",
+        "@cloudflare/workers-types": "^4.20260426.1",
         "@discordjs/rest": "^2.6.1",
         "@eslint/js": "^10.0.1",
-        "@types/bun": "^1.3.12",
+        "@types/bun": "^1.3.13",
         "eslint": "^10.2.1",
-        "globals": "^17.4.0",
+        "globals": "^17.5.0",
         "jiti": "^2.6.1",
-        "prettier": "^3.8.2",
-        "prisma": "^7.7.0",
-        "typescript": "^6.0.2",
-        "typescript-eslint": "^8.58.1",
+        "prettier": "^3.8.3",
+        "prisma": "^7.8.0",
+        "typescript": "^6.0.3",
+        "typescript-eslint": "^8.59.1",
       },
     },
   },
@@ -374,7 +374,7 @@
 
     "detect-libc": ["detect-libc@2.0.2", "", {}, "sha512-UX6sGumvvqSaXgdKGUsgZWqcUyIXZ/vZTrlRT/iobiKhGL0zL4d3osHj3uqllWJK+i+sixDS/3COVEOFbupFyw=="],
 
-    "discord-api-types": ["discord-api-types@0.38.47", "", {}, "sha512-XgXQodHQBAE6kfD7kMvVo30863iHX1LHSqNq6MGUTDwIFCCvHva13+rwxyxVXDqudyApMNAd32PGjgVETi5rjA=="],
+    "discord-api-types": ["discord-api-types@0.38.48", "", {}, "sha512-WFUE/2o0lBlLeCQonQ+Pu2RqHAqbytBJ2RlXR91gzk05InSS6k9ShzzLYoymrA4c2oRgRKGE7/VqQJNNdGWSxQ=="],
 
     "dotenv": ["dotenv@17.4.2", "", {}, "sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw=="],
 
