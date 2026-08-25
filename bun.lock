@@ -5,25 +5,25 @@
     "": {
       "name": "uncivgames-dbot",
       "dependencies": {
-        "@libsql/client": "^0.17.2",
+        "@libsql/client": "^0.17.3",
         "@prisma/adapter-libsql": "^7.8.0",
-        "@prisma/client": "^7.7.0",
+        "@prisma/client": "^7.8.0",
         "dayjs": "^1.11.20",
-        "discord-api-types": "^0.38.45",
-        "wrangler": "^4.81.1",
+        "discord-api-types": "^0.38.47",
+        "wrangler": "^4.85.0",
       },
       "devDependencies": {
-        "@cloudflare/workers-types": "^4.20260411.1",
+        "@cloudflare/workers-types": "^4.20260426.1",
         "@discordjs/rest": "^2.6.1",
         "@eslint/js": "^10.0.1",
-        "@types/bun": "^1.3.12",
+        "@types/bun": "^1.3.13",
         "eslint": "^10.2.1",
-        "globals": "^17.4.0",
-        "jiti": "^2.6.1",
-        "prettier": "^3.8.2",
-        "prisma": "^7.7.0",
-        "typescript": "^6.0.2",
-        "typescript-eslint": "^8.58.1",
+        "globals": "^17.5.0",
+        "jiti": "^2.7.0",
+        "prettier": "^3.8.3",
+        "prisma": "^7.8.0",
+        "typescript": "^6.0.3",
+        "typescript-eslint": "^8.59.1",
       },
     },
   },
@@ -470,7 +470,7 @@
 
     "isexe": ["isexe@2.0.0", "", {}, "sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw=="],
 
-    "jiti": ["jiti@2.6.1", "", { "bin": { "jiti": "lib/jiti-cli.mjs" } }, "sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ=="],
+    "jiti": ["jiti@2.7.0", "", { "bin": { "jiti": "lib/jiti-cli.mjs" } }, "sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ=="],
 
     "js-base64": ["js-base64@3.7.8", "", {}, "sha512-hNngCeKxIUQiEUN3GPJOkz4wF/YvdUdbNL9hsBcMQTkKzboD7T/q3OYOuuPZLUE6dBxSGpwhk5mwuDud7JVAow=="],
 
@@ -655,6 +655,8 @@
     "@types/ws/@types/node": ["@types/node@25.3.5", "", { "dependencies": { "undici-types": "~7.18.0" } }, "sha512-oX8xrhvpiyRCQkG1MFchB09f+cXftgIXb3a7UUa4Y3wpmZPw5tyZGTLWhlESOLq1Rq6oDlc8npVU2/9xiCuXMA=="],
 
     "@typescript-eslint/eslint-plugin/ignore": ["ignore@7.0.5", "", {}, "sha512-Hs59xBNfUIunMFgWAbGX5cq6893IbWg4KnrjbYwX3tx0ztorVgTDA6B2sxf8ejHJ4wz8BqGUMYlnzNBer5NvGg=="],
+
+    "c12/jiti": ["jiti@2.6.1", "", { "bin": { "jiti": "lib/jiti-cli.mjs" } }, "sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ=="],
 
     "cross-fetch/node-fetch": ["node-fetch@2.7.0", "", { "dependencies": { "whatwg-url": "^5.0.0" }, "peerDependencies": { "encoding": "^0.1.0" }, "optionalPeers": ["encoding"] }, "sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A=="],
 
