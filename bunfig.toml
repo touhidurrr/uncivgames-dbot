@@ -2,4 +2,16 @@
 bun = true
 
 [install]
-minimumReleaseAge = 259200
+minimumReleaseAge = '3 days'
+
+[fmt]
+jsdoc = true
+endOfLine = 'lf'
+singleQuote = true
+proseWrap = 'always'
+arrowParens = 'avoid'
+trailingComma = 'es5'
+bracketSpacing = true
+sortPackageJson = true
+quoteProps = 'as-needed'
+ignorePatterns = ['CODE_OF_CONDUCT.md']
