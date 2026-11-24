@@ -10,7 +10,7 @@ await cleanup();
 await Promise.all([
   Bun.$`prisma generate`,
   Bun.$`bunx wrangler types src/types.d.ts --include-runtime false`.then(
-    () => Bun.$`bunx prettier --write src/types.d.ts`
+    () => Bun.$`bun fmt src/types.d.ts`
   ),
 ]);
 await cleanup();
